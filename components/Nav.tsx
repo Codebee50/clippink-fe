@@ -1,0 +1,65 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { RxHamburgerMenu } from "react-icons/rx";
+
+const Nav = () => {
+  const navItems = [
+    {
+      label: "Home",
+      href: "/",
+    },
+    {
+      label: "About",
+      href: "/about",
+    },
+    {
+      label: "Features",
+      href: "/features",
+    },
+    {
+      label: "Pricing",
+      href: "/pricing",
+    },
+    {
+      label: "Contact",
+      href: "/contact",
+    },
+  ];
+  return (
+    <div className="flex justify-between items-center w-full h-[100px] padding-x py-5">
+      <Image
+        src="/images/logo.svg"
+        alt="logo"
+        width={100}
+        height={100}
+        className="w-[70px] h-[70px]"
+      />
+      <div className="flex items-center gap-7 max-sm:hidden">
+        {navItems.map((item) => (
+          <Link
+            href={item.href}
+            key={item.label}
+            className="text-white font-intertight font-medium"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+      <div className="flex items-center gap-4 max-sm:hidden">
+        <Link
+          href="/login"
+          className="bg-senary text-white px-6 py-2 rounded-md"
+        >
+          Login
+        </Link>
+      </div>
+
+      <div className="sm:hidden">
+        <RxHamburgerMenu className="text-white text-2xl" />
+      </div>
+    </div>
+  );
+};
+
+export default Nav;
