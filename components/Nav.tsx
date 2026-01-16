@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
+import Logo from "./Logo";
 
 const Nav = () => {
   const navItems = [
@@ -28,19 +29,21 @@ const Nav = () => {
   ];
   return (
     <div className="flex justify-between items-center w-full h-[100px] padding-x py-5">
-      <Image
+      {/* <Image
         src="/images/logo.svg"
         alt="logo"
         width={100}
         height={100}
         className="w-[70px] h-[70px]"
-      />
+      /> */}
+
+      <Logo color="#0A8337" dotColor="#fff" width={50} height={50} />
       <div className="flex items-center gap-7 max-sm:hidden">
         {navItems.map((item) => (
           <Link
             href={item.href}
             key={item.label}
-            className="text-white font-intertight font-medium"
+            className="text-white font-intertight font-medium hover:text-senary transition-all duration-300"
           >
             {item.label}
           </Link>

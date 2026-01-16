@@ -4,6 +4,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import Marquee from "./Marquee";
 import Nav from "./Nav";
+import { useRouter } from "next/navigation";
 
 const imageUrls = [
   "https://clippink-bkt.s3.amazonaws.com/images/landing-page-images/feaf47bb-baf6-4aef-9904-3897edf6e8a5.jpeg",
@@ -98,14 +99,15 @@ const imageUrls = [
   "https://clippink-bkt.s3.amazonaws.com/images/landing-page-images/ab4c2a0f-fe84-4d8d-ba04-e26ae42412c8.jpeg",
 ];
 
+const shuffleArray = (array: string[]) => {
+  return array.slice().sort(() => Math.random() - 0.5);
+};
+
 const Hero = () => {
-  const [images, setImages] = useState<string[]>(imageUrls as string[]);
-
-  useEffect(() => {
-    const shuffledImages = imageUrls.slice().sort(() => Math.random() - 0.5);
-    setImages(shuffledImages as string[]);
-  }, []);
-
+  const [images, setImages] = useState<string[]>(
+    shuffleArray(imageUrls as string[])
+  );
+  const router = useRouter();
   return (
     <div className="flex flex-col min-h-screen  bg-denary w-full relative">
       <div className="relative">
@@ -121,13 +123,20 @@ const Hero = () => {
           <div className="h-[280px]"></div>
 
           <div className="flex flex-col items-center justify-center gap-3 padding-x">
-            <h1 className="text-white text-4xl md:text-6xl font-black capitalize font-eb-garamond text-center">
-              Turn scripts into <br /> viral faceless videos.
+            <h1 className="text-white text-4xl md:text-6xl font-medium capitalize font-eb-garamond text-center">
+              Create Viral Social Media <br /> Content On Auto Pilot
             </h1>
             <p className="font-intertight text-gray-200 max-sm:text-sm text-center">
               Post daily without burnout and grow your audience while you sleep.{" "}
             </p>
-            <button className="bg-senary text-white px-6 py-2 rounded-md cursor-pointer capitalize font-medium text-center">
+            <button
+              onClick={() =>
+                router.push(
+                  "/workspace/video/290d4bc0-90a6-4662-9284-ee39426bd9d7"
+                )
+              }
+              className="bg-senary text-white px-6 py-2 rounded-md cursor-pointer capitalize font-medium text-center"
+            >
               Start creating videos
             </button>
           </div>
