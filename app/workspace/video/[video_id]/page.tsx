@@ -14,6 +14,7 @@ import useFetchRequest from "@/hooks/useFetch";
 import { makeMsUrl } from "@/constants";
 import { VideoResponse } from "@/lib/types/video";
 import { AxiosError, AxiosResponse } from "axios";
+import SceneCard from "@/components/video/SceneCard";
 
 const sideNavItems = [
   {
@@ -80,27 +81,24 @@ const Page = () => {
 
       {/* Bottom container */}
       <div className="w-full h-[calc(100vh-70px)] flex flex-row">
+
+        {/* Side Nav */}
         <div className="w-[90px] h-full pt-5 flex flex-col items-center gap-5 border-r border-r-greys1/20">
           {sideNavItems.map((item) => (
             <div
               key={item.Label}
               className="flex flex-col items-center justify-center gap-2 text-greys2 hover:bg-greys1/10 rounded-md p-2 cursor-pointer transition-all duration-300 w-[90%]"
             >
-              <item.Icon className="text-2xl" />
+              <item.Icon className="text-xl" />
               <span className="text-sm">{item.Label}</span>
             </div>
           ))}
         </div>
 
-        <div className="w-[400px] h-full border-r border-r-greys1/20 bg-[#0C0C10] overflow-y-scroll p-4 flex flex-col gap-4 cus-scrollbar">
+        <div className="w-[500px] h-full border-r border-r-greys1/20 bg-[#0C0C10] overflow-y-scroll p-4 flex flex-col gap-4 cus-scrollbar">
           {videoData &&
             videoData.scenes.map((scene) => (
-              <div
-                key={scene.id}
-                className="w-full h-[100px] bg-[#111117] rounded-md p-4 flex flex-col"
-              >
-                <div className="w-full flex flex-row items-center justify-between"></div>
-              </div>
+             <SceneCard key={scene.id} scene={scene} />
             ))}
         </div>
       </div>
