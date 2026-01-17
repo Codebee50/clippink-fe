@@ -1,9 +1,10 @@
-import { Scene, VideoResponse } from "@/lib/types/video";
+import { Caption, Scene, VideoResponse } from "@/lib/types/video";
 import React, { useState } from "react";
-import { AbsoluteFill, Audio, Img, Sequence, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
 
 const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
   const { fps } = useVideoConfig();
+  const frame = useCurrentFrame();
 
   if (!video) {
     return (
@@ -41,15 +42,36 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
     return startFrame;
   };
 
+  //TODO: fix captions not updating when scene changes
+  const getCurrentCaption = (scene: Scene): Caption | undefined => {
+    const currentTime = frame / fps; //convert frame number to milliseconds
+
+    const currentCaption = scene.captions.find(caption => currentTime >= caption.start && currentTime <= caption.end);
+    return currentCaption;
+  };
+
   return (
     <AbsoluteFill className="bg-greys1/10 rounded-md overflow-hidden">
-      {sortedScenes.map((scene, index) => (
-        <Sequence key={scene.id} from={getSceneStartFrame(scene, index)} durationInFrames={getSceneDurationInFrames(scene)}>
-          <Img src={scene.image_url || ""} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" />
+      {sortedScenes.map((scene, index) => {
+        const startTime = getSceneStartFrame(scene, index);
+        const duration = getSceneDurationInFrames(scene);
 
-          {scene.audio_url && <Audio src={scene.audio_url} />}
-        </Sequence>
-      ))}
+        const scale = (index: number) =>
+          interpolate(frame, [startTime, startTime + duration / 2, startTime + duration], index === 0 ? [1, 1.4, 1] : [1.4, 1, 1.4], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        return (
+          <Sequence key={scene.id} from={startTime} durationInFrames={duration}>
+            <AbsoluteFill className="justify-center items-center">
+              <Img src={scene.image_url || ""} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" style={{ transform: `scale(${scale(index)})` }} />
+
+              <AbsoluteFill className="text-white justify-center items-center bottom-30 text-center w-full h-max" style={{ top: undefined }}>
+                <h2 className="text-2xl font-bold">{getCurrentCaption(scene)?.text || ""}</h2>
+              </AbsoluteFill>
+            </AbsoluteFill>
+
+            {scene.audio_url && <Audio src={scene.audio_url} />}
+          </Sequence>
+        );
+      })}
     </AbsoluteFill>
   );
 };
