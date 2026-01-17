@@ -1,8 +1,6 @@
 import { Scene } from "@/lib/types/video";
-import React from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { TbAdjustmentsStar } from "react-icons/tb";
-import { FaMicrophoneAlt } from "react-icons/fa";
 import Image from "next/image";
 import { RiSpeakAiLine } from "react-icons/ri";
 import { TbClockHour9 } from "react-icons/tb";

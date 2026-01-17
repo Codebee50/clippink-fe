@@ -2,19 +2,21 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 
-const useFetchRequest = ({
-  url = "https://google.com",
-  onSuccess = (response: AxiosResponse) => {},
-  onError = (error: AxiosError) => {},
-  responseType = "json",
-  authorize = true,
-}: {
+type FetchRequestProps = {
   url: string;
   onSuccess?: (response: AxiosResponse) => void;
   onError?: (error: AxiosError) => void;
   responseType?: AxiosRequestConfig["responseType"];
   authorize?: boolean;
-}) => {
+};
+
+const useFetchRequest = ({
+  url,
+  onSuccess,
+  onError,
+  responseType = "json",
+  authorize = true,
+}: FetchRequestProps) => {
   const mutation = useMutation({
     mutationFn: async () => {
       const accessToken = Cookies.get("userToken");

@@ -16,6 +16,9 @@ import { VideoResponse } from "@/lib/types/video";
 import { AxiosError, AxiosResponse } from "axios";
 import SceneCard from "@/components/video/SceneCard";
 
+import { Player } from "@remotion/player";
+import RemotionVideo from "@/components/video/RemotionVideo";
+
 const sideNavItems = [
   {
     Label: "Frames",
@@ -54,6 +57,10 @@ const Page = () => {
     },
   });
 
+  if (videoData){
+    console.log("duration in frames", videoData.scenes.reduce((acc, scene) => acc + scene.duration_seconds * 30, 0));
+  }
+
   useEffect(() => {
     fetchVideo();
   }, []);
@@ -81,9 +88,8 @@ const Page = () => {
 
       {/* Bottom container */}
       <div className="w-full h-[calc(100vh-70px)] flex flex-row">
-
         {/* Side Nav */}
-        <div className="w-[90px] h-full pt-5 flex flex-col items-center gap-5 border-r border-r-greys1/20">
+        <div className="w-[90px] h-full pt-5 flex flex-col items-center gap-5 border-r border-r-greys1/20 shrink-0">
           {sideNavItems.map((item) => (
             <div
               key={item.Label}
@@ -95,11 +101,27 @@ const Page = () => {
           ))}
         </div>
 
-        <div className="w-[500px] h-full border-r border-r-greys1/20 bg-[#0C0C10] overflow-y-scroll p-4 flex flex-col gap-4 cus-scrollbar">
+        <div className="w-[500px] h-full border-r border-r-greys1/20 bg-[#0C0C10] overflow-y-scroll p-4 flex flex-col gap-4 cus-scrollbar shrink-0">
           {videoData &&
             videoData.scenes.map((scene) => (
-             <SceneCard key={scene.id} scene={scene} />
+              <SceneCard key={scene.id} scene={scene} />
             ))}
+        </div>
+
+        <div className="flex-1 h-full flex items-center justify-center">
+          {videoData && (
+            <Player
+              component={RemotionVideo}
+              durationInFrames={videoData.scenes.reduce((acc, scene) => acc + scene.duration_seconds * 30, 0)}
+              compositionWidth={300}
+              compositionHeight={450}
+              fps={30}
+              inputProps={{
+                video: videoData,
+              }}
+              controls={true}
+            />
+          )}
         </div>
       </div>
     </div>
