@@ -3,27 +3,23 @@ import Link from "next/link";
 import React from "react";
 
 const Logo = ({
-  color = "#0A8337",
+  color = "#1DB954",
   dotColor = "#fff",
   width = 142,
   height = 141,
   showText = true,
+  fontSize = 20,
 }: {
-  color: string;
+  color?: string;
   dotColor?: string | undefined;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   showText?: boolean;
+  fontSize?: number;
 }) => {
   return (
     <Link href="/" className="flex flex-row items-center gap-2">
-      <svg
-        width={width}
-        height={height}
-        viewBox="0 0 142 141"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg width={width} height={height} viewBox="0 0 142 141" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M63.9845 112.556C60.3035 111.632 56.7122 110.381 53.2533 108.819C28.7495 98.0013 11.3839 80.1128 0.484754 55.7193C-0.359543 53.8292 -0.215629 52.9562 1.83755 52.1838C7.06643 50.2138 12.2457 48.1111 17.3755 45.8756C19.3615 45.0121 20.2874 45.3383 21.1556 47.3771C26.4007 59.8433 33.5648 71.4117 42.3878 81.6623C50.8211 91.4532 60.5785 99.5556 72.13 105.403C74.8308 106.77 74.8452 106.876 72.3363 108.449C70.3791 109.682 68.3595 110.848 66.3639 111.995C65.6567 112.445 64.8182 112.642 63.9845 112.556Z"
           fill={color}
@@ -46,7 +42,11 @@ const Logo = ({
         />
       </svg>
 
-      {showText && <p className="text-xl font-bold">{appConfig.APP_NAME}</p>}
+      {showText && (
+        <p className="text-xl font-bold font-zalando" style={{ fontSize: fontSize }}>
+          {appConfig.APP_SHORT_NAME}
+        </p>
+      )}
     </Link>
   );
 };

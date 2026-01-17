@@ -1,6 +1,6 @@
 import { Caption, Scene, VideoResponse } from "@/lib/types/video";
 import React, { useState } from "react";
-import { AbsoluteFill, Audio, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, Easing, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
 
 const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
   const { fps } = useVideoConfig();
@@ -57,7 +57,11 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
         const duration = getSceneDurationInFrames(scene);
 
         const scale = (index: number) =>
-          interpolate(frame, [startTime, startTime + duration / 2, startTime + duration], index === 0 ? [1, 1.4, 1] : [1.4, 1, 1.4], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          interpolate(frame, [startTime, startTime + duration / 2, startTime + duration], index === 0 ? [1, 1.4, 1] : [1.4, 1, 1.4], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            easing: Easing.ease,
+          });
         return (
           <Sequence key={scene.id} from={startTime} durationInFrames={duration}>
             <AbsoluteFill className="justify-center items-center">

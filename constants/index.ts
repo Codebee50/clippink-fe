@@ -1,5 +1,6 @@
 export const appConfig = {
   APP_NAME: "Clipink",
+  APP_SHORT_NAME: "Clip",
   APP_DESCRIPTION:
     "Create viral faceless videos with AI. Post daily without burnout and grow your audience while you sleep.",
 };

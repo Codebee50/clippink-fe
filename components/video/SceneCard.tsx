@@ -7,10 +7,7 @@ import { TbClockHour9 } from "react-icons/tb";
 
 const SceneCard = ({ scene }: { scene: Scene }) => {
   return (
-    <div
-      key={scene.id}
-      className="w-full  bg-[#111117] rounded-md p-4 flex flex-col gap-4 border border-greys1/20"
-    >
+    <div key={scene.id} className="w-full  bg-greys3 rounded-md p-4 flex flex-col gap-4 border border-greys1/20">
       <div className="w-full flex flex-row items-center justify-between">
         <div className="flex flex-row items-center gap-2 border border-greys1/20 rounded-md px-2 py-1">
           <p className="font-bold">#{scene.order_number}</p>
@@ -37,13 +34,7 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
           </div>
         </div>
 
-        <Image
-          src={scene.image_url || ""}
-          alt="scene image"
-          width={100}
-          height={100}
-          className="w-[100px] h-[110px] object-cover object-center shrink-0 rounded-md"
-        />
+        <Image src={scene.image_url || ""} alt="scene image" width={100} height={100} className="w-[100px] h-[110px] object-cover object-center shrink-0 rounded-md" />
       </div>
 
       <div className="flex flex-row items-center justify-between">

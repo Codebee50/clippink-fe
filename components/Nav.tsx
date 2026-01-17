@@ -37,23 +37,16 @@ const Nav = () => {
         className="w-[70px] h-[70px]"
       /> */}
 
-      <Logo color="#0A8337" dotColor="#fff" width={50} height={50} />
+      <Logo width={50} height={50} />
       <div className="flex items-center gap-7 max-sm:hidden">
-        {navItems.map((item) => (
-          <Link
-            href={item.href}
-            key={item.label}
-            className="text-white font-intertight font-medium hover:text-senary transition-all duration-300"
-          >
+        {navItems.map(item => (
+          <Link href={item.href} key={item.label} className="text-white font-intertight font-medium hover:text-senary transition-all duration-300">
             {item.label}
           </Link>
         ))}
       </div>
       <div className="flex items-center gap-4 max-sm:hidden">
-        <Link
-          href="/login"
-          className="bg-senary text-white px-6 py-2 rounded-md"
-        >
+        <Link href="/dashboard" className="bg-senary text-white px-6 py-2 rounded-md">
           Login
         </Link>
       </div>

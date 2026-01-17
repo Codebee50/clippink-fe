@@ -1,8 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-
+/* EBGaramond font */
 @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
 
-@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+/* rubik font */
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
+
+/* zalando sans expanded font */
+/* zalando sans expanded font with multiple weights */
+@import url("https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@200;300;400;500;600;700;800;900&display=swap");
 
 @import "tailwindcss";
 
@@ -16,20 +20,21 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 
   --color-denary: #08090a;
-  /* --color-senary: #a947ff; */
-  --color-senary: #0a8337;
-  /* --color-senary: #7B00E6; */
+  --color-senary: #1db954;
   --color-quinary: #e50000;
 
+  /* s means shade, use this to create different shades of one color e.g greys1 is shade 1 of grey, they have no direct relation with each other, its just a way to group colors and a naming convention */
   --color-greys1: #5d5d5d;
   --color-greys2: #b1b1b1;
+  --color-greys3: #111117;
+  --color-greys4: #6b6b6b;
+
   --font-eb-garamond: "EB Garamond", serif;
   --font-inter: "Inter", sans-serif;
   --font-rubik: "Rubik", sans-serif;
+  --font-zalando: "Zalando Sans Expanded", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {

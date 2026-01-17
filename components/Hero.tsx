@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import Marquee from "./Marquee";
 import Nav from "./Nav";
 import { useRouter } from "next/navigation";
@@ -104,9 +103,7 @@ const shuffleArray = (array: string[]) => {
 };
 
 const Hero = () => {
-  const [images, setImages] = useState<string[]>(
-    shuffleArray(imageUrls as string[])
-  );
+  const [images, setImages] = useState<string[]>(shuffleArray(imageUrls as string[]));
   const router = useRouter();
   return (
     <div className="flex flex-col min-h-screen  bg-denary w-full relative">
@@ -126,15 +123,9 @@ const Hero = () => {
             <h1 className="text-white text-4xl md:text-6xl font-medium capitalize font-eb-garamond text-center">
               Create Viral Social Media <br /> Content On Auto Pilot
             </h1>
-            <p className="font-intertight text-gray-200 max-sm:text-sm text-center">
-              Post daily without burnout and grow your audience while you sleep.{" "}
-            </p>
+            <p className="font-intertight text-gray-200 max-sm:text-sm text-center">Post daily without burnout and grow your audience while you sleep. </p>
             <button
-              onClick={() =>
-                router.push(
-                  "/workspace/video/290d4bc0-90a6-4662-9284-ee39426bd9d7"
-                )
-              }
+              onClick={() => router.push("/dashboard/video/290d4bc0-90a6-4662-9284-ee39426bd9d7")}
               className="bg-senary text-white px-6 py-2 rounded-md cursor-pointer capitalize font-medium text-center"
             >
               Start creating videos

@@ -102,8 +102,24 @@ const Page = () => {
         <div className="w-[50%] max-w-[500px] h-full border-r border-r-greys1/20 bg-[#0C0C10] overflow-y-scroll p-4 flex flex-col gap-4 cus-scrollbar shrink-0">
           {videoData && videoData.scenes.map(scene => <SceneCard key={scene.id} scene={scene} />)}
         </div>
-
-        <div className="flex-1 h-full flex items-center justify-center">
+        {/* 
+        <div
+          className="flex-1 h-full flex items-center justify-center bg-denary"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(48,48,56,0.5) 1.5px, transparent 1.5px)",
+            backgroundSize: "18px 18px",
+            backgroundPosition: "0 0",
+          }}
+        > */}
+        <div
+          className="flex-1 h-full flex items-center justify-center bg-denary"
+          style={{
+            backgroundImage: "linear-gradient(to right, rgba(48,48,56,0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(48,48,56,0.12) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+            backgroundPosition: "0 0",
+          }}
+        >
           {videoData && (
             <Player
               component={RemotionVideo}
