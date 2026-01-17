@@ -1,46 +1,54 @@
 import { Scene, VideoResponse } from "@/lib/types/video";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AbsoluteFill, Audio, Img, Sequence, useVideoConfig } from "remotion";
 
-const RemotionVideo = ({ video }: { video: VideoResponse }) => {
+const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
   const { fps } = useVideoConfig();
-  const [sortedScenes, setSortedScenes] = useState<Scene[]>(
-    video.scenes.sort((a, b) => a.order_number - b.order_number)
-  ); // sorted scenes by order_number
+
+  if (!video) {
+    return (
+      <AbsoluteFill className="bg-greys1/10 rounded-md overflow-hidden flex items-center justify-center">
+        <p className="text-gray-400">No video data</p>
+      </AbsoluteFill>
+    );
+  }
+
+  const sortedScenes = video.scenes.sort((a, b) => a.order_number - b.order_number);
+
+  const AUDIO_BUFFER_SECONDS = 0.1; // 100ms buffer to prevent cutoff
+
+  const getActualAudioDuration = (scene: Scene) => {
+    if (scene.captions && scene.captions.length > 0) {
+      const lastCaption = scene.captions[scene.captions.length - 1];
+      // Add buffer to prevent audio cutoff
+      return lastCaption.end + AUDIO_BUFFER_SECONDS;
+    }
+    return scene.duration_seconds;
+  };
 
   const getSceneDurationInFrames = (scene: Scene) => {
-    return scene.duration_seconds * fps;
+    //this asks the question: how long is this scene meant to stay in the video
+    const actualDuration = getActualAudioDuration(scene);
+    return Math.ceil(actualDuration * fps);
   };
 
   const getSceneStartFrame = (scene: Scene, index: number) => {
+    //this asks the question: when does this scene start in the video
     let startFrame = 0;
     for (let i = 0; i < index; i++) {
       startFrame += getSceneDurationInFrames(sortedScenes[i]);
     }
     return startFrame;
   };
+
   return (
     <AbsoluteFill className="bg-greys1/10 rounded-md overflow-hidden">
       {sortedScenes.map((scene, index) => (
-        <Fragment key={scene.id}>
-          <Sequence
-            key={scene.id}
-            //what frame should this scene start at?
-            from={getSceneStartFrame(scene, index)}
-            // how long should this scene last?
-            durationInFrames={getSceneDurationInFrames(scene)}
-          >
-            <Img
-              src={scene.image_url || ""}
-              alt="scene image"
-              width={100}
-              height={100}
-              className="w-full h-full object-cover object-center"
-            />
+        <Sequence key={scene.id} from={getSceneStartFrame(scene, index)} durationInFrames={getSceneDurationInFrames(scene)}>
+          <Img src={scene.image_url || ""} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" />
 
-            {scene.audio_url && <Audio src={scene.audio_url} />}
-          </Sequence>
-        </Fragment>
+          {scene.audio_url && <Audio src={scene.audio_url} />}
+        </Sequence>
       ))}
     </AbsoluteFill>
   );
