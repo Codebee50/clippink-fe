@@ -40,7 +40,7 @@ const Nav = () => {
       <Logo width={50} height={50} />
       <div className="flex items-center gap-7 max-sm:hidden">
         {navItems.map(item => (
-          <Link href={item.href} key={item.label} className="text-white font-intertight font-medium hover:text-senary transition-all duration-300">
+          <Link href={item.href} key={item.label} className="text-white font-intertight font-normal hover:text-senary transition-all duration-300">
             {item.label}
           </Link>
         ))}

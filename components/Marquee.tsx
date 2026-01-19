@@ -17,7 +17,7 @@ const Marquee = ({ imageList = [], direction= "left" }: { imageList: string[], d
                   width={500}
                   height={220}
                   alt={"Image"}
-                  className="sm:h-[150px] h-[100px] object-cover object-center"
+                  className="sm:h-[190px] h-[100px] object-cover object-center"
                 />
               </div>
             </div>

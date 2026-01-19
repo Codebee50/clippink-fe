@@ -111,7 +111,7 @@ const Hero = () => {
         <div className="flex flex-col pt-[20px]">
           <Marquee imageList={images.slice(0, 30)} direction="left" />
           <Marquee imageList={images.slice(30, 60)} direction="right" />
-          <Marquee imageList={images.slice(60, 90)} direction="left" />
+          {/* <Marquee imageList={images.slice(60, 90)} direction="left" /> */}
         </div>
 
         <div className="absolute inset-0 bg-linear-to-b from-denary/95 from-20% to-denary  via-transparent">
