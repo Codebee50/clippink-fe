@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { appConfig } from "@/constants";
-import { ReactQueryProvider } from "./ReactQueryProvider";
-
+import DashboardNav from "@/components/dashboard/DashboardNav";
 
 export const metadata: Metadata = {
   title: `${appConfig.APP_NAME} - ${appConfig.APP_DESCRIPTION}`,
@@ -10,18 +8,16 @@ export const metadata: Metadata = {
   description: appConfig.APP_DESCRIPTION,
 };
 
-export default function RootLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`antialiased`}
-      >
-        <ReactQueryProvider>{children}</ReactQueryProvider>
-      </body>
-    </html>
+    <div className="bg-denary flex flex-row h-screen w-full">
+      <DashboardNav />
+
+      <div className="flex-1 min-h-0 h-full px-6 flex flex-col gap-4 w-full shrink-0 overflow-hidden relative max-w-[1600px] mx-auto">{children}</div>
+    </div>
   );
 }

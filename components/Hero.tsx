@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import Marquee from "./Marquee";
 import Nav from "./Nav";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { FaStar } from "react-icons/fa";
+import Image from "next/image";
 
 const imageUrls = [
   "https://clippink-bkt.s3.amazonaws.com/images/landing-page-images/feaf47bb-baf6-4aef-9904-3897edf6e8a5.jpeg",
@@ -111,7 +111,7 @@ const Hero = () => {
   const router = useRouter();
   return (
     <div className="flex flex-col min-h-screen  bg-denary w-full relative">
-      <div className="relative hidden">
+      <div className="relative">
         <div className="flex flex-col pt-[20px]">
           <Marquee imageList={images.slice(0, 30)} direction="left" />
           <Marquee imageList={images.slice(30, 60)} direction="right" />
@@ -127,59 +127,36 @@ const Hero = () => {
             <h1 className="text-white text-3xl md:text-6xl font-medium capitalize font-eb-garamond text-center">
               Create Viral Social Media <br /> Content On Auto Pilot
             </h1>
-            <p className="font-intertight text-gray-200 max-sm:text-sm text-center">Post daily without burnout and grow your audience while you sleep. </p>
+            <p className="font-intertight text-greys2 max-sm:text-sm max-sm:max-w-[270px] text-center">Post daily without burnout and grow your audience while you sleep. </p>
             <button
               onClick={() => router.push("/dashboard/video/290d4bc0-90a6-4662-9284-ee39426bd9d7")}
               className="bg-senary text-white px-6 py-2 rounded-md cursor-pointer capitalize font-medium text-center"
             >
-              Start creating videos
+              Start creating videos 
             </button>
-          </div>
-        </div>
-      </div>
 
-      <div className="flex flex-col gap-3">
-        <Nav />
-
-        <div className="flex flex-col items-center justify-center gap-3 padding-x  mt-[20px]">
-          <h1 className="text-white text-3xl md:text-6xl font-medium capitalize font-eb-garamond text-center">
-            Create Viral Social Media <br /> Content On Auto Pilot
-          </h1>
-          <p className="text-gray-200 max-sm:text-sm text-center">Post daily without burnout and grow your audience while you sleep. </p>
-
-          <button
-            onClick={() => router.push("/dashboard/video/290d4bc0-90a6-4662-9284-ee39426bd9d7")}
-            className="bg-senary text-white px-6 py-2 rounded-md cursor-pointer capitalize font-medium text-center mt-4"
-          >
-            Start creating videos
-          </button>
-
-          <div className="mt-5 flex flex-col sm:flex-row items-center gap-4">
-            <div className="flex flex-row items-center justify-center">
-              {randomAvatars.map(avatar => (
-                <Image src={avatar} alt="avatar" key={avatar} width={50} height={50} className="w-10 h-10 rounded-full object-cover object-center shrink-0 -m-1" />
-              ))}
-            </div>
-
-            <div className="w-[0.5px] h-[40px] bg-gray-600 opacity-50 max-sm:hidden"></div>
-
-            <div className="flex flex-col justify-start items-start">
-              <div className="flex flex-row gap-1 items-center">
-                {[1, 2, 3, 4, 5].map(item => (
-                  <FaStar className="text-yellow-500" key={`${item}-starry`} />
+            <div className="mt-2 flex flex-row items-center gap-4">
+              <div className="flex flex-row items-center justify-center">
+                {randomAvatars.map(avatar => (
+                  <Image src={avatar} alt="avatar" key={avatar} width={50} height={50} className="w-10 h-10 rounded-full object-cover object-center shrink-0 -m-1" />
                 ))}
-                <p className="font-medium">5.0</p>
               </div>
-              <p className="font-medium text-gray-200 text-sm">
-                <span className="font-medium">{randomAvatars.length}</span> early adopter{randomAvatars.length > 1 && "s"}
-              </p>
+
+              <div className="w-[0.5px] h-[40px] bg-gray-600 opacity-50 "></div>
+
+              <div className="flex flex-col justify-start items-start">
+                <div className="flex flex-row gap-1 items-center">
+                  {[1, 2, 3, 4, 5].map(item => (
+                    <FaStar className="text-yellow-500" key={`${item}-starry`} />
+                  ))}
+                  <p className="">5.0</p>
+                </div>
+                <p className=" text-gray-200 text-sm">
+                  <span className="font-medium">{randomAvatars.length}</span> early adopter{randomAvatars.length > 1 && "s"}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-col pt-[40px]">
-          <Marquee imageList={images.slice(0, 30)} direction="left" />
-          {/* <Marquee imageList={images.slice(30, 60)} direction="right" /> */}
-          {/* <Marquee imageList={images.slice(60, 90)} direction="left" /> */}
         </div>
       </div>
 

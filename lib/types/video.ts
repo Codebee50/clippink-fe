@@ -42,3 +42,20 @@ export interface VideoResponse {
   title: string | null;
   scenes: Scene[];
 }
+
+export type VideoStyleResponse = {
+  id: string;
+  name: string;
+  preview_url: string;
+};
+export type BackgroundMusicResponse = {
+  id: string;
+  name: string;
+  description: string;
+  updated_at: string;
+  file_name: string | null;
+  url: string;
+  created_at: string;
+  s3_key: string | null;
+  is_public: boolean | null;
+};
