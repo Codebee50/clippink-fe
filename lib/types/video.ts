@@ -38,5 +38,7 @@ export interface VideoResponse {
   id: string;
   updated_at: string;
   final_audio_url: string;
+  thumbnail_url: string | null;
+  title: string | null;
   scenes: Scene[];
 }

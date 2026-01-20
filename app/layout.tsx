@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${appConfig.APP_NAME} - AI Powered Video Creation`,
+  title: `${appConfig.APP_NAME} - ${appConfig.APP_DESCRIPTION}`,
+  // title: `${appConfig.APP_NAME} - AI Powered Video Creation`,
   description: appConfig.APP_DESCRIPTION,
 };
 

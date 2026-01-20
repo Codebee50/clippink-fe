@@ -3,6 +3,7 @@ export const appConfig = {
   APP_SHORT_NAME: "Clip",
   APP_DESCRIPTION:
     "Create viral faceless videos with AI. Post daily without burnout and grow your audience while you sleep.",
+  PLACEHOLDER_IMAGE_URL: "https://placehold.co/600x400/2a2e33/FFFFFF.png"
 };
 
 export const BASE_MS_URL = process.env.NEXT_PUBLIC_BASE_MS_URL || "http://localhost:9000"

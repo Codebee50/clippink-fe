@@ -80,13 +80,13 @@ body {
   .slide-track {
     display: flex;
     width: calc(360px * 12);
-    animation: scroll 60s linear infinite;
+    animation: scroll 90s linear infinite;
   }
 
   .slide-track-reverse {
     display: flex;
     width: calc(360px * 12);
-    animation: scroll-reverse 60s linear infinite;
+    animation: scroll-reverse 90s linear infinite;
   }
 
   .no-scrollbar {
