@@ -65,5 +65,28 @@ export type NarratorsVoiceResponse = {
   voice_id: string;
   name: string
   description: string;
-  preview_url: string
+  preview_url: string;
+  gradient_avatar: string | null | undefined
+}
+
+
+export type ScriptToVideoReqConfig = {
+  script: string | null;
+  video_style_id: string | null;
+  background_audio_id: string | null;
+  voice_id: string | null;
+}
+
+export type TextToVideoReqConfig = {
+  script: string | null;
+  video_style_id: string | null;
+  background_audio_id: string | null;
+  voice_id: string | null;
+}
+
+export type VideoCreateReqConfig = ScriptToVideoReqConfig | TextToVideoReqConfig;
+
+export type VideoCreateReqBody = {
+  type: "script-to-video" | "text-to-video";
+  config: VideoCreateReqConfig;
 }
