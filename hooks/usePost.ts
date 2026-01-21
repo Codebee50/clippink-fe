@@ -1,33 +1,36 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 
-type FetchRequestProps = {
+type PostRequestProps = {
   url: string;
   onSuccess?: (response: AxiosResponse) => void;
   onError?: (error: AxiosError) => void;
-  responseType?: AxiosRequestConfig["responseType"];
   authorize?: boolean;
+  contentType?: string;
 };
 
-const useFetchRequest = ({
+const usePostRequest = ({
   url,
   onSuccess = () => {},
   onError = () => {},
-  responseType = "json",
   authorize = true,
-}: FetchRequestProps) => {
+  contentType = "application/json",
+}: PostRequestProps) => {
   const mutation = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (data: unknown) => {
       const accessToken = Cookies.get("userToken");
+
       const headers: Record<string, string> = {
-        "Content-Type": "application/json",
+        "Content-Type": contentType,
       };
+
       if (accessToken && authorize) {
         headers["Authorization"] = `Bearer ${accessToken}`;
       }
 
-      return await axios.get(url, { headers, responseType });
+      return await axios.post(url, data, { headers });
     },
     onSuccess,
     onError,
@@ -42,4 +45,4 @@ const useFetchRequest = ({
   };
 };
 
-export default useFetchRequest;
+export default usePostRequest;

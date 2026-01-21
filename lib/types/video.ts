@@ -72,9 +72,9 @@ export type NarratorsVoiceResponse = {
 
 export type ScriptToVideoReqConfig = {
   script: string | null;
-  video_style_id: string | null;
   background_audio_id: string | null;
   voice_id: string | null;
+  image_style_preset_id: string | null;
 }
 
 export type TextToVideoReqConfig = {

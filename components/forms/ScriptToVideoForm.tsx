@@ -3,36 +3,59 @@
 import React, { useEffect, useState } from "react";
 import { PiMagicWand } from "react-icons/pi";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
-import useFetchRequest from "@/hooks/useFetch";
-import { makeMsUrl } from "@/constants";
-import { AxiosResponse } from "axios";
-import { BackgroundMusicResponse, NarratorsVoiceResponse, ScriptToVideoReqConfig, VideoStyleResponse } from "@/lib/types/video";
-import Image from "next/image";
 
-import { PiMusicNotesBold } from "react-icons/pi";
-import { IoPlayOutline } from "react-icons/io5";
-import { RiVoiceAiFill } from "react-icons/ri";
+import { BackgroundMusicResponse, NarratorsVoiceResponse, ScriptToVideoReqConfig, VideoStyleResponse } from "@/lib/types/video";
+
 import SelectBackgroundMusicModal from "../SelectBackgroundMusicModal";
 
 import { GiMagicLamp } from "react-icons/gi";
 import SelectVideoStyle from "../SelectVideoStyle";
 import SelectNarratorsVoice from "../SelectNarratorsVoice";
-
+import LoadingButton from "../buttons/LoadingButton";
+import usePostRequest from "@/hooks/usePost";
+import { makeMsUrl } from "@/constants";
+import { AxiosResponse } from "axios";
+import { useRouter } from "next/navigation";
 
 
 
 const ScriptToVideoForm = () => {
-  const [videoStyles, setVideoStyles] = useState<VideoStyleResponse[]>([]);
-  const [narratorsVoice, setNarratorsVoice] = useState<NarratorsVoiceResponse[]>([]);
-  const [backgroundMusic, setBackgroundMusic] = useState<BackgroundMusicResponse | null>(null);
+  const router = useRouter();
+
 
   const [videoConfig, setVideoConfig] = useState<ScriptToVideoReqConfig>({
     script: null,
-    video_style_id: null,
+    image_style_preset_id: null,
     background_audio_id: null,
     voice_id: null,
   })
+
+  type Video = {
+    id: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
+    script: string;
+
+  }
+
+  type GenerateVideoResponse = {
+    message: string;
+    video: Video
+  }
+
+  const { mutate: generateVideo, isLoading: isGeneratingVideo } = usePostRequest({
+    url: makeMsUrl("/video/script-to-video/"),
+    onSuccess: (response: AxiosResponse) => {
+      const data = response.data as GenerateVideoResponse;
+
+      router.push(`/dashboard/video/${data.video.id}`);
+    },
+    onError: (error) => {
+      // TODO: show error to user
+      console.log(error);
+    },
+  });
 
   const updateConfig = (key: keyof ScriptToVideoReqConfig, value: string | null) => {
     setVideoConfig(prev => ({
@@ -43,20 +66,25 @@ const ScriptToVideoForm = () => {
 
 
   const handleSelectBackgroundMusic = (audio: BackgroundMusicResponse) => {
-    setBackgroundMusic(audio);
     updateConfig("background_audio_id", audio.id)
   }
 
   const handleSelectVideoStyle = (style: VideoStyleResponse) => {
-    updateConfig("video_style_id", style.id)
+    updateConfig("image_style_preset_id", style.id)
   }
 
   const handleSelectNarratorsVoice = (voice: NarratorsVoiceResponse) => {
     updateConfig("voice_id", voice.voice_id)
   }
 
-  useEffect(() => {
-  }, []);
+  const handleGenerateVideo = () => {
+    if (!videoConfig.script){
+      // TODO: show error to user
+      console.log("Script is required");
+      return;
+    }
+    generateVideo(videoConfig);
+  }
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="flex flex-col gap-6">
@@ -89,23 +117,17 @@ Example: On Christmas Eve 1945, the Sodder family went to bed in their home in F
 
         {/* Video Style */}
         <SelectVideoStyle onSelect={handleSelectVideoStyle} />
-        
+
 
         {/* Background Music */}
         <SelectBackgroundMusicModal onSelect={handleSelectBackgroundMusic} />
 
+        {/* Narrators Voice */}
         <SelectNarratorsVoice onSelect={handleSelectNarratorsVoice} />
 
 
 
-        <button className="w-full flex flex-row items-center gap-2 justify-center bg-senary px-6 py-2 rounded-sm text-sm text-nowrap cursor-pointer">
-          <GiMagicLamp size={16} />
-          <p>Generate Video</p>
-        </button>
-
-
-
-
+        <LoadingButton text="Generate Video" loadingText="Generating Video.." isLoading={isGeneratingVideo} Icon={<GiMagicLamp size={20} />} onClick={handleGenerateVideo} />
 
 
       </div>

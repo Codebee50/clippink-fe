@@ -4,7 +4,7 @@ import soundAnimation from "@/public/lottie/sound.json";
 
 const SoundLottie = () => {
   return (
-    <div className="w-[40px] h-[40px] opacity-20">
+    <div className="w-[40px] h-[40px] opacity-20 shrink-0">
         <Lottie animationData={soundAnimation} loop={true} />
     </div>
   )
