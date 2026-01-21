@@ -1,43 +1,67 @@
+"use client";
+
 import BreadCrumbs from "@/components/BreadCrumbs";
 import { BreadCrumbItem } from "@/lib/types/global";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { ImFileText2 } from "react-icons/im";
 import { PiTextAaBold } from "react-icons/pi";
 import ScriptToVideoForm from "@/components/forms/ScriptToVideoForm";
+import { VideoResponse } from "@/lib/types/video";
+import useFetchRequest from "@/hooks/useFetch";
+import { makeMsUrl } from "@/constants";
+import { AxiosResponse } from "axios";
+import VideoPlayer from "@/components/video/VideoPlayer";
 
+const breadCrumbs: BreadCrumbItem[] = [
+  {
+    label: "Dashboard",
+    href: "/dashboard",
+  },
+  {
+    label: "Create Video",
+    href: "/dashboard/video/create",
+  },
+];
+
+const videoTypeOptions = [
+  {
+    label: "Script to video",
+    value: "script-to-video",
+    Icon: ImFileText2,
+  },
+  {
+    label: "Text to video",
+    value: "text-to-video",
+    Icon: PiTextAaBold,
+  },
+];
 
 const Page = () => {
-  const breadCrumbs: BreadCrumbItem[] = [
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      label: "Create Video",
-      href: "/dashboard/video/create",
-    },
-  ];
 
-  const videoTypeOptions = [
-    {
-      label: "Script to video",
-      value: "script-to-video",
-      Icon: ImFileText2,
+
+  const [sampleVideo, setSampleVideo] = useState<VideoResponse | null>(null)
+
+  const {mutate: getSampleVideo, isLoading: isGettingSampleVideo} = useFetchRequest({
+    url: makeMsUrl(`/video/sample/`),
+    onSuccess: (response: AxiosResponse) => {
+      const data = response.data as VideoResponse;
+      setSampleVideo(data);
     },
-    {
-      label: "Text to video",
-      value: "text-to-video",
-      Icon: PiTextAaBold,
-    },
-  ];
+  });
+
+  useEffect(() => {
+    getSampleVideo();
+  }, []);
   return (
     <>
       <div className="pt-4 pb-2 w-full fixed top-0 backdrop-blur-3xl">
         <BreadCrumbs breadCrumbs={breadCrumbs} />
       </div>
-      <div className="flex flex-col gap-5 pt-20 max-w-[750px] overflow-y-scroll no-scrollbar">
+      <div className="w-full flex flex-row gap-4 justify-between pt-14">
+
+      <div className="flex flex-col gap-5 overflow-y-scroll no-scrollbar h-[calc(100vh-90px)] flex-2/6">
         <div>
           <h1>Create A New Video</h1>
           <p className="text-sm text-greys2/50">Select a tool and pick your options to create your video</p>
@@ -64,6 +88,14 @@ const Page = () => {
 
         <ScriptToVideoForm /> 
       </div>
+
+      <div className="flex  justify-center flex-1">
+        <VideoPlayer video={sampleVideo ?? null} />
+      </div>
+
+      </div>
+
+      
     </>
   );
 };

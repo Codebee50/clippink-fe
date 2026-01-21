@@ -59,3 +59,11 @@ export type BackgroundMusicResponse = {
   s3_key: string | null;
   is_public: boolean | null;
 };
+
+
+export type NarratorsVoiceResponse = {
+  voice_id: string;
+  name: string
+  description: string;
+  preview_url: string
+}

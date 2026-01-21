@@ -7,13 +7,19 @@ import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 import useFetchRequest from "@/hooks/useFetch";
 import { makeMsUrl } from "@/constants";
 import { AxiosResponse } from "axios";
-import { BackgroundMusicResponse, VideoStyleResponse } from "@/lib/types/video";
+import { BackgroundMusicResponse, NarratorsVoiceResponse, VideoStyleResponse } from "@/lib/types/video";
 import Image from "next/image";
+
+import { PiMusicNotesBold } from "react-icons/pi";
+import { IoPlayOutline } from "react-icons/io5";
+import { RiVoiceAiFill } from "react-icons/ri";
+import SelectBackgroundMusicModal from "../SelectBackgroundMusicModal";
+
+
 
 const ScriptToVideoForm = () => {
   const [videoStyles, setVideoStyles] = useState<VideoStyleResponse[]>([]);
-  const [backgroundMusic, setBackgroundMusic] = useState<BackgroundMusicResponse[]>([]);
-
+  const [narratorsVoice, setNarratorsVoice] = useState<NarratorsVoiceResponse[]>([]);
 
   const { mutate: getVideoStyles, isLoading: isGettingVideoStyles } = useFetchRequest({
     url: makeMsUrl(`/video/image-style-presets/`),
@@ -22,17 +28,19 @@ const ScriptToVideoForm = () => {
       setVideoStyles(data);
     },
   });
-  const { mutate: getBackgroundMusic, isLoading: isGettingBackgroundMusic } = useFetchRequest({
-    url: makeMsUrl(`/assets/background-audio/list/`),
+
+
+  const { mutate: getNarratorsVoice, isLoading: isGettingNarratorsVoice } = useFetchRequest({
+    url: makeMsUrl(`/assets/voices/list/`),
     onSuccess: (response: AxiosResponse) => {
-      const data = response.data as BackgroundMusicResponse[];
-      setBackgroundMusic(data);
+      const data = response.data.voices as NarratorsVoiceResponse[];
+      setNarratorsVoice(data);
     },
   });
 
   useEffect(() => {
     getVideoStyles();
-    getBackgroundMusic();
+    getNarratorsVoice();
   }, []);
   return (
     <div className="w-full flex flex-col gap-4">
@@ -63,6 +71,7 @@ Example: On Christmas Eve 1945, the Sodder family went to bed in their home in F
           ></textarea>
         </div>
 
+        {/* Video Style */}
         <div className="w-full flex flex-col gap-2 border-b border-b-greys1/30 pb-4">
           <div className="flex flex-row items-center justify-between w-full">
             <div className="w-full flex flex-col gap-1">
@@ -100,17 +109,43 @@ Example: On Christmas Eve 1945, the Sodder family went to bed in their home in F
           </div>
         </div>
 
-        <div className="w-full flex flex-col gap-2 border-b border-b-greys1/30 pb-4">
-          <p className="text-white">Background Music</p>
+        {/* Background Music */}
+        <SelectBackgroundMusicModal />
 
-          <div className="w-full flex flex-col gap-4">
-            {backgroundMusic.map(music => (
-              <div key={music.id} className="w-full flex flex-row items-center gap-2">
-                <p className="text-sm text-white">{music.name}</p>
+
+        <div className="w-full flex flex-col gap-2 border-b border-b-greys1/30 pb-4">
+          <p className="text-white">Narrators Voice</p>
+
+          <div className="w-full flex flex-col gap-4 mt-2 h-[300px] overflow-y-scroll cus-scrollbar">
+            {narratorsVoice.map(voice => (
+              <div key={voice.voice_id} className="w-full flex flex-row items-center gap-2 justify-between bg-greys5 border border-greys1/20 rounded-md p-2">
+                <div className="flex flex-row items-center gap-2">
+                  <div className="w-[35px] h-[35px] rounded-full bg-greys5 border border-greys1/20 flex items-center justify-center shrink-0">
+                    <RiVoiceAiFill size={16} className="text-senary" />
+
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-sm text-white">{voice.name}</p>
+                    <p className="text-xs text-greys4">{voice.description}</p>
+                  </div>
+                </div>
+                {/* <div className="flex flex-row gap-2 w-[35px] h-[35px] shrink-0 rounded-full bg-greys1/10 border border-greys1/20 items-center justify-center cursor-pointer hover:bg-greys1/20 transition-all duration-300">
+                  <IoPlayOutline size={16} className="text-white" />
+                </div> */}
+
+                <button className="text-sm text-white bg-senary px-4 py-2 rounded-sm text-nowrap gap-2 items-center cursor-pointer">
+                  Use voice
+                </button>
               </div>
             ))}
           </div>
         </div>
+
+
+
+
+
+
       </div>
     </div>
   );
