@@ -88,7 +88,7 @@ const SelectBackgroundMusicModal = ({ onSelect }: { onSelect: (audio: Background
       <div className='w-full flex flex-col items-start  gap-4 bg-greys1/20 p-4 rounded-md border border-greys1/60 border-dashed'>
         <p className='text-white'>Select Background Music</p>
 
-        <div className='w-full flex flex-row items-center justify-between'>
+        <div className='w-full flex flex-row items-center justify-between gap-4 flex-wrap'>
           <div className='flex flex-row  gap-2'>
 
             <button className="w-[35px] h-[35px] rounded-md bg-denary border border-greys1/20 flex items-center justify-center">
@@ -135,7 +135,12 @@ const SelectBackgroundMusicModal = ({ onSelect }: { onSelect: (audio: Background
 
       </div>
 
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog open={isOpen} onOpenChange={(open) => {
+        setIsOpen(open);
+        if (!open) {
+          clearAudio();
+        }
+      }}>
         <DialogTrigger>
 
         </DialogTrigger>
@@ -152,7 +157,7 @@ const SelectBackgroundMusicModal = ({ onSelect }: { onSelect: (audio: Background
                     <div key={music.id} className="w-full flex flex-row items-center gap-2 justify-between ">
                       <div className="flex flex-row items-center gap-2">
 
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1 text-start">
                           <p className="text-sm text-white">{music.name}</p>
                           <p className="text-xs text-greys4">{music.description}</p>
                         </div>

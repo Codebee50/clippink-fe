@@ -16,31 +16,32 @@ export interface Scene {
   media_type: string;
   video_id: string;
   narration: string;
-  duration_seconds: number;
+  duration_seconds?: number | null;
   mood: string;
-  audio_file_key: string;
-  image_file_key: string;
-  video_file_key: string | null;
-  captions: Caption[];
+  audio_file_key?: string | null;
+  image_file_key?: string | null;
+  video_file_key?: string | null;
+  captions: Caption[] | null;
   id: string;
   visual_prompt: string;
-  audio_url: string;
+  audio_url?: string | null;
   image_url: string | null;
-  video_url: string | null;
-  audio_duration_seconds: number;
+  video_url?: string | null;
+  audio_duration_seconds?: number | null;
 }
 
 export interface VideoResponse {
   created_at: string;
   status: string;
-  final_audio_key: string;
+  final_audio_key?: string | null;
   script: string;
   id: string;
   updated_at: string;
-  final_audio_url: string;
+  final_audio_url?: string | null;
   thumbnail_url: string | null;
   title: string | null;
   scenes: Scene[];
+  last_changed_at?: string | null;
 }
 
 export type VideoStyleResponse = {
@@ -89,4 +90,34 @@ export type VideoCreateReqConfig = ScriptToVideoReqConfig | TextToVideoReqConfig
 export type VideoCreateReqBody = {
   type: "script-to-video" | "text-to-video";
   config: VideoCreateReqConfig;
+}
+
+
+export type SceneGeneratedPayload = {
+  progress: number, 
+  scenes: Scene[]
+}
+
+export type SceneAudioGeneratedPayload = {
+  audio: {
+    audio_file_key: string,
+    audio_url: string,
+    captions: Caption[],
+    duration_seconds: number
+  },
+  scene: Scene
+}
+
+export type SceneImageGeneratedPayload = {
+  image: {
+    image_file_key: string,
+    image_url: string
+  },
+  scene: Scene
+}
+
+export type VideoWsProgressMessageBody = {
+  type: "scene_audio_generated" | "scene_image_generated" | "scenes_generated" | "completed" | "failed";
+  progress?:number,
+  payload: SceneGeneratedPayload | SceneAudioGeneratedPayload | SceneImageGeneratedPayload
 }

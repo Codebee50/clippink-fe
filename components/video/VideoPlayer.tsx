@@ -3,15 +3,26 @@ import React from 'react'
 import RemotionVideo from './RemotionVideo';
 import { Player } from '@remotion/player';
 
-const VideoPlayer = ({video}: {video: VideoResponse | null}) => {
+const VideoPlayer = ({ video }: { video: VideoResponse | null }) => {
+
+  if (!video) return null;
+
+  const durationInFrames = video.scenes.filter(scene => scene.image_url !== null && scene.audio_url !== null).reduce((acc, scene) => {
+    // Use caption-based duration for accuracy
+    if (scene.captions && scene.captions.length > 0) {
+      const actualDuration = scene.captions[scene.captions.length - 1].end + 0.1;
+      return acc + Math.ceil(actualDuration * 30);
+    }
+    else {
+      return acc + (scene.duration_seconds ?? 1) * 30;
+    }
+  }, 0)
+
   return video && (
     <Player
+      key={`${video.id}-${video.last_changed_at}`}
       component={RemotionVideo}
-      durationInFrames={video.scenes.reduce((acc, scene) => {
-        // Use caption-based duration for accuracy
-        const actualDuration = scene.captions && scene.captions.length > 0 ? scene.captions[scene.captions.length - 1].end + 0.1 : scene.duration_seconds;
-        return acc + Math.ceil(actualDuration * 30);
-      }, 0)}
+      durationInFrames={durationInFrames === 0 ? 1 : durationInFrames}
       compositionWidth={300}
       compositionHeight={450}
       fps={30}

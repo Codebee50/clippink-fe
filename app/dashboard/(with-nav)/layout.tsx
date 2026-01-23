@@ -8,16 +8,18 @@ export const metadata: Metadata = {
   description: appConfig.APP_DESCRIPTION,
 };
 
+
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="bg-denary flex flex-row h-screen w-full">
+    <div className="bg-denary flex md:flex-row flex-col md:h-screen w-full">
       <DashboardNav />
 
-      <div className="flex-1 min-h-0 h-full px-6 flex flex-col gap-4 w-full shrink-0 overflow-hidden relative max-w-[1600px] mx-auto">{children}</div>
+
+      <div className="md:flex-1 md:min-h-0 md:h-full sm:px-6 px-3 flex flex-col gap-4 w-full shrink-0 md:overflow-hidden relative max-w-[1600px] mx-auto">{children}</div>
     </div>
   );
 }

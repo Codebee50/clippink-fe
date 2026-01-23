@@ -129,7 +129,7 @@ const Hero = () => {
             </h1>
             <p className="font-intertight text-greys2 max-sm:text-sm max-sm:max-w-[270px] text-center">Post daily without burnout and grow your audience while you sleep. </p>
             <button
-              onClick={() => router.push("/dashboard/video/290d4bc0-90a6-4662-9284-ee39426bd9d7")}
+              onClick={() => router.push("/dashboard")}
               className="bg-senary text-white px-6 py-2 rounded-md cursor-pointer capitalize font-medium text-center"
             >
               Start creating videos 

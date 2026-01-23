@@ -10,7 +10,7 @@ const VideoListCard = ({ video }: { video: VideoResponse }) => {
   const router = useRouter();
 
   return (
-    <div className="w-[200px] h-[250px] bg-greys3 rounded-md border border-greys1/30 shrink-0 cursor-pointer overflow-hidden relative" onClick={() => router.push(`/dashboard/video/${video.id}`)}>
+    <div className="w-[150px] sm:w-[200px] h-[200px] sm:h-[250px] bg-greys3 rounded-md border border-greys1/30 shrink-0 cursor-pointer overflow-hidden relative" onClick={() => router.push(`/dashboard/video/${video.id}`)}>
       {video.thumbnail_url ? (
         <Image src={video.thumbnail_url || appConfig.PLACEHOLDER_IMAGE_URL} alt={video.title || "Untitled"} width={200} height={200} className="w-full h-full object-cover object-center" />
       ) : (
@@ -29,7 +29,7 @@ const VideoListCard = ({ video }: { video: VideoResponse }) => {
           <p className="text-sm text-white line-clamp-2">{video.title || "Untitled"}</p>
           <div className="flex flex-row items-center text-xs text-greys2/50 gap-1">
             <TbClockHour3 />
-            <p>
+            <p className="text-nowrap line-clamp-1">
               {new Date(video.created_at)
                 .toLocaleString("en-US", {
                   month: "short",

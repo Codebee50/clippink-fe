@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { appConfig } from "@/constants";
 import { ReactQueryProvider } from "./ReactQueryProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 
 export const metadata: Metadata = {
@@ -20,7 +21,10 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+          <Toaster position="top-right" />
+          {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );

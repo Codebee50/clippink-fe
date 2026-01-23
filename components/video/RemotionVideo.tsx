@@ -1,3 +1,4 @@
+import { appConfig } from "@/constants";
 import { Caption, Scene, VideoResponse } from "@/lib/types/video";
 import React, { useState } from "react";
 import { AbsoluteFill, Audio, Easing, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
@@ -24,7 +25,7 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
       // Add buffer to prevent audio cutoff
       return lastCaption.end + AUDIO_BUFFER_SECONDS;
     }
-    return scene.duration_seconds;
+    return scene.duration_seconds ?? 1;
   };
 
   const getSceneDurationInFrames = (scene: Scene) => {
@@ -46,7 +47,7 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
   const getCurrentCaption = (scene: Scene): Caption | undefined => {
     const currentTime = frame / fps; //convert frame number to milliseconds
 
-    const currentCaption = scene.captions.find(caption => currentTime >= caption.start && currentTime <= caption.end);
+    const currentCaption = scene.captions?.find(caption => currentTime >= caption.start && currentTime <= caption.end);
     return currentCaption;
   };
 
@@ -65,7 +66,7 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
         return (
           <Sequence key={scene.id} from={startTime} durationInFrames={duration}>
             <AbsoluteFill className="justify-center items-center">
-              <Img src={scene.image_url || ""} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" style={{ transform: `scale(${scale(index)})` }} />
+              <Img src={scene.image_url || appConfig.PLACEHOLDER_IMAGE_URL} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" style={{ transform: `scale(${scale(index)})` }} />
 
               <AbsoluteFill className="text-white justify-center items-center bottom-30 text-center w-full h-max" style={{ top: undefined }}>
                 <h2 className="text-2xl font-bold">{getCurrentCaption(scene)?.text || ""}</h2>

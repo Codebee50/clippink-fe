@@ -96,7 +96,7 @@ const SelectNarratorsVoice = ({ onSelect }: { onSelect: (voice: NarratorsVoiceRe
             <div className='w-full flex flex-col items-start  gap-4 bg-greys1/20 p-4 rounded-md border border-greys1/60 border-dashed'>
                 <p className='text-white'>Choose your narrator</p>
 
-                <div className='w-full flex flex-row items-center justify-between'>
+                <div className='w-full flex flex-row items-center justify-between gap-4 flex-wrap'>
                     <div className='flex flex-row  gap-2'>
 
                         <span
@@ -145,39 +145,46 @@ const SelectNarratorsVoice = ({ onSelect }: { onSelect: (voice: NarratorsVoiceRe
             </div>
 
 
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <Dialog open={isOpen} onOpenChange={(open) => {
+                setIsOpen(open);
+                if (!open) {
+                    clearVoice()
+                }
+            }}>
                 <DialogTrigger></DialogTrigger>
                 <DialogContent className='bg-denary border-greys1/10'>
                     <DialogHeader>
                         <DialogTitle className='font-normal text-lg'>Choose your narrator</DialogTitle>
-                        <DialogDescription>
-                            <div className="w-full flex flex-col gap-2 pt-4">
-                                <div className="w-full flex flex-col gap-5 h-[400px] overflow-y-scroll cus-scrollbar">
-                                    {narratorsVoiceList.map(voice => (
-                                        <div key={voice.voice_id} className="w-full flex flex-row items-center gap-4 justify-between cursor-pointer " >
-                                            <div className="flex flex-row items-center gap-2" onClick={() => playOrPauseVoice(voice)}>
-                                                {
-                                                    isPlayingVoice(voice) ? <SoundLottie /> : <span className="w-[35px] h-[35px] rounded-full overflow-hidden flex items-center justify-center shrink-0" dangerouslySetInnerHTML={{ __html: voice.gradient_avatar || "" }} />
-
-                                                }
-                                                <div className="flex flex-col gap-1">
-                                                    <p className="text-sm text-white">{voice.name}</p>
-                                                    <p className="text-xs text-greys4">{voice.description}</p>
-                                                </div>
-                                            </div>
-
-                                            <button className='text-xs text-white bg-greys3 hover:bg-greys4/80 transition-all duration-300 border rounded-md border-greys1/40 px-4 py-2 cursor-pointer text-nowrap' onClick={() => {
-                                                updateSelectedNarratorsVoice(voice);
-                                                clearVoice()
-                                                setIsOpen(false)
-                                            }}>
-                                                Use Voice
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                        <DialogDescription className='hidden'>
+                            Select a narrator to use in your video
                         </DialogDescription>
+
+                        <div className="w-full flex flex-col gap-2 pt-4">
+                            <div className="w-full flex flex-col gap-5 h-[400px] overflow-y-scroll cus-scrollbar">
+                                {narratorsVoiceList.map(voice => (
+                                    <div key={voice.voice_id} className="w-full flex flex-row items-center gap-4 justify-between cursor-pointer " >
+                                        <div className="flex flex-row items-center gap-2" onClick={() => playOrPauseVoice(voice)}>
+                                            {
+                                                isPlayingVoice(voice) ? <SoundLottie /> : <span className="w-[35px] h-[35px] rounded-full overflow-hidden flex items-center justify-center shrink-0" dangerouslySetInnerHTML={{ __html: voice.gradient_avatar || "" }} />
+
+                                            }
+                                            <div className="flex flex-col gap-1 text-start">
+                                                <p className="text-sm text-white">{voice.name}</p>
+                                                <p className="text-xs text-greys4">{voice.description}</p>
+                                            </div>
+                                        </div>
+
+                                        <button className='text-xs text-white bg-greys3 hover:bg-greys4/80 transition-all duration-300 border rounded-md border-greys1/40 px-4 py-2 cursor-pointer text-nowrap' onClick={() => {
+                                            updateSelectedNarratorsVoice(voice);
+                                            clearVoice()
+                                            setIsOpen(false)
+                                        }}>
+                                            Use Voice
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </DialogHeader>
                 </DialogContent>
             </Dialog>

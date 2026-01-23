@@ -4,6 +4,7 @@ import { TbAdjustmentsStar } from "react-icons/tb";
 import Image from "next/image";
 import { RiSpeakAiLine } from "react-icons/ri";
 import { TbClockHour9 } from "react-icons/tb";
+import { appConfig } from "@/constants";
 
 const SceneCard = ({ scene }: { scene: Scene }) => {
   return (
@@ -34,13 +35,13 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
           </div>
         </div>
 
-        <Image src={scene.image_url || ""} alt="scene image" width={100} height={100} className="w-[100px] h-[110px] object-cover object-center shrink-0 rounded-md" />
+        <Image src={scene.image_url ||"/images/defaultbg.png"} alt="scene image" width={100} height={100} className="w-[100px] h-[110px] object-cover object-center shrink-0 rounded-md" />
       </div>
 
       <div className="flex flex-row items-center justify-between">
         <p className="text-sm text-greys2/50 flex flex-row items-center gap-1">
           <TbClockHour9 className="text-greys2/50" />
-          {scene.duration_seconds.toFixed(2)}s
+          {scene.duration_seconds?.toFixed(2) ?? "0.00"}s
         </p>
       </div>
     </div>

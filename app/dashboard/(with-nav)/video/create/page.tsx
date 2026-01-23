@@ -89,7 +89,7 @@ const Page = () => {
         <ScriptToVideoForm /> 
       </div>
 
-      <div className="flex  justify-center flex-1">
+      <div className="flex  justify-center flex-1 max-lg:hidden">
         <VideoPlayer video={sampleVideo ?? null} />
       </div>
 

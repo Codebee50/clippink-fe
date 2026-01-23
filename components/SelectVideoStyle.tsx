@@ -59,10 +59,10 @@ const SelectVideoStyle = ({ onSelect }: { onSelect: (style: VideoStyleResponse) 
                 {videoStyles.map(style => (
                     <div onClick={() => {
                         updateSelectedVideoStyle(style)
-                    }} key={style.id} className={`w-[150px] flex flex-col border border-[#202020] rounded-md overflow-hidden cursor-pointer ${selectedVideoStyle?.id === style.id ? "border-2 border-senary" : ""}`}>
+                    }} key={style.id} className={`min-w-[150px] flex flex-col border border-[#202020] rounded-md overflow-hidden cursor-pointer ${selectedVideoStyle?.id === style.id ? "border-2 border-senary" : ""}`}>
                         <Image src={style.preview_url} alt={style.name} width={100} height={100} className="w-full h-[120px] object-cover object-center" />
                         <div className="bg-greys5 px-2 py-3  flex flex-row items-center justify-between">
-                            <p className="text-sm text-white">{style.name}</p>
+                            <p className="text-sm text-white text-nowrap">{style.name}</p>
 
                             <div className={`w-[15px] h-[15px] rounded-full bg-greys5 border border-greys4 flex items-center justify-center ${selectedVideoStyle?.id === style.id ? "border-senary" : ""}`}>
                                 <div className={`w-[10px] h-[10px] rounded-full bg-greys4 ${selectedVideoStyle?.id === style.id ? "bg-senary" : ""}`}></div>

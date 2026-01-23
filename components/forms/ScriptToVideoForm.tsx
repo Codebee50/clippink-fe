@@ -16,6 +16,7 @@ import usePostRequest from "@/hooks/usePost";
 import { makeMsUrl } from "@/constants";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 
 
@@ -39,7 +40,7 @@ const ScriptToVideoForm = () => {
 
   }
 
-  type GenerateVideoResponse = {
+  type GenerateVideoResponse = {  
     message: string;
     video: Video
   }
@@ -49,11 +50,11 @@ const ScriptToVideoForm = () => {
     onSuccess: (response: AxiosResponse) => {
       const data = response.data as GenerateVideoResponse;
 
+      toast.success("Video generation started successfully")
       router.push(`/dashboard/video/${data.video.id}`);
     },
     onError: (error) => {
-      // TODO: show error to user
-      console.log(error);
+      toast.error("Failed to generate video")
     },
   });
 
@@ -78,9 +79,9 @@ const ScriptToVideoForm = () => {
   }
 
   const handleGenerateVideo = () => {
-    if (!videoConfig.script){
+    if (!videoConfig.script) {
       // TODO: show error to user
-      console.log("Script is required");
+      toast.error("Please enter a script")
       return;
     }
     generateVideo(videoConfig);
@@ -88,7 +89,7 @@ const ScriptToVideoForm = () => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="flex flex-col gap-6">
-        <div className="w-full flex flex-row items-center justify-between">
+        <div className="w-full flex flex-row items-center justify-between gap-4">
           <div className="w-full flex flex-col gap-1">
             <div className="flex flex-row items-center gap-1">
               <p>Script</p>
@@ -98,7 +99,7 @@ const ScriptToVideoForm = () => {
             <p className="text-sm text-greys4">Our AI analyzes your script and generates visuals that match it.</p>
           </div>
 
-          <button className="flex flex-row text-white bg-senary px-6 py-2 rounded-sm text-sm text-nowrap gap-2 items-center cursor-pointer">
+          <button className="flex flex-row text-white bg-senary sm:px-6 px-4 py-2 rounded-sm text-sm text-nowrap gap-2 items-center cursor-pointer">
             <PiMagicWand size={16} />
             Write using AI
           </button>

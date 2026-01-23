@@ -6,8 +6,16 @@ export const appConfig = {
   PLACEHOLDER_IMAGE_URL: "https://placehold.co/600x400/2a2e33/FFFFFF.png"
 };
 
-export const BASE_MS_URL = process.env.NEXT_PUBLIC_BASE_MS_URL || "http://localhost:9000"
+export const BASE_MS_URL = process.env.NEXT_PUBLIC_BASE_MS_URL || "http://192.168.1.164:9000"
 
-export const makeMsUrl = (path: string) =>{
-    return `${BASE_MS_URL}${path}`
+export const BASE_MS_HOST = process.env.NEXT_PUBLIC_BASE_MS_HOST || "192.168.1.164"
+export const BASE_MS_PORT = process.env.NEXT_PUBLIC_BASE_MS_PORT || "9000"
+export const BASE_MS_PROTOCOL = process.env.NEXT_PUBLIC_BASE_MS_PROTOCOL || "http"
+
+
+export const makeMsUrl = (path: string, protocol: string | null=null) =>{
+  if(protocol){
+    return `${protocol}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
+  }
+    return `${BASE_MS_PROTOCOL}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
 }
