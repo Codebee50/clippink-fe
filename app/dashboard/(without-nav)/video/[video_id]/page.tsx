@@ -23,6 +23,10 @@ import { Progress } from "@/components/ui/progress"
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import GooeyBalls from "@/components/loaders/GooeyBalls";
 import VideoGenerationAnimation from "@/components/VideoGenerationAnimation";
+import { BiExport } from "react-icons/bi";
+import { BreadCrumbItem } from "@/lib/types/global";
+import BreadCrumbs from "@/components/BreadCrumbs";
+
 
 const sideNavItems = [
   {
@@ -47,10 +51,27 @@ const sideNavItems = [
   },
 ];
 
+
+
 const Page = () => {
   const { video_id } = useParams();
   const [videoData, setVideoData] = useState<VideoResponse | null>(null);
   const [progress, setProgress] = useState<number>(0);
+
+
+  const breadCrumbs: BreadCrumbItem[] = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+
+    {
+      label: videoData?.title ?? "Video",
+      href: `/dashboard/video/${video_id}`,
+    }
+
+  ];
+
 
 
   const { mutate: fetchVideo, isLoading: isFetchingVideo } = useFetchRequest({
@@ -67,6 +88,7 @@ const Page = () => {
 
   useEffect(() => {
     fetchVideo();
+
 
   }, []);
 
@@ -128,10 +150,15 @@ const Page = () => {
     <div className="flex flex-col min-h-screen  bg-denary w-full relative">
       {/* Top Nav */}
       <div className="w-full p-4 border-b  border-b-greys1/20 flex flex-row items-center justify-between h-[11vh] max-h-[70px]">
-        <Logo color="#0A8337" dotColor="#fff" width={40} height={40} />
+        <Logo width={30} height={30} />
+
+        <BreadCrumbs breadCrumbs={breadCrumbs} />
 
         <div className="flex flex-row items-center gap-4">
-          <button className="bg-senary text-white px-4 py-2 text-sm font-medium rounded-md">Export/Share</button>
+          <button className="bg-senary text-white px-6 py-2 text-sm rounded-sm flex flex-row items-center gap-2">
+            <BiExport size={16} />
+            Export
+          </button>
 
           <Image
             src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=761&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

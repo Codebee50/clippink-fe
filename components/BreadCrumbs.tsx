@@ -14,7 +14,7 @@ const BreadCrumbs = ({ breadCrumbs }: { breadCrumbs: BreadCrumbItem[] }) => {
 
       {breadCrumbs.map(crumb => (
         <div className="flex flex-row items-center gap-2" key={crumb.label}>
-          <Link href={crumb.href} className="text-sm hover:text-senary transition-all duration-300 hover:underline">
+          <Link href={crumb.href} className="text-sm hover:text-senary transition-all duration-300 hover:underline max-w-[200px] truncate">
             {crumb.label}
           </Link>
           <RxCaretRight className="text-greys2" />
