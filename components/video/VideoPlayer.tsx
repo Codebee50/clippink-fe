@@ -2,10 +2,12 @@ import { VideoResponse } from '@/lib/types/video'
 import React from 'react'
 import RemotionVideo from './RemotionVideo';
 import { Player } from '@remotion/player';
+import VideoGenerationAnimation from '../VideoGenerationAnimation';
 
 const VideoPlayer = ({ video }: { video: VideoResponse | null }) => {
 
-  if (!video) return null;
+  if (!video || video.status === 'pending' || video.status === 'processing') return null
+
 
   const durationInFrames = video.scenes.filter(scene => scene.image_url !== null && scene.audio_url !== null).reduce((acc, scene) => {
     // Use caption-based duration for accuracy

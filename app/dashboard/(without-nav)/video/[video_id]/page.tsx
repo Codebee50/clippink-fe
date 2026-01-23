@@ -22,6 +22,7 @@ import VideoPlayer from "@/components/video/VideoPlayer";
 import { Progress } from "@/components/ui/progress"
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import GooeyBalls from "@/components/loaders/GooeyBalls";
+import VideoGenerationAnimation from "@/components/VideoGenerationAnimation";
 
 const sideNavItems = [
   {
@@ -172,14 +173,21 @@ const Page = () => {
 
               {
                 videoData && (videoData.status === 'processing' || videoData.status === 'pending') && <div className="flex flex-col items-center justify-center gap-2 w-full">
-                  <p className="text-white text-sm">Generating video...</p>
+                  <VideoGenerationAnimation progress={progress} />
 
-                  <Progress value={progress} className="w-full max-w-[300px] bg-greys1/20" indicatorClassName="bg-senary" />
                 </div>
               }
 
 
-              <VideoPlayer video={videoData ?? null} />
+
+
+
+              {
+                videoData && videoData.status === 'completed' && <VideoPlayer video={videoData ?? null} />
+
+              }
+
+
             </div>
           </div>
       }
