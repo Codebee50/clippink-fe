@@ -1,7 +1,10 @@
 import { appConfig } from "@/constants";
-import { Caption, Scene, VideoResponse } from "@/lib/types/video";
+import { AnimationType, Caption, Scene, VideoResponse } from "@/lib/types/video";
 import React, { useState } from "react";
 import { AbsoluteFill, Audio, Easing, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
+import { getAnimationStyle } from "@/lib/utils";
+
+
 
 const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
   const { fps } = useVideoConfig();
@@ -57,16 +60,11 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
         const startTime = getSceneStartFrame(scene, index);
         const duration = getSceneDurationInFrames(scene);
 
-        const scale = (index: number) =>
-          interpolate(frame, [startTime, startTime + duration / 2, startTime + duration], index === 0 ? [1, 1.4, 1] : [1.4, 1, 1.4], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-            easing: Easing.ease,
-          });
+
         return (
           <Sequence key={scene.id} from={startTime} durationInFrames={duration}>
             <AbsoluteFill className="justify-center items-center">
-              <Img src={scene.image_url || appConfig.PLACEHOLDER_IMAGE_URL} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" style={{ transform: `scale(${scale(index)})` }} />
+              <Img src={scene.image_url || appConfig.PLACEHOLDER_IMAGE_URL} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" style={getAnimationStyle(scene.motion_effect || "none", frame, startTime, duration)} />
 
               <AbsoluteFill className="text-white justify-center items-center bottom-30 text-center w-full h-max" style={{ top: undefined }}>
                 <h2 className="text-2xl font-bold">{getCurrentCaption(scene)?.text || ""}</h2>

@@ -4,7 +4,8 @@ import { TbAdjustmentsStar } from "react-icons/tb";
 import Image from "next/image";
 import { RiSpeakAiLine } from "react-icons/ri";
 import { TbClockHour9 } from "react-icons/tb";
-import { appConfig } from "@/constants";
+import EditImageModal from "./EditImageModal";
+
 
 const SceneCard = ({ scene }: { scene: Scene }) => {
   return (
@@ -35,7 +36,24 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
           </div>
         </div>
 
-        <Image src={scene.image_url ||"/images/defaultbg.png"} alt="scene image" width={100} height={100} className="w-[100px] h-[110px] object-cover object-center shrink-0 rounded-md" />
+        <div className="w-[100px] h-[110px] shrink-0 flex flex-col gap-2 relative group">
+          <Image
+            src={scene.image_url || "/images/defaultbg.png"}
+            alt="scene image"
+            width={100}
+            height={100}
+            className="w-[100px] h-[110px] object-cover object-center shrink-0 rounded-md"
+          />
+
+          {/* Hide by default, show on hover for desktop, always show on mobile */}
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+
+            <EditImageModal scene={scene} />
+
+
+          </div>
+        </div>
+
       </div>
 
       <div className="flex flex-row items-center justify-between">

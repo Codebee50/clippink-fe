@@ -27,6 +27,7 @@ const VideoPlayer = ({ video }: { video: VideoResponse | null }) => {
       durationInFrames={durationInFrames === 0 ? 1 : durationInFrames}
       compositionWidth={300}
       compositionHeight={450}
+      clickToPlay={false}
       fps={30}
       inputProps={{
         video: video,

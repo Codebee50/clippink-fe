@@ -1,6 +1,185 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { AnimationType } from "./types/video";
+import { Easing, interpolate } from "remotion";
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+
+
+export const getAnimationStyle = (
+  type: AnimationType,
+  frame: number,
+  startTime: number,
+  duration: number
+): React.CSSProperties => {
+
+  switch (type) {
+    case 'none':
+      return { transform: 'scale(1)' };
+
+    case 'scrollUp':
+      const translateYUp = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(1.3) translateY(${translateYUp}%)` };
+
+    case 'scrollDown':
+      const translateYDown = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(1.3) translateY(${translateYDown}%)` };
+
+    case 'scrollLeft':
+      const translateXLeft = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(1.3) translateX(${translateXLeft}%)` };
+
+    case 'scrollRight':
+      const translateXRight = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(1.3) translateX(${translateXRight}%)` };
+
+    case 'zoomIn':
+      const scaleIn = interpolate(frame, [startTime, startTime + duration], [1, 1.4], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(${scaleIn})` };
+
+    case 'zoomOut':
+      const scaleOut = interpolate(frame, [startTime, startTime + duration], [1.4, 1], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(${scaleOut})` };
+
+    case 'diagonalUpLeft':
+      const dulTranslateX = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      const dulTranslateY = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(1.3) translate(${dulTranslateX}%, ${dulTranslateY}%)` };
+
+    case 'diagonalUpRight':
+      const durTranslateX = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      const durTranslateY = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(1.3) translate(${durTranslateX}%, ${durTranslateY}%)` };
+
+    case 'diagonalDownLeft':
+      const ddlTranslateX = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      const ddlTranslateY = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(1.3) translate(${ddlTranslateX}%, ${ddlTranslateY}%)` };
+
+    case 'diagonalDownRight':
+      const ddrTranslateX = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      const ddrTranslateY = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(1.3) translate(${ddrTranslateX}%, ${ddrTranslateY}%)` };
+
+    case 'kenBurnsUp':
+      const kbuScale = interpolate(frame, [startTime, startTime + duration], [1, 1.3], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      const kbuTranslateY = interpolate(frame, [startTime, startTime + duration], [5, -5], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(${kbuScale}) translateY(${kbuTranslateY}%)` };
+
+    case 'kenBurnsDown':
+      const kbdScale = interpolate(frame, [startTime, startTime + duration], [1, 1.3], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      const kbdTranslateY = interpolate(frame, [startTime, startTime + duration], [-5, 5], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.ease,
+      });
+      return { transform: `scale(${kbdScale}) translateY(${kbdTranslateY}%)` };
+
+    case 'slideInLeft':
+      const silTranslateX = interpolate(frame, [startTime, startTime + duration * 0.3], [-100, 0], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.out(Easing.cubic),
+      });
+      return { transform: `translateX(${silTranslateX}%)` };
+
+    case 'slideInRight':
+      const sirTranslateX = interpolate(frame, [startTime, startTime + duration * 0.3], [100, 0], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.out(Easing.cubic),
+      });
+      return { transform: `translateX(${sirTranslateX}%)` };
+
+    case 'slideInTop':
+      const sitTranslateY = interpolate(frame, [startTime, startTime + duration * 0.3], [-100, 0], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.out(Easing.cubic),
+      });
+      return { transform: `translateY(${sitTranslateY}%)` };
+
+    case 'slideInBottom':
+      const sibTranslateY = interpolate(frame, [startTime, startTime + duration * 0.3], [100, 0], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+        easing: Easing.out(Easing.cubic),
+      });
+      return { transform: `translateY(${sibTranslateY}%)` };
+
+    default:
+      return { transform: 'scale(1)' };
+  }
+};

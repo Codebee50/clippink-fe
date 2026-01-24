@@ -11,6 +11,25 @@ export interface Caption {
   words: Word[];
 }
 
+export type AnimationType = 
+  | 'none'
+  | 'scrollUp'
+  | 'scrollDown'
+  | 'scrollLeft'
+  | 'scrollRight'
+  | 'zoomIn'
+  | 'zoomOut'
+  | 'diagonalUpLeft'
+  | 'diagonalUpRight'
+  | 'diagonalDownLeft'
+  | 'diagonalDownRight'
+  | 'kenBurnsUp'
+  | 'kenBurnsDown'
+  | 'slideInLeft'
+  | 'slideInRight'
+  | 'slideInTop'
+  | 'slideInBottom';
+
 export interface Scene {
   order_number: number;
   media_type: string;
@@ -28,6 +47,7 @@ export interface Scene {
   image_url: string | null;
   video_url?: string | null;
   audio_duration_seconds?: number | null;
+  motion_effect: AnimationType | null
 }
 
 export interface VideoResponse {
@@ -121,3 +141,5 @@ export type VideoWsProgressMessageBody = {
   progress?:number,
   payload: SceneGeneratedPayload | SceneAudioGeneratedPayload | SceneImageGeneratedPayload
 }
+
+
