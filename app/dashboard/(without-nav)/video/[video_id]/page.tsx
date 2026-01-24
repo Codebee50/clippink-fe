@@ -26,6 +26,10 @@ import VideoGenerationAnimation from "@/components/VideoGenerationAnimation";
 import { BiExport } from "react-icons/bi";
 import { BreadCrumbItem } from "@/lib/types/global";
 import BreadCrumbs from "@/components/BreadCrumbs";
+import { RiAppsFill } from "react-icons/ri";
+import { MdOutlineVideoCameraBack } from "react-icons/md";
+import { useVideoStore } from "@/lib/store/video";
+
 
 
 const sideNavItems = [
@@ -51,11 +55,22 @@ const sideNavItems = [
   },
 ];
 
+const MobileBottomNavItem = ({ label, Icon }: { label: string, Icon: React.ElementType }) => {
+  return (
+    <div className="flex flex-col items-center justify-center gap-1 text-white hover:bg-greys1/10 rounded-md p-2 cursor-pointer transition-all duration-300 w-[90%]">
+      <Icon className="text-xl" />
+      <span className="text-xs">{label}</span>
+    </div>
+  )
+}
+
 
 
 const Page = () => {
   const { video_id } = useParams();
-  const [videoData, setVideoData] = useState<VideoResponse | null>(null);
+
+  const { video: videoData, loading: isFetchingVideo, fetchVideo, replaceScenes, replaceScene } = useVideoStore();
+  // const [videoData, setVideoData] = useState<VideoResponse | null>(null);
   const [progress, setProgress] = useState<number>(0);
 
 
@@ -74,20 +89,20 @@ const Page = () => {
 
 
 
-  const { mutate: fetchVideo, isLoading: isFetchingVideo } = useFetchRequest({
-    url: makeMsUrl(`/video/${video_id}/`),
-    onSuccess: (response: AxiosResponse) => {
-      const data = response.data as VideoResponse;
-      setVideoData(data);
-    },
-    onError: (error: AxiosError) => {
-      console.log("the error is", error);
-    },
-  });
+  // const { mutate: fetchVideo, isLoading: isFetchingVideo } = useFetchRequest({
+  //   url: makeMsUrl(`/video/${video_id}/`),
+  //   onSuccess: (response: AxiosResponse) => {
+  //     const data = response.data as VideoResponse;
+  //     setVideoData(data);
+  //   },
+  //   onError: (error: AxiosError) => {
+  //     console.log("the error is", error);
+  //   },
+  // });
 
 
   useEffect(() => {
-    fetchVideo();
+    fetchVideo(video_id as string);
 
 
   }, []);
@@ -98,49 +113,26 @@ const Page = () => {
 
     rws.onmessage = (event) => {
       const data = JSON.parse(event.data) as VideoWsProgressMessageBody
-      const timestamp = new Date().getTime();
       if (data.type === 'scenes_generated') {
         setProgress(data.progress ?? 0)
-        setVideoData((prev: VideoResponse | null) => {
-          if (!prev) return null;
-          return {
-            ...prev,
-            scenes: (data.payload as SceneGeneratedPayload).scenes,
-            last_changed_at: timestamp.toString()
-          }
-        })
+        replaceScenes((data.payload as SceneGeneratedPayload).scenes)
 
       }
 
       if (data.type === 'scene_audio_generated') {
         setProgress(data.progress ?? 0)
         const payload = data.payload as SceneAudioGeneratedPayload
-        setVideoData(prev => {
-          if (!prev) return null;
-
-          return {
-            ...prev,
-            scenes: prev.scenes.map(scene => scene.id === payload.scene.id ? payload.scene : scene),
-            last_changed_at: timestamp.toString()
-          }
-        })
+        replaceScene(payload.scene)
       }
 
       if (data.type === 'scene_image_generated') {
         setProgress(data.progress ?? 0)
         const payload = data.payload as SceneImageGeneratedPayload
-        setVideoData(prev => {
-          if (!prev) return null;
-          return {
-            ...prev,
-            scenes: prev.scenes.map(scene => scene.id === payload.scene.id ? payload.scene : scene),
-            last_changed_at: timestamp.toString()
-          }
-        })
+        replaceScene(payload.scene)
       }
 
       if (data.type === 'completed') {
-        fetchVideo()
+        fetchVideo(video_id as string)
       }
     }
 
@@ -149,10 +141,10 @@ const Page = () => {
   return (
     <div className="flex flex-col min-h-screen  bg-denary w-full relative">
       {/* Top Nav */}
-      <div className="w-full p-4 border-b  border-b-greys1/20 flex flex-row items-center justify-between h-[11vh] max-h-[70px]">
+      <div className="w-full p-4 border-b  border-b-greys1/20 flex flex-row items-center justify-between h-[11dvh] max-h-[70px]">
         <Logo width={30} height={30} />
 
-        <BreadCrumbs breadCrumbs={breadCrumbs} />
+        <BreadCrumbs breadCrumbs={breadCrumbs} className="hidden md:flex" />
 
         <div className="flex flex-row items-center gap-4">
           <button className="bg-senary text-white px-6 py-2 text-sm rounded-sm flex flex-row items-center gap-2">
@@ -165,18 +157,18 @@ const Page = () => {
             alt="share"
             width={42}
             height={42}
-            className="rounded-full w-[42px] h-[42px] object-cover object-center"
+            className="rounded-full w-[42px] h-[42px] object-cover object-center max-sm:hidden"
           />
         </div>
       </div>
 
       {
-        isFetchingVideo ? <div className="w-full h-[calc(100vh-70px)] flex flex-row items-center justify-center">
+        isFetchingVideo ? <div className="w-full h-[calc(100dvh-70px)] flex flex-row items-center justify-center">
           <GooeyBalls size={40} />
         </div> :
-          <div className="w-full h-[calc(100vh-70px)] flex flex-row">
+          <div className="w-full h-[calc(100dvh-70px)] flex flex-row">
             {/* Side Nav */}
-            <div className="w-[10%] max-w-[90px] h-full pt-5 flex flex-col items-center gap-5 border-r border-r-greys1/20 shrink-0">
+            <div className="w-[10%] max-w-[90px] h-full pt-5 flex max-vidMobile:hidden flex-col items-center gap-5 border-r border-r-greys1/20 shrink-0">
               {sideNavItems.map(item => (
                 <div key={item.Label} className="flex flex-col items-center justify-center gap-2 text-greys2 hover:bg-greys1/10 rounded-md p-2 cursor-pointer transition-all duration-300 w-[90%]">
                   <item.Icon className="text-xl" />
@@ -185,12 +177,12 @@ const Page = () => {
               ))}
             </div>
 
-            <div className="w-[50%] max-w-[500px] h-full border-r border-r-greys1/20 bg-[#0C0C10] overflow-y-scroll p-4 flex flex-col gap-4 cus-scrollbar shrink-0">
+            <div className="w-[50%] max-vidMobile:hidden max-w-[500px] h-full border-r border-r-greys1/20 bg-[#0C0C10] overflow-y-scroll p-4 flex flex-col gap-4 cus-scrollbar shrink-0">
               {videoData && videoData.scenes.map(scene => <SceneCard key={scene.id} scene={scene} />)}
             </div>
 
             <div
-              className="flex-1 h-full flex flex-col gap-3 items-center justify-center bg-denary"
+              className="flex-1 h-full flex flex-col gap-3 items-center justify-center max-vidMobile:justify-between max-vidMobile:pt-3 bg-denary"
               style={{
                 backgroundImage: "linear-gradient(to right, rgba(48,48,56,0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(48,48,56,0.12) 1px, transparent 1px)",
                 backgroundSize: "22px 22px",
@@ -209,10 +201,29 @@ const Page = () => {
 
 
 
+
               {
                 videoData && videoData.status === 'completed' && <VideoPlayer video={videoData ?? null} />
 
               }
+
+              <div className="vidMobile:hidden w-full mt-4 bg-greys3 border border-greys1/20 m-3 rounded-lg py-1  flex flex-row items-center">
+                <MobileBottomNavItem label="Video" Icon={MdOutlineVideoCameraBack} />
+
+
+                {
+                  sideNavItems.slice(0, 2).map(item => (
+                    <MobileBottomNavItem key={item.Label} label={item.Label} Icon={item.Icon} />
+                  ))
+                }
+
+                <MobileBottomNavItem label="More" Icon={RiAppsFill} />
+
+
+              </div>
+
+
+
 
 
             </div>
