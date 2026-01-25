@@ -46,13 +46,22 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
     return startFrame;
   };
 
-  //TODO: fix captions not updating when scene changes
-  const getCurrentCaption = (scene: Scene): Caption | undefined => {
-    const currentTime = frame / fps; //convert frame number to milliseconds
+  const getCurrentCaption = (scene: Scene, sceneStartFrame: number) => {
+    const sceneRelativeTime = (frame - sceneStartFrame) / fps;
 
-    const currentCaption = scene.captions?.find(caption => currentTime >= caption.start && currentTime <= caption.end);
-    return currentCaption;
-  };
+    const currentCaption = scene.captions?.find(
+      caption => sceneRelativeTime >= caption.start && sceneRelativeTime <= caption.end
+    );
+
+    if (!currentCaption) return null;
+
+    // Find the currently active word
+    const currentWord = currentCaption.words?.find(
+      word => sceneRelativeTime >= word.start && sceneRelativeTime <= word.end
+    );
+
+    return { caption: currentCaption, currentWord };
+  }
 
   return (
     <AbsoluteFill className="bg-greys1/10 rounded-md overflow-hidden">
@@ -60,14 +69,39 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
         const startTime = getSceneStartFrame(scene, index);
         const duration = getSceneDurationInFrames(scene);
 
+        const animationData = getAnimationStyle(
+          scene.motion_effect || 'scrollRight',
+          frame,
+          startTime,
+          duration
+        );
+
+        const captionData = getCurrentCaption(scene, startTime);
+
+
+
 
         return (
           <Sequence key={scene.id} from={startTime} durationInFrames={duration}>
             <AbsoluteFill className="justify-center items-center">
-              <Img src={scene.image_url || appConfig.PLACEHOLDER_IMAGE_URL} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" style={getAnimationStyle(scene.motion_effect || "none", frame, startTime, duration)} />
 
-              <AbsoluteFill className="text-white justify-center items-center bottom-30 text-center w-full h-max" style={{ top: undefined }}>
-                <h2 className="text-2xl font-bold">{getCurrentCaption(scene)?.text || ""}</h2>
+              <Img src={scene.image_url || appConfig.PLACEHOLDER_IMAGE_URL} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" style={animationData.style} />
+
+              <AbsoluteFill className="text-white justify-center items-center bottom-14 text-center w-full h-max p-4" style={{ top: undefined }}>
+                <h2 className="text-xl font-extrabold text-white italic tracking-wide  drop-shadow-[4px_4px_0_rgba(0,0,0,0.9)]">
+                  {captionData?.caption.words?.map((word, idx) => (
+                    <span
+                      key={idx}
+                      className={
+                        word.text === captionData.currentWord?.text
+                          ? "text-yellow-400"
+                          : "text-white"
+                      }
+                    >
+                      {word.text}{" "}
+                    </span>
+                  ))}
+                </h2>
               </AbsoluteFill>
             </AbsoluteFill>
 

@@ -263,7 +263,7 @@ const Page = () => {
             }
 
 
-            <div className="vidMobile:hidden w-[98%] mx-auto bg-greys3 border border-greys1/20  rounded-lg py-1  flex flex-row items-center fixed inset-x-0 bottom-1 z-10">
+            <div className="vidMobile:hidden w-[98%] mx-auto bg-greys3 border border-greys1/20  rounded-lg py-1 px-1  flex flex-row items-center fixed inset-x-0 bottom-1 z-10">
               {
                 sideNavItems.slice(0, 3).map(item => (
                   <MobileBottomNavItem key={item.Label} label={item.Label} Icon={item.Icon} onClick={() => setActiveTab(item.id)} active={activeTab === item.id} />
