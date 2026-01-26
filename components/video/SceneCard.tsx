@@ -4,7 +4,9 @@ import { TbAdjustmentsStar } from "react-icons/tb";
 import Image from "next/image";
 import { RiSpeakAiLine } from "react-icons/ri";
 import { TbClockHour9 } from "react-icons/tb";
-import EditImageModal from "./EditImageModal";
+import EditImageModal from "./EditMotionEffect";
+import EditImageOptionsPopover from "./EditImageOptionsPopover";
+
 
 
 const SceneCard = ({ scene }: { scene: Scene }) => {
@@ -48,7 +50,11 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
           {/* Hide by default, show on hover for desktop, always show on mobile */}
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
 
-            <EditImageModal scene={scene} />
+            <EditImageOptionsPopover
+              scene={scene}
+            />
+
+            {/* <EditImageModal scene={scene} /> */}
 
 
           </div>

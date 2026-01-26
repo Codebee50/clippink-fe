@@ -2,14 +2,14 @@ import { VideoResponse } from '@/lib/types/video'
 import React from 'react'
 import RemotionVideo from './RemotionVideo';
 import { Player } from '@remotion/player';
-import VideoGenerationAnimation from '../VideoGenerationAnimation';
 
-const VideoPlayer = ({ video }: { video: VideoResponse | null }) => {
+const VideoPlayer = ({ video, width = 300, height = 450, controls = true, autoPlay = false, overrideDurationInFrames = null, loop = false }:
+  { video: VideoResponse | null, width?: number, height?: number, controls?: boolean, autoPlay?: boolean, overrideDurationInFrames?: number | null, loop?: boolean }) => {
 
   if (!video || video.status === 'pending' || video.status === 'processing') return null
 
 
-  const durationInFrames = video.scenes.filter(scene => scene.image_url !== null && scene.audio_url !== null).reduce((acc, scene) => {
+  const durationInFrames = overrideDurationInFrames !== null ? overrideDurationInFrames : video.scenes.filter(scene => scene.image_url !== null && scene.audio_url !== null).reduce((acc, scene) => {
     // Use caption-based duration for accuracy
     if (scene.captions && scene.captions.length > 0) {
       const actualDuration = scene.captions[scene.captions.length - 1].end + 0.1;
@@ -25,14 +25,21 @@ const VideoPlayer = ({ video }: { video: VideoResponse | null }) => {
       key={`${video.id}-${video.last_changed_at}`}
       component={RemotionVideo}
       durationInFrames={durationInFrames === 0 ? 1 : durationInFrames}
-      compositionWidth={300}
-      compositionHeight={450}
+      compositionWidth={width}
+      compositionHeight={height}
       clickToPlay={false}
       fps={30}
       inputProps={{
         video: video,
+        overrideDurationInFrames: overrideDurationInFrames,
       }}
-      controls={true}
+      controls={controls}
+      autoPlay={autoPlay}
+      loop={loop}
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
     />
   )
 }

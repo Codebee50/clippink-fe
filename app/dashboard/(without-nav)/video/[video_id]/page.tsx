@@ -173,7 +173,7 @@ const Page = () => {
 
         <div className="flex flex-row items-center gap-4">
           <button className="bg-senary text-white sm:px-6 px-4 py-2 text-sm rounded-sm flex flex-row items-center gap-2">
-            <BiExport  />
+            <BiExport />
 
             <p className="">
               Export
@@ -223,8 +223,11 @@ const Page = () => {
                         <VideoGenerationAnimation progress={progress} />
 
                       </div>
+                    </div> :
 
-                    </div> : <VideoPlayer video={videoData ?? null} />
+                      <div className="w-full h-dvh max-w-[300px] max-h-[450px] mx-auto">
+                        <VideoPlayer video={videoData ?? null} width={300} height={450} />
+                      </div>
 
                   }
                 </div>
@@ -255,7 +258,9 @@ const Page = () => {
 
 
                 {
-                  videoData && videoData.status === 'completed' && <VideoPlayer video={videoData ?? null} />
+                  videoData && videoData.status === 'completed' && <div className="w-full h-full max-w-[300px] max-h-[450px] mx-auto">
+                    <VideoPlayer video={videoData ?? null} width={300} height={450} />
+                  </div>
 
                 }
 

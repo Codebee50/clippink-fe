@@ -6,7 +6,7 @@ import { getAnimationStyle } from "@/lib/utils";
 
 
 
-const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
+const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: VideoResponse | null, overrideDurationInFrames?: number | null }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -23,6 +23,11 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
   const AUDIO_BUFFER_SECONDS = 0.1; // 100ms buffer to prevent cutoff
 
   const getActualAudioDuration = (scene: Scene) => {
+
+    if (overrideDurationInFrames !== null) {
+      return overrideDurationInFrames / fps
+    }
+
     if (scene.captions && scene.captions.length > 0) {
       const lastCaption = scene.captions[scene.captions.length - 1];
       // Add buffer to prevent audio cutoff
@@ -77,9 +82,6 @@ const RemotionVideo = ({ video }: { video: VideoResponse | null }) => {
         );
 
         const captionData = getCurrentCaption(scene, startTime);
-
-
-
 
         return (
           <Sequence key={scene.id} from={startTime} durationInFrames={duration}>

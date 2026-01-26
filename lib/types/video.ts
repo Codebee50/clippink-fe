@@ -30,6 +30,11 @@ export type AnimationType =
   | 'slideInTop'
   | 'slideInBottom';
 
+export type MotionEffect = {
+  displayName: string;
+  value: AnimationType;
+}
+
 export interface Scene {
   order_number: number;
   media_type: string;

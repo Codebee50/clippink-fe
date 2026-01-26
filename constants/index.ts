@@ -1,3 +1,5 @@
+import { MotionEffect } from "@/lib/types/video";
+
 export const appConfig = {
   APP_NAME: "Clipink",
   APP_SHORT_NAME: "Clip",
@@ -19,3 +21,71 @@ export const makeMsUrl = (path: string, protocol: string | null=null) =>{
   }
     return `${BASE_MS_PROTOCOL}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
 }
+
+
+export const motionEffects: MotionEffect[] = [
+  {
+    displayName: "Scroll Up",
+    value: "scrollUp"
+  },
+  {
+    displayName: "Scroll Down",
+    value: "scrollDown"
+  },
+  {
+    displayName: "Scroll Left",
+    value: "scrollLeft"
+  },
+  {
+    displayName: "Scroll Right",
+    value: "scrollRight"
+  },
+  {
+    displayName: "Zoom In",
+    value: "zoomIn"
+  },
+  {
+    displayName: "Zoom Out",
+    value: "zoomOut"
+  },
+  {
+    displayName: "Diagonal Up Left",
+    value: "diagonalUpLeft"
+    },
+  {
+    displayName: "Diagonal Up Right",
+    value: "diagonalUpRight"
+  },
+  {
+    displayName: "Diagonal Down Left",
+    value: "diagonalDownLeft"
+  },
+  {
+    displayName: "Diagonal Down Right",
+    value: "diagonalDownRight"
+  },
+  {
+    displayName: "Ken Burns Up",
+    value: "kenBurnsUp"
+  },
+  {
+    displayName: "Ken Burns Down",
+    value: "kenBurnsDown"
+  },
+  {
+    displayName: "Slide In Left",
+    value: "slideInLeft"
+  },
+  {
+    displayName: "Slide In Right",
+    value: "slideInRight"
+  },
+  {
+    displayName: "Slide In Top",
+    value: "slideInTop"
+  },
+  {
+    displayName: "Slide In Bottom",
+    value: "slideInBottom"
+  }
+]

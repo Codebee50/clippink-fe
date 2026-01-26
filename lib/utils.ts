@@ -31,7 +31,7 @@ export const getAnimationStyle = (
       };
       
     case 'scrollUp': {
-      const translateYUp = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+      const translateYUp = interpolate(frame, [startTime, startTime + duration], [6, -6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
@@ -42,7 +42,7 @@ export const getAnimationStyle = (
     }
       
     case 'scrollDown': {
-      const translateYDown = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+      const translateYDown = interpolate(frame, [startTime, startTime + duration], [-6, 6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
@@ -53,7 +53,7 @@ export const getAnimationStyle = (
     }
       
     case 'scrollLeft': {
-      const translateXLeft = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+      const translateXLeft = interpolate(frame, [startTime, startTime + duration], [6, -6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
@@ -64,7 +64,7 @@ export const getAnimationStyle = (
     }
       
     case 'scrollRight': {
-      const translateXRight = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+      const translateXRight = interpolate(frame, [startTime, startTime + duration], [-6, 6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
@@ -97,12 +97,12 @@ export const getAnimationStyle = (
     }
       
     case 'diagonalUpLeft': {
-      const dulTranslateX = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+      const dulTranslateX = interpolate(frame, [startTime, startTime + duration], [6, -6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
       });
-      const dulTranslateY = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+      const dulTranslateY = interpolate(frame, [startTime, startTime + duration], [6, -6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
@@ -113,12 +113,12 @@ export const getAnimationStyle = (
     }
       
     case 'diagonalUpRight': {
-      const durTranslateX = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+      const durTranslateX = interpolate(frame, [startTime, startTime + duration], [-6, 6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
       });
-      const durTranslateY = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+      const durTranslateY = interpolate(frame, [startTime, startTime + duration], [6, -6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
@@ -129,12 +129,12 @@ export const getAnimationStyle = (
     }
       
     case 'diagonalDownLeft': {
-      const ddlTranslateX = interpolate(frame, [startTime, startTime + duration], [10, -10], {
+      const ddlTranslateX = interpolate(frame, [startTime, startTime + duration], [6, -6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
       });
-      const ddlTranslateY = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+      const ddlTranslateY = interpolate(frame, [startTime, startTime + duration], [-6, 6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
@@ -145,12 +145,12 @@ export const getAnimationStyle = (
     }
       
     case 'diagonalDownRight': {
-      const ddrTranslateX = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+      const ddrTranslateX = interpolate(frame, [startTime, startTime + duration], [-6, 6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
       });
-      const ddrTranslateY = interpolate(frame, [startTime, startTime + duration], [-10, 10], {
+      const ddrTranslateY = interpolate(frame, [startTime, startTime + duration], [-6, 6], {
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp',
         easing: Easing.ease,
