@@ -1,13 +1,12 @@
-import { appConfig } from "@/constants";
-import { AnimationType, Caption, Scene, VideoResponse } from "@/lib/types/video";
-import React, { useState } from "react";
-import { AbsoluteFill, Audio, Easing, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
-import { getAnimationStyle } from "@/lib/utils";
+import { appConfig } from "../../constants";
+import { Scene, VideoResponse } from "../../lib/types/video";
+import { AbsoluteFill, Audio,  Img,  Sequence, useCurrentFrame, useVideoConfig } from "remotion";
+import { getAnimationStyle } from "../../lib/utils";
 
 
 
 const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: VideoResponse | null, overrideDurationInFrames?: number | null }) => {
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
   const frame = useCurrentFrame();
 
   if (!video) {
@@ -87,7 +86,7 @@ const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: Vide
           <Sequence key={scene.id} from={startTime} durationInFrames={duration}>
             <AbsoluteFill className="justify-center items-center">
 
-              <Img src={scene.image_url || appConfig.PLACEHOLDER_IMAGE_URL} alt="scene image" width={100} height={100} className="w-full h-full object-cover object-center" style={animationData.style} />
+              <Img src={scene.image_url || appConfig.PLACEHOLDER_IMAGE_URL} alt="scene image" width={width} height={height} className="w-full h-full object-cover object-center" style={animationData.style} />
 
               <AbsoluteFill className="text-white justify-center items-center bottom-14 text-center w-full h-max p-4" style={{ top: undefined }}>
                 <h2 className="text-xl font-extrabold text-white italic tracking-wide  drop-shadow-[4px_4px_0_rgba(0,0,0,0.9)]">

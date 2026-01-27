@@ -5,7 +5,7 @@ export const appConfig = {
   APP_SHORT_NAME: "Clip",
   APP_DESCRIPTION:
     "Create viral faceless videos with AI. Post daily without burnout and grow your audience while you sleep.",
-  PLACEHOLDER_IMAGE_URL: "https://placehold.co/600x400/2a2e33/FFFFFF.png"
+  PLACEHOLDER_IMAGE_URL: "https://clippink-bkt.s3.us-east-1.amazonaws.com/defaultbg.png"
 };
 
 export const BASE_MS_URL = process.env.NEXT_PUBLIC_BASE_MS_URL || "http://192.168.1.164:9000"
@@ -24,6 +24,11 @@ export const makeMsUrl = (path: string, protocol: string | null=null) =>{
 
 
 export const motionEffects: MotionEffect[] = [
+  {
+    displayName: "None",
+    value: "none"
+  },
+  
   {
     displayName: "Scroll Up",
     value: "scrollUp"
@@ -72,20 +77,20 @@ export const motionEffects: MotionEffect[] = [
     displayName: "Ken Burns Down",
     value: "kenBurnsDown"
   },
-  {
-    displayName: "Slide In Left",
-    value: "slideInLeft"
-  },
-  {
-    displayName: "Slide In Right",
-    value: "slideInRight"
-  },
-  {
-    displayName: "Slide In Top",
-    value: "slideInTop"
-  },
-  {
-    displayName: "Slide In Bottom",
-    value: "slideInBottom"
-  }
+  // {
+  //   displayName: "Slide In Left",
+  //   value: "slideInLeft"
+  // },
+  // {
+  //   displayName: "Slide In Right",
+  //   value: "slideInRight"
+  // },
+  // {
+  //   displayName: "Slide In Top",
+  //   value: "slideInTop"
+  // },
+  // {
+  //   displayName: "Slide In Bottom",
+  //   value: "slideInBottom"
+  // }
 ]

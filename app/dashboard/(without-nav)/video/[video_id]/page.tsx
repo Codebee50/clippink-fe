@@ -13,7 +13,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import useFetchRequest from "@/hooks/useFetch";
 import { makeMsUrl } from "@/constants";
 import { SceneAudioGeneratedPayload, SceneGeneratedPayload, SceneImageGeneratedPayload, VideoResponse, VideoWsProgressMessageBody } from "@/lib/types/video";
-import { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import SceneCard from "@/components/video/SceneCard";
 
 import { Player } from "@remotion/player";
@@ -79,6 +79,7 @@ const MobileBottomNavItem = ({ label, Icon, onClick = () => { }, active = false 
 
 
 
+
 const Page = () => {
   const { video_id } = useParams();
 
@@ -113,14 +114,40 @@ const Page = () => {
   const isVideoProcessing = !videoData || videoData?.status === 'processing' || videoData?.status === 'pending';
 
 
+  const dummyRenderId = "gt7oi9luer"
+  const dummyBucketName = "remotionlambda-useast1-h2ias1sgku"
+
+  const checkProgress = async (renderId: string, bucketName: string) => {
+    const response = await axios.post(`/api/lambda/progress/${renderId}`, {
+      bucketName: bucketName
+    })
+    console.log("Response from lambda progress", response.data)
+  }
+
+  const exportVideo = async () => {
+
+    checkProgress(dummyRenderId, dummyBucketName)
+
+
+    // const response = await axios.post("/api/lambda/render", {
+    //   video: videoData,
+    //   width: 1080,
+    //   height: 1920,
+    // })
+
+    // console.log("Response from lambda render", response.data)
+  }
+
+
+
+
+
 
   useEffect(() => {
     fetchVideo(video_id as string);
-
-
-
-
   }, []);
+
+
 
   useEffect(() => {
 
@@ -172,7 +199,7 @@ const Page = () => {
         <BreadCrumbs breadCrumbs={breadCrumbs} className="hidden md:flex" />
 
         <div className="flex flex-row items-center gap-4">
-          <button className="bg-senary text-white sm:px-6 px-4 py-2 text-sm rounded-sm flex flex-row items-center gap-2">
+          <button onClick={exportVideo} className="bg-senary text-white sm:px-6 px-4 py-2 text-sm rounded-sm flex flex-row items-center gap-2">
             <BiExport />
 
             <p className="">

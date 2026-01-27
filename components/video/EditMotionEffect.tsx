@@ -13,16 +13,23 @@ import { AnimationType, Scene, VideoResponse } from '@/lib/types/video'
 import Image from 'next/image'
 import { MdOutlineClose } from "react-icons/md";
 import VideoPlayer from './VideoPlayer'
-import { motionEffects } from '@/constants'
+import { makeMsUrl, motionEffects } from '@/constants'
 import { BsStars } from "react-icons/bs";
+import LoadingButton from '../buttons/LoadingButton'
+import usePatchRequest from '@/hooks/usePatch'
+import useStyledToast from '@/hooks/useStyledToast'
+import { useVideoStore } from '@/lib/store/video'
 
 
 
 const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }: { scene: Scene, open?: boolean, onOpenChange?: (open: boolean) => void }) => {
   const [isOpen, setIsOpen] = useState(open)
-  const [videos, setVideos] = useState<VideoResponse[]>([])
   const [motionEffect, setMotionEffect] = useState<AnimationType | null>(scene.motion_effect || null)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  const { replaceScene } = useVideoStore()
+
+  const toast = useStyledToast()
 
 
   const animationTypeToVideo = (animationType: AnimationType, imageUrl: string = "https://clippink-bkt.s3.amazonaws.com/images/landing-page-images/19f807ac-468d-4a57-a1c2-d01faaf96848.jpeg"): VideoResponse => {
@@ -75,8 +82,38 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
     }
   }
 
+  const { mutate: updateMotionEffectMutation, isLoading: isUpdatingMotionEffect } = usePatchRequest({
+    url: makeMsUrl(`/video/scenes/${scene.id}/`),
+    onSuccess: (response) => {
+      toast.success("Motion effect updated successfully")
+
+      const updatedScene = {
+        ...scene,
+        motion_effect: motionEffect
+      } as Scene
+
+      replaceScene(updatedScene)
+      setIsOpen(false)
+
+    },
+    onError: (error) => {
+      toast.error("Failed to update motion effect")
+    }
+  })
+
+  const handleSubmit = () => {
+    if (!motionEffect) {
+      toast.error("Please select a motion effect")
+      return
+    }
+    updateMotionEffectMutation({
+      motion_effect: motionEffect
+    })
+  }
+
   useEffect(() => {
     setIsOpen(open)
+
   }, [open])
 
 
@@ -94,7 +131,7 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
       </DialogTrigger>
       <DialogContent showCloseButton={false} className='bg-denary border-greys1/10 pt-0 overflow-hidden p-0 max-h-[90vh]'>
         <DialogHeader>
-          <div className='w-full flex flex-row items-center justify-between  border-b border-greys1/20 py-2 px-2'>
+          <div className='w-full flex flex-row items-center justify-between  border-b border-greys1/20 py-2 px-4'>
 
             <div className='flex flex-row items-center gap-4'>
               <div className='flex flex-row items-center border border-senary/20 bg-senary/10 rounded-md py-2 px-4 h-[40px] w-[40px] justify-center'>
@@ -155,16 +192,9 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
             </div>
 
 
-            <button className='bg-senary w-full p-3 rounded-md'>
-              <p className='text-sm text-white'>Update Effect</p>
-            </button>
 
 
-
-
-
-
-
+            <LoadingButton text="Update Motion Effect" onClick={handleSubmit} isLoading={isUpdatingMotionEffect} />
 
           </div>
         </div>
