@@ -1,5 +1,6 @@
 import {getFunctions, renderMediaOnLambda, getRenderProgress} from '@remotion/lambda/client';
 import { NextResponse } from 'next/server';
+import { appConfig } from '@/constants';
 
 
 export async function POST(req: Request){
@@ -24,12 +25,13 @@ export async function POST(req: Request){
             video: video
         },
         downloadBehavior: {
-            type: "download",
-            fileName: `video-${Date.now()}.mp4`
+            type: "play-in-browser",
         },
         framesPerLambda: 30,
         forceWidth: width,
-        forceHeight: height
+        forceHeight: height,
+        overwrite: true,
+        outName: `${appConfig.APP_SHORT_NAME}-${video.id}-out.mp4`
         
     })
 

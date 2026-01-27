@@ -142,9 +142,49 @@ export type SceneImageGeneratedPayload = {
 }
 
 export type VideoWsProgressMessageBody = {
-  type: "scene_audio_generated" | "scene_image_generated" | "scenes_generated" | "completed" | "failed";
+  type: "scene_audio_generated" | "scene_image_generated" | "scenes_generated" | "completed" | "failed" ;
   progress?:number,
   payload: SceneGeneratedPayload | SceneAudioGeneratedPayload | SceneImageGeneratedPayload
+}
+
+export type ExportedVideo = {
+  url: string;
+  render_id: string | null;
+  bucket_name: string | null;
+  created_at: string
+  updated_at: string
+}
+
+export type VideoWsExportStartedPayload = {
+  render_id: string;
+  bucket_name: string
+}
+
+export type VideoWsExportFailedPayload = {
+  render_id: string,
+  bucket_name: string;
+  errors: Record<string, string>[],
+  video_id: string
+}
+
+export type VideoWsExportCompletedPayload = {
+  render_id: string,
+  bucket_name: string;
+  video_id: string;
+  url: string;
+  exported_video: ExportedVideo
+}
+
+export type VideoWsExportProgressUpdatePayload = {
+  progress: number;
+  render_id: string;
+  video_id: string
+}
+
+export type VideoWsExportProgressMessageBody = {
+  type: 'video_export_started' | "video_export_completed" | "video_export_failed" | "video_export_progress_update";
+  progress: number;
+  payload: VideoWsExportStartedPayload | VideoWsExportCompletedPayload | VideoWsExportFailedPayload | VideoWsExportProgressUpdatePayload
 }
 
 

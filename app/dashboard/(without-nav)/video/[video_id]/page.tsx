@@ -14,12 +14,7 @@ import useFetchRequest from "@/hooks/useFetch";
 import { makeMsUrl } from "@/constants";
 import { SceneAudioGeneratedPayload, SceneGeneratedPayload, SceneImageGeneratedPayload, VideoResponse, VideoWsProgressMessageBody } from "@/lib/types/video";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import SceneCard from "@/components/video/SceneCard";
-
-import { Player } from "@remotion/player";
-import RemotionVideo from "@/components/video/RemotionVideo";
 import VideoPlayer from "@/components/video/VideoPlayer";
-import { Progress } from "@/components/ui/progress"
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import GooeyBalls from "@/components/loaders/GooeyBalls";
 import VideoGenerationAnimation from "@/components/VideoGenerationAnimation";
@@ -32,7 +27,7 @@ import { useVideoStore } from "@/lib/store/video";
 import { VideoIcon } from "lucide-react";
 import SceneList from "@/components/video/SceneList";
 import { RxCaretLeft } from "react-icons/rx";
-
+import ExportVideoButton from "@/components/video/ExportVideoButton";
 
 
 const sideNavItems = [
@@ -78,14 +73,16 @@ const MobileBottomNavItem = ({ label, Icon, onClick = () => { }, active = false 
 }
 
 
-
-
 const Page = () => {
   const { video_id } = useParams();
 
   const { video: videoData, loading: isFetchingVideo, fetchVideo, replaceScenes, replaceScene } = useVideoStore();
   // const [videoData, setVideoData] = useState<VideoResponse | null>(null);
   const [progress, setProgress] = useState<number>(0);
+
+  const [exportProgress, setExportProgress] = useState<number | null>(null)
+
+  const [rws, setRws] = useState<ReconnectingWebSocket | null>(null);
 
   const [activeTab, setActiveTab] = useState<string>(() => {
     if (typeof window !== "undefined") {
@@ -148,7 +145,6 @@ const Page = () => {
   }, []);
 
 
-
   useEffect(() => {
 
     const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/video/task/${video_id}`, "ws")}`);
@@ -158,7 +154,6 @@ const Page = () => {
       if (data.type === 'scenes_generated') {
         setProgress(data.progress ?? 0)
         replaceScenes((data.payload as SceneGeneratedPayload).scenes)
-
       }
 
       if (data.type === 'scene_audio_generated') {
@@ -175,6 +170,12 @@ const Page = () => {
 
       if (data.type === 'completed') {
         fetchVideo(video_id as string)
+      }
+    }
+
+    return () => {
+      if (rws) {
+        rws.close();
       }
     }
 
@@ -199,14 +200,7 @@ const Page = () => {
         <BreadCrumbs breadCrumbs={breadCrumbs} className="hidden md:flex" />
 
         <div className="flex flex-row items-center gap-4">
-          <button onClick={exportVideo} className="bg-senary text-white sm:px-6 px-4 py-2 text-sm rounded-sm flex flex-row items-center gap-2">
-            <BiExport />
-
-            <p className="">
-              Export
-            </p>
-
-          </button>
+          <ExportVideoButton video={videoData ?? null} />
 
           <Image
             src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=761&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
