@@ -4,7 +4,7 @@ import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Logo from "./Logo";
 
-const Nav = () => {
+const Nav = ({fixed=false}: {fixed?: boolean}) => {
   const navItems = [
     {
       label: "Home",
@@ -28,7 +28,7 @@ const Nav = () => {
     },
   ];
   return (
-    <div className="flex justify-between items-center w-full h-[100px] padding-x py-5">
+    <div className={`flex justify-between items-center w-full h-[100px] padding-x py-5 ${fixed ? "fixed top-0 left-0 right-0 z-50" : ""}`}>
       {/* <Image
         src="/images/logo.svg"
         alt="logo"

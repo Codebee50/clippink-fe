@@ -129,7 +129,7 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
           <BiEdit />
         </div> */}
       </DialogTrigger>
-      <DialogContent showCloseButton={false} className='bg-denary border-greys1/10 pt-0 overflow-hidden p-0 max-h-[90vh]'>
+      <DialogContent showCloseButton={false} className='bg-denary border-greys1/10 pt-0 overflow-hidden p-0 max-h-[95vh]'>
         <DialogHeader>
           <div className='w-full flex flex-row items-center justify-between  border-b border-greys1/20 py-2 px-4'>
 
@@ -155,19 +155,19 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
 
         <div className='w-full flex flex-col gap-2 px-4 pb-6'>
           <div className='w-full pt-2 flex flex-col gap-2' ref={containerRef}>
-            <div className='w-full grid grid-cols-2 gap-2 justify-items-center items-center'>
+            <div className='w-full grid grid-cols-1 gap-2 justify-items-center items-center'>
 
               <div className='w-full flex flex-col gap-2'>
 
-                <div className='w-full flex flex-row items-center justify-center gap-2'>
+                {/* <div className='w-full flex flex-row items-center justify-center gap-2'>
                   <BsStars size={16} className='text-senary' />
                   <p className='text-sm text-white text-center'>Preview</p>
 
-                </div>
+                </div> */}
 
 
-                <div className='w-full h-[200px] flex items-center justify-center'>
-                  <VideoPlayer video={animationTypeToVideo(motionEffect || "none", scene.image_url || "")} width={150} height={200} controls={false} autoPlay={true} overrideDurationInFrames={100} loop={true} />
+                <div className='w-full h-[170px] flex items-center justify-center'>
+                  <VideoPlayer video={animationTypeToVideo(motionEffect || "none", scene.image_url || "")} width={150} height={170} controls={false} autoPlay={true} overrideDurationInFrames={100} loop={true} />
 
                   {/* <Image src={scene.image_url || "/images/defaultbg.png"} alt="scene image" width={400} height={400} className="w-full max-w-[150px] h-[200px] object-cover object-center rounded-md" /> */}
 
@@ -178,11 +178,11 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
 
 
               <div className='w-full flex flex-col gap-2'>
-                <div className='w-full  grid grid-cols-1 gap-2 max-h-[400px] overflow-y-scroll cus-scrollbar'>
+                <div className='w-full  flex flex-row flex-wrap items-center   gap-2 max-h-[300px] overflow-y-scroll cus-scrollbar'>
                   {motionEffects.map((effect) => (
-                    <div key={effect.value} onClick={() => updateMotionEffect(effect.value)} className={`w-full text-center  border border-greys1/20 bg-greys3 flex flex-col items-start justify-center cursor-pointer rounded-md p-3 text-sm ${motionEffect === effect.value ? "border-senary" : ""}`}>
-                      <p className='text-greys2 '>{effect.displayName}</p>
-                      <p className='text-xs text-greys2/50'>Click to preview</p>
+                    <div key={effect.value} onClick={() => updateMotionEffect(effect.value)} className={`w-max text-center flex-1  border border-greys1/20 bg-greys3 flex flex-col items-center justify-center cursor-pointer rounded-md p-3 text-sm ${motionEffect === effect.value ? "border-senary" : ""}`}>
+                      <p className='text-greys2 text-nowrap '>{effect.displayName}</p>
+                      {/* <p className='text-xs text-greys2/50'>Click to preview</p> */}
 
                     </div>
                   ))}

@@ -138,7 +138,7 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
 
     const handleDownload = async () => {
         if (!exportedVideo?.url) return;
-        if(isDownloading) return
+        if (isDownloading) return
 
         try {
             setIsDownloading(true);
@@ -210,7 +210,7 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
             </button>
             <Popover open={isOpen} onOpenChange={setIsOpen}>
                 <PopoverTrigger >
-                    <div></div>
+                    <div className='w-0'></div>
 
                 </PopoverTrigger>
                 <PopoverContent className='bg-denary border-greys1/10 overflow-hidden w-[90dvw] max-w-[400px]' align='end'>
@@ -262,7 +262,7 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
                         }
 
                         {
-                            !exportInProgress && exportedVideo && <button onClick={handleDownload} disabled={isDownloading} className='text-white text-nowrap flex flex-row w-full items-center justify-center gap-2 bg-denary border border-greys1/20 px-4 py-2 rounded-sm cursor-pointer'>
+                            !exportInProgress && exportedVideo && <button onClick={handleDownload} disabled={isDownloading} className='text-white disabled:cursor-not-allowed text-nowrap flex flex-row w-full items-center justify-center gap-2 bg-denary border border-greys1/20 px-4 py-2 rounded-sm cursor-pointer'>
 
                                 {isDownloading ? <GooeyBalls size={20} /> : <MdOutlineFileDownload />}
                                 <p className='text-sm'>Download Video</p>
