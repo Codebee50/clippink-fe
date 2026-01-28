@@ -35,6 +35,7 @@ const VideoPlayer = ({ video, width = 300, height = 450, controls = true, autoPl
       }}
       controls={controls}
       autoPlay={autoPlay}
+      acknowledgeRemotionLicense={true}
       loop={loop}
       style={{
         width: "100%",

@@ -248,7 +248,12 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
 
                     {
                         exportInProgress && <div className='w-full flex flex-col gap-2 mt-5'>
-                            <p className='text-greys2 text-sm'>Rendering video...</p>
+                            <div className='w-full flex flex-row items-center justify-between'>
+                                <p className='text-greys2 text-sm'>Rendering video...</p>
+
+                                <p className='text-greys2 text-sm'>{Math.round(progress)}%</p>
+
+                            </div>
                             <Progress value={progress} className="w-full  bg-greys1/20" indicatorClassName="bg-senary" />
                         </div>
                     }
