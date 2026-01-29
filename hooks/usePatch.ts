@@ -30,7 +30,7 @@ const usePatchRequest = ({
         headers["Authorization"] = `Bearer ${accessToken}`;
       }
 
-      return await axios.patch(url, data, { headers });
+      return await axios.patch(url, data, { headers, withCredentials:true });
     },
     onSuccess,
     onError,

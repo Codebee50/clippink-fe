@@ -30,7 +30,7 @@ const usePostRequest = ({
         headers["Authorization"] = `Bearer ${accessToken}`;
       }
 
-      return await axios.post(url, data, { headers });
+      return await axios.post(url, data, { headers, withCredentials:true } );
     },
     onSuccess,
     onError,

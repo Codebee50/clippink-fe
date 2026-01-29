@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.5.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1200 800" style="enable-background:new 0 0 1200 800;" xml:space="preserve">
+<g id="Background">
+	<rect width="1200" height="800"/>
+</g>
+<g id="Graphic_Elements">
+	<g>
+		<path style="fill:#017CF5;" d="M960,282.339L960,282.339c-132.549,0-240-107.452-240-240V0h480v42.339
+			C1200,174.887,1092.548,282.339,960,282.339z"/>
+		<g>
+			<path style="fill:#E62E2E;" d="M240,490.278H0V120C0,53.726,53.726,0,120,0h0c66.274,0,120,53.726,120,120V490.278z"/>
+			<path style="fill:#017CF5;" d="M240,800H0V402.339c0-66.274,53.726-120,120-120h0c66.274,0,120,53.726,120,120V800z"/>
+		</g>
+		<g>
+			<path style="fill:#ED98A1;" d="M240,309.722h240V680c0,66.274-53.726,120-120,120h0c-66.274,0-120-53.726-120-120V309.722z"/>
+			<path style="fill:#34AD5C;" d="M240,0h240v397.661c0,66.274-53.726,120-120,120h0c-66.274,0-120-53.726-120-120V0z"/>
+		</g>
+		<g>
+			<rect x="480" y="0" style="fill:#E62E2E;" width="240" height="490.278"/>
+			<path style="fill:#F7F7F7;" d="M720,800H480V402.339c0-66.274,53.726-120,120-120h0c66.274,0,120,53.726,120,120V800z"/>
+		</g>
+		<g>
+			<rect x="720" transform="matrix(-1 -1.224647e-16 1.224647e-16 -1 1680 400)" style="fill:#F7F7F7;" width="240" height="400"/>
+			
+				<rect x="720" y="400" transform="matrix(-1 -1.224647e-16 1.224647e-16 -1 1680 1200)" style="fill:#34AD5C;" width="240" height="400"/>
+			<path style="fill:#FCCA23;" d="M840,0L840,0c66.274,0,120,53.726,120,120v277.661c0,66.274-53.726,120-120,120h0
+				c-66.274,0-120-53.726-120-120V120C720,53.726,773.726,0,840,0z"/>
+		</g>
+		<g>
+			<rect x="960" y="0" style="fill:#ED98A1;" width="240" height="490.278"/>
+			<path style="fill:#E62E2E;" d="M1200,800H960V402.339c0-66.274,53.726-120,120-120h0c66.274,0,120,53.726,120,120V800z"/>
+		</g>
+		<path style="fill:#017CF5;" d="M720,0v42.34c0,132.55-107.45,240-240,240V0H720z"/>
+		<path style="fill:#F7F7F7;" d="M480,0v282.34c-132.55,0-240-107.45-240-240V0H480z"/>
+		<path d="M960,757.66V800H720V517.66C852.55,517.66,960,625.11,960,757.66z"/>
+		<path style="fill:#FCCA23;" d="M720,517.66V800H480v-42.34C480,625.11,587.45,517.66,720,517.66z"/>
+	</g>
+</g>
+</svg>

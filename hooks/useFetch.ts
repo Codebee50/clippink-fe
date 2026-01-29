@@ -15,19 +15,13 @@ const useFetchRequest = ({
   onSuccess = () => {},
   onError = () => {},
   responseType = "json",
-  authorize = true,
 }: FetchRequestProps) => {
   const mutation = useMutation({
     mutationFn: async () => {
-      const accessToken = Cookies.get("userToken");
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
-      if (accessToken && authorize) {
-        headers["Authorization"] = `Bearer ${accessToken}`;
-      }
-
-      return await axios.get(url, { headers, responseType });
+      return await axios.get(url, { headers, responseType, withCredentials:true });
     },
     onSuccess,
     onError,

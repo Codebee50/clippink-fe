@@ -21,6 +21,7 @@ import { IoMdInformationCircle } from "react-icons/io";
 import { FaCircleUser } from "react-icons/fa6";
 import { RoundedUserAvatar } from "../RoundedUserAvatar";
 import { MdOutlineClose } from "react-icons/md";
+import { useUserStore } from "@/hooks/useUser";
 
 const navSections = [
   {
@@ -51,6 +52,7 @@ const navSections = [
 const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobile?: boolean, onMobileClose?: () => void }) => {
   const [selectedItem, setSelectedItem] = useState<string | null>(navSections[0].items[0].label);
   const [layoutState, setLayoutState] = useState<"reduced" | "expanded">("expanded");
+  const { user } = useUserStore()
   return (
     <div className={`md:w-[40%] md:max-w-[250px] md:h-full max-md:h-screen  flex flex-col items-center  border-r border-r-greys1/20 shrink-0 bg-greys3/70 transition-all duration-300  ${isMobile ? "" : "max-md:hidden"} ${layoutState == "reduced" ? "w-max" : ""}`}>
       <div className="flex flex-row items-center justify-between w-full border-b border-b-greys1/20 px-5 h-[60px]">
@@ -144,8 +146,8 @@ const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobil
             {
               layoutState == "expanded" && (
                 <div>
-                  <p className="text-sm font-medium">John Doe</p>
-                  <p className="text-xs text-greys2/50">john.doe@example.com</p>
+                  <p className="text-sm font-medium">{user?.name}</p>
+                  <p className="text-xs text-greys2/50">{user?.email}</p>
                 </div>
               )
             }

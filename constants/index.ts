@@ -8,6 +8,13 @@ export const appConfig = {
   PLACEHOLDER_IMAGE_URL: "https://clippink-bkt.s3.us-east-1.amazonaws.com/defaultbg.png"
 };
 
+
+export const routeMap = {
+  LOGIN: "/auth/login",
+  REGISTER: "/auth/register",
+  EMAIL_VERIFY: "/auth/email/verify",
+}
+
 export const BASE_MS_URL = process.env.NEXT_PUBLIC_BASE_MS_URL || "http://192.168.1.164:9000"
 
 export const BASE_MS_HOST = process.env.NEXT_PUBLIC_BASE_MS_HOST || "192.168.1.164"

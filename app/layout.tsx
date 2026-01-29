@@ -3,6 +3,7 @@ import "./globals.css";
 import { appConfig } from "@/constants";
 import { ReactQueryProvider } from "./ReactQueryProvider";
 import { Toaster } from "@/components/ui/sonner";
+import UserHeader from "@/components/UserHeader";
 
 
 export const metadata: Metadata = {
@@ -16,6 +17,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     <html lang="en">
       <body
@@ -23,6 +26,7 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           <Toaster position="top-right" />
+          <UserHeader />
           {children}
         </ReactQueryProvider>
       </body>

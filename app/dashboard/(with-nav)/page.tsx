@@ -9,7 +9,7 @@ import { RoundedUserAvatar } from "@/components/RoundedUserAvatar";
 import { IoCreateOutline } from "react-icons/io5";
 import useFetchRequest from "@/hooks/useFetch";
 import { makeMsUrl } from "@/constants";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { VideoResponse } from "@/lib/types/video";
 import { useRouter } from "next/navigation";
 import VideoListCard from "@/components/video/VideoListCard";
@@ -28,8 +28,20 @@ const Page = () => {
     },
   });
 
+
+  const { mutate: fetchUser, isLoading: isFetchingUer } = useFetchRequest({
+    url: makeMsUrl("/auth/me"),
+    onSuccess: (response: AxiosResponse) => {
+      console.log(response.data)
+    },
+    onError: (error: AxiosError) => {
+      console.error(error)
+    }
+  })
+
   useEffect(() => {
     fetchVideos();
+    fetchUser()
   }, []);
   return (
     <>

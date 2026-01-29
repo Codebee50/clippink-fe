@@ -10,7 +10,7 @@ const Footer = () => {
                     {/* Brand and tagline */}
                     <div className="flex flex-col gap-3 min-w-[220px]">
                         <div className="flex items-center gap-2">
-                            <span className="font-bold text-2xl">{appConfig.APP_SHORT_NAME}</span>
+                            <span className="font-bold text-2xl font-zalando">{appConfig.APP_SHORT_NAME}</span>
                             <span className="text-xs text-white/50">|</span>
                             <span className="text-md">Viral videos with AI.</span>
                         </div>
