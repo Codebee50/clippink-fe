@@ -23,31 +23,38 @@ import { RoundedUserAvatar } from "../RoundedUserAvatar";
 import { MdOutlineClose } from "react-icons/md";
 import { useUserStore } from "@/hooks/useUser";
 import UserInfoPopover from "../UserInfoPopover";
+import { BiSolidVideos } from "react-icons/bi";
+
 
 const navSections = [
   {
     title: "DASHBOARD",
     items: [
       { label: "Home", Icon: MdHome },
+      { label: "My Videos", Icon: BiSolidVideos },
       { label: "Marketplace", Icon: LuShoppingBag },
     ],
   },
   {
     title: "CREATION",
     items: [
-      { label: "Prompt to video", Icon: BsAlphabet },
       { label: "Script to video", Icon: TbScriptPlus },
-    ],
-  },
-  {
-    title: "TRENDS",
-    items: [
+      { label: "Prompt to video", Icon: BsAlphabet },
       { label: "POV Videos", Icon: IoMdEye },
       { label: "Italian Bainrot", Icon: LuPizza },
       { label: "User Generated Content", Icon: MdFace2 },
       { label: "AI ASMR", Icon: GiFruitBowl },
     ],
   },
+  // {
+  //   title: "TRENDS",
+  //   items: [
+  //     { label: "POV Videos", Icon: IoMdEye },
+  //     { label: "Italian Bainrot", Icon: LuPizza },
+  //     { label: "User Generated Content", Icon: MdFace2 },
+  //     { label: "AI ASMR", Icon: GiFruitBowl },
+  //   ],
+  // },
 ];
 
 const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobile?: boolean, onMobileClose?: () => void }) => {

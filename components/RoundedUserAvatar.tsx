@@ -5,7 +5,7 @@ export const RoundedUserAvatar = ({ width = 30, height = 30 }: { width?: number;
   return (
     <div className="cursor-pointer text-greys2/50 hover:text-white transition-all duration-300  rounded-md hover:bg-greys1/10 relative shrink-0">
       <Image
-        src="/avaters/bear.png"
+        src="/avaters/dog.png"
         alt="avatar"
         width={width}
         height={height}

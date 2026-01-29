@@ -28,6 +28,7 @@ import { VideoIcon } from "lucide-react";
 import SceneList from "@/components/video/SceneList";
 import { RxCaretLeft } from "react-icons/rx";
 import ExportVideoButton from "@/components/video/ExportVideoButton";
+import UserInfoPopover from "@/components/UserInfoPopover";
 
 
 const sideNavItems = [
@@ -199,16 +200,10 @@ const Page = () => {
 
         <BreadCrumbs breadCrumbs={breadCrumbs} className="hidden md:flex" />
 
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-row items-center ">
           <ExportVideoButton video={videoData ?? null} />
 
-          <Image
-            src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=761&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="share"
-            width={42}
-            height={42}
-            className="rounded-full w-[38px] h-[38px] object-cover object-center max-sm:hidden"
-          />
+          <UserInfoPopover state="reduced" />
         </div>
       </div>
 

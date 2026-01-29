@@ -210,7 +210,6 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
             </button>
             <Popover open={isOpen} onOpenChange={setIsOpen}>
                 <PopoverTrigger >
-                    <div className='w-0'></div>
 
                 </PopoverTrigger>
                 <PopoverContent className='bg-denary border-greys1/10 overflow-hidden w-[90dvw] max-w-[400px]' align='end'>

@@ -15,13 +15,13 @@ const MobileDashboardNav = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <div className="md:hidden">
-            <Drawer direction='right' open={isOpen} onOpenChange={setIsOpen}>
+            <Drawer direction='left' open={isOpen} onOpenChange={setIsOpen}>
                 <DrawerTrigger>
                     <div className="md:hidden w-[40px] h-[40px] flex items-center justify-center border border-greys1/20 rounded-md">
                         <MdOutlineMenu className="text-greys2 transition-all duration-300" />
                     </div>
                 </DrawerTrigger>
-                <DrawerContent className='bg-denary border-none! w-screen! h-dvh!'>
+                <DrawerContent className='bg-denary border-none! w-[85%]! h-dvh!'>
 
 
                     <div className='w-full h-dvh'>

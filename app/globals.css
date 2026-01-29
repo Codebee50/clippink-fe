@@ -83,6 +83,14 @@ body {
   .padding-x {
     @apply px-6 md:px-10 lg:px-16;
   }
+
+  .stack {
+    display: grid;
+  }
+
+  .stack > * {
+    grid-area: 1 / 1; /* stack everything on top of each other */
+  }
   @keyframes scroll {
     0% {
       transform: translateX(0);

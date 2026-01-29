@@ -17,20 +17,29 @@ import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 import MobileDashboardNav from "@/components/dashboard/MobileDashboardNav";
 import UserInfoPopover from "@/components/UserInfoPopover";
 import Link from "next/link";
-import { IoIosArrowRoundForward } from "react-icons/io";
 import { useUserStore } from "@/hooks/useUser";
 import { RiVideoOnAiFill } from "react-icons/ri";
-import { IoArrowForwardSharp } from "react-icons/io5";
 
 import { BsStars } from "react-icons/bs";
+import { IoMdAdd } from "react-icons/io";
+import { Skeleton } from "@/components/ui/skeleton"
+import { LuInbox } from "react-icons/lu";
 
 
-const BannerCard = ({ title, value }: { title: string, value: string }) => {
-  return <div className="flex flex-col items-center justify-center border border-greys1/20 rounded-md p-4 min-h-[120px]">
-    <p className="text-sm text-greys2/50 text-center">{title}</p>
-    <h1 className="text-2xl">{value}</h1>
-  </div>
+
+const LoadingRecentsSekeleton = () => {
+
+  return (
+    <div className="w-full flex flex-row overflow-scroll no-scrollbar gap-2 scroll-smooth">
+      {Array.from({ length: 10 }).map((_, index: number) => (
+        <Skeleton key={index} className="w-[150px] sm:w-[200px] h-[200px] sm:h-[250px] bg-greys3 rounded-md border border-greys1/30 shrink-0 cursor-pointer overflow-hidden relative" />
+      ))
+      }
+    </div>
+  )
+
 }
+
 
 const Page = () => {
   const [userVideos, setUserVideos] = useState<VideoResponse[]>([]);
@@ -133,11 +142,20 @@ const Page = () => {
 
                 </div>
 
-                <button onClick={() => router.push("/dashboard/video/create")} className="bg-denary  z-10 text-white font-medium px-4 py-2 rounded-md flex flex-row items-center gap-2 cursor-pointer w-max max-sm:mt-10">
-                  <p className="text-sm capitalize">Create new video</p>
-                  <IoArrowForwardSharp className="text-2xl" size={20} />
+                <div className="w-full flex flex-row items-center gap-4">
 
-                </button>
+                  <button onClick={() => router.push("/dashboard/video/create")} className="bg-denary  z-10 text-white font-medium px-4 py-2 rounded-md flex flex-row items-center gap-2 cursor-pointer w-max max-sm:mt-10">
+                    <IoMdAdd className="text-lg" />
+                    <p className="text-sm capitalize">Create new video</p>
+                  </button>
+
+                  {/* <button onClick={() => router.push("/dashboard/video/create")} className=" z-10 text-white font-medium  py-2 rounded-md flex flex-row items-center gap-2 cursor-pointer w-max max-sm:mt-10">
+                    My Videos
+                    <IoArrowForwardSharp className="text-lg" />
+                  </button> */}
+                </div>
+
+
 
 
                 <Image src="/images/stars.svg" alt="Generate content using AI" width={1000} height={1000} className="w-[200px] opacity-50  absolute bottom-0 right-0" />
@@ -147,7 +165,7 @@ const Page = () => {
 
 
 
-              <div className="sm:w-[40%] w-ful min-h-[250px] sm:h-[250px] h-[200px] p-5 rounded-lg bg-senary/10 border border-[#2F2F2F] flex flex-col justify-between">
+              <div className="sm:w-[40%] w-ful min-h-[250px] sm:h-[250px] h-[200px] p-5 rounded-lg bg-senary/10 border border-[#2F2F2F] flex flex-col justify-between cursor-pointer">
                 {/* <p className="text-sm">Idea for you</p> */}
 
                 <div className="bg-[#3C3C40]/50 w-max text-xs px-4 py-1 rounded-full text-center border border-white/10 flex flex-row items-center gap-1">
@@ -164,14 +182,10 @@ const Page = () => {
                 </div>
 
 
-                <button onClick={() => router.push("/dashboard/video/create")} className="bg-denary   z-10 text-white  px-4 py-2 rounded-md flex flex-row items-center gap-2 cursor-pointer w-max">
-                  {/* <IoArrowForwardSharp className="text-2xl" size={20} /> */}
-                  <BsStars className="text-yellow-500 text-sm" />
 
 
-                  <p className="text-sm capitalize">Generate this video</p>
 
-                </button>
+                <div></div>
 
               </div>
 
@@ -225,17 +239,22 @@ const Page = () => {
                 <IoMdArrowForward />
               </button>
             </div>
-
-
-
-
           </div>
 
-          <div className="w-full  flex flex-row overflow-scroll no-scrollbar gap-4 scroll-smooth" ref={userVideosScrollRef}>
-            {userVideos.map(video => {
-              return <VideoListCard key={video.id} video={video} />;
-            })}
-          </div>
+
+
+          {
+            isFetchingVideos ? <LoadingRecentsSekeleton /> : userVideos.length > 0 ? <div className="w-full  flex flex-row overflow-scroll no-scrollbar gap-4 scroll-smooth" ref={userVideosScrollRef}>
+              {userVideos.map(video => {
+                return <VideoListCard key={video.id} video={video} />;
+              })}
+            </div> :
+              <div className="w-full flex flex-col items-center justify-center h-[200px] border border-greys1/20 rounded-md p-4 gap-2">
+                <LuInbox className="text-greys2/50 text-2xl" size={40} />
+                <p className="text-sm text-greys2/50 text-center">No videos yet. Ready to create your first one?</p>
+              </div>
+          }
+
         </div>
 
 

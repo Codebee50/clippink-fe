@@ -30,12 +30,12 @@ const userInfoPopoverItems = [
         href: "/profile",
     },
     {
-        label: "Billing",
+        label: "Manage Billing",
         icon: <PiWalletBold size={18} />,
         href: "/wallet",
     },
     {
-        label: "Videos",
+        label: "My Videos",
         icon: <BiSolidVideos size={18} />,
         href: "/videos",
     },
