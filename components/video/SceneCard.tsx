@@ -54,9 +54,6 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
               scene={scene}
             />
 
-            {/* <EditImageModal scene={scene} /> */}
-
-
           </div>
         </div>
 

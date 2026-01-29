@@ -121,6 +121,7 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
   return (
 
     <Dialog open={isOpen} onOpenChange={(open) => {
+      console.log('on open change', open)
       setIsOpen(open)
       onOpenChange(open)
     }}>
@@ -143,7 +144,10 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
 
             </div>
 
-            <button onClick={() => setIsOpen(false)} className='flex flex-row items-center gap-2 w-[30px] h-[30px] border border-greys1/20 rounded-md justify-center cursor-pointer  transition-all duration-300'>
+            <button onClick={() => {
+              setIsOpen(false)
+              onOpenChange(false)
+            }} className='flex flex-row items-center gap-2 w-[30px] h-[30px] border border-greys1/20 rounded-md justify-center cursor-pointer  transition-all duration-300'>
               <MdOutlineClose size={16} className='text-white text-lg cursor-pointer hover:text-red-500 transition-all duration-300' />
             </button>
 
@@ -159,17 +163,9 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
 
               <div className='w-full flex flex-col gap-2'>
 
-                {/* <div className='w-full flex flex-row items-center justify-center gap-2'>
-                  <BsStars size={16} className='text-senary' />
-                  <p className='text-sm text-white text-center'>Preview</p>
-
-                </div> */}
-
-
                 <div className='w-full h-[170px] flex items-center justify-center'>
                   <VideoPlayer video={animationTypeToVideo(motionEffect || "none", scene.image_url || "")} width={150} height={170} controls={false} autoPlay={true} overrideDurationInFrames={100} loop={true} />
 
-                  {/* <Image src={scene.image_url || "/images/defaultbg.png"} alt="scene image" width={400} height={400} className="w-full max-w-[150px] h-[200px] object-cover object-center rounded-md" /> */}
 
                 </div>
 
