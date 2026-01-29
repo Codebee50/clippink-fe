@@ -7,17 +7,41 @@ import LoadingButton from '@/components/buttons/LoadingButton'
 import { useFormik } from 'formik'
 import TextInput from '@/components/inputs/TextInput'
 import Link from 'next/link'
-import { routeMap } from '@/constants'
+import { makeMsUrl, routeMap } from '@/constants'
+import { registrationSchema } from '@/lib/validationSchemas'
+import usePostRequest from '@/hooks/usePost'
+import { AxiosError, AxiosResponse } from 'axios'
+import useStyledToast from '@/hooks/useStyledToast'
+import { useRouter } from 'next/navigation'
+import { genericErrorHandler } from '@/lib/errorHandler'
 
 const Page = () => {
+
+    const toast = useStyledToast()
+    const router = useRouter()
+
+    const { mutate: register, isLoading: isRegisterLoading } = usePostRequest({
+        url: makeMsUrl("/auth/register/"),
+        onSuccess: (response: AxiosResponse) => {
+
+            toast.success("Account created successfully")
+            router.push(`${routeMap.EMAIL_VERIFY}/${response.data.email}`)
+
+        },
+        onError: (error: AxiosError) => {
+            toast.error(genericErrorHandler(error, "Unable to create account"))
+        }
+    })
+
     const formik = useFormik({
         initialValues: {
             email: "",
             password: "",
-            username: ""
+            name: ""
         },
+        validationSchema: registrationSchema,
         onSubmit: (values) => {
-            console.log(values)
+            register(values)
         }
     })
     return (
@@ -43,12 +67,12 @@ const Page = () => {
                 <div className='w-full  mt-[5px] flex flex-col gap-2'>
 
 
-                    <TextInput formik={formik} name='username' label='Username' placeholder='Enter your username' type='text' />
+                    <TextInput formik={formik} name='name' label='Username' placeholder='Choose your username' type='text' />
                     <TextInput formik={formik} name='email' label='Email' placeholder='Enter your email' type='email' />
                     <TextInput formik={formik} name='password' label='Password' placeholder='Enter your password' type='password' />
 
                     <div className='w-full mt-5 flex flex-col gap-2'>
-                        <LoadingButton text='Create account' onClick={formik.handleSubmit} isLoading={false} loadingText='Creating your account...' />
+                        <LoadingButton text='Create account' onClick={formik.handleSubmit} isLoading={isRegisterLoading} loadingText='Creating your account...' />
 
                         <p className='text-center text-greys2 font-inter f text-sm'>
                             <span>Already have an account?</span>

@@ -10,16 +10,45 @@ import {
 } from "@/components/ui/input-otp";
 import LoadingButton from '@/components/buttons/LoadingButton';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import useStyledToast from '@/hooks/useStyledToast';
 import Link from 'next/link';
-import { routeMap } from '@/constants';
+import { appConfig, makeMsUrl, routeMap } from '@/constants';
+import usePostRequest from '@/hooks/usePost';
+import { AxiosError, AxiosResponse } from 'axios';
+import { genericErrorHandler } from '@/lib/errorHandler';
+import { useUserStore } from '@/hooks/useUser';
+import { UserData } from '@/lib/types/user';
 
 const Page = () => {
   const { email } = useParams();
   const decodedEmail = email ? decodeURIComponent(email as string) : "";
 
   const toast = useStyledToast()
+  const router = useRouter()
+  const setUser = useUserStore((state) => state.setUser)
+
+  const { mutate: verifyEmail, isLoading: isVerifyingEmail } = usePostRequest({
+    url: makeMsUrl("/auth/email/verify/"),
+    onSuccess: (response: AxiosResponse) => {
+      toast.success(`Email verified successfully, welcome to ${appConfig.APP_NAME}`)
+      setUser(response.data as UserData)
+      router.push(routeMap.DASHBOARD)
+    },
+    onError: (error: AxiosError) => {
+      toast.error(genericErrorHandler(error, "Unable to verify email"))
+    }
+  })
+
+  const { mutate: resendEmail, isLoading: isResendingEmail } = usePostRequest({
+    url: makeMsUrl("/auth/email/verification/resend/"),
+    onSuccess: (response: AxiosResponse) => {
+      toast.success("Email resent successfully")
+    },
+    onError: (error: AxiosError) => {
+      toast.error(genericErrorHandler(error, "Unable to resend email"))
+    }
+  })
 
 
   const handleFormSubmitted = (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,6 +64,8 @@ const Page = () => {
       email: decodedEmail,
       otp: userOtp,
     };
+
+    verifyEmail(reqBody)
 
 
   };
@@ -56,11 +87,14 @@ const Page = () => {
 
         <div className='w-full flex flex-row items-center justify-center gap-2'>
           <p className='text-greys2 font-inter text-sm'>Didn&apos;t receive the code?</p>
-          <Link href="/" className='text-senary font-inter text-sm underline'>Resend code</Link>
+          <button type='button' onClick={() => resendEmail({ email: decodedEmail })} disabled={isResendingEmail} className='text-senary font-inter text-sm underline cursor-pointer disabled:cursor-not-allowed'>Resend code</button>
         </div>
 
         <LoadingButton
           text="Verify my account"
+          type="submit"
+          isLoading={isVerifyingEmail}
+          loadingText="Verifying email..."
         />
       </form>
 

@@ -22,6 +22,7 @@ import { FaCircleUser } from "react-icons/fa6";
 import { RoundedUserAvatar } from "../RoundedUserAvatar";
 import { MdOutlineClose } from "react-icons/md";
 import { useUserStore } from "@/hooks/useUser";
+import UserInfoPopover from "../UserInfoPopover";
 
 const navSections = [
   {
@@ -138,26 +139,7 @@ const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobil
 
         </div>
 
-        {/* user details */}
-        <div className={`flex flex-row items-center w-full px-3 py-3 ${layoutState == "reduced" ? "justify-center" : "justify-between"}`}>
-          <div className="flex flex-row items-center gap-2">
-            <RoundedUserAvatar />
-
-            {
-              layoutState == "expanded" && (
-                <div>
-                  <p className="text-sm font-medium">{user?.name}</p>
-                  <p className="text-xs text-greys2/50">{user?.email}</p>
-                </div>
-              )
-            }
-          </div>
-
-          {
-            layoutState == "expanded" && <RiExpandUpDownLine />
-          }
-        </div>
-
+        <UserInfoPopover state={layoutState} />
 
       </div>
     </div>

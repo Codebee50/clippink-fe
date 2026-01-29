@@ -10,9 +10,10 @@ export const appConfig = {
 
 
 export const routeMap = {
+  DASHBOARD: "/dashboard",
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
-  EMAIL_VERIFY: "/auth/email/verify",
+  EMAIL_VERIFY: "/auth/verify",
 }
 
 export const BASE_MS_URL = process.env.NEXT_PUBLIC_BASE_MS_URL || "http://192.168.1.164:9000"
