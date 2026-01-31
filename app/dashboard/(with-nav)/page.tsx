@@ -25,6 +25,9 @@ import { IoMdAdd } from "react-icons/io";
 import { Skeleton } from "@/components/ui/skeleton"
 import { LuInbox } from "react-icons/lu";
 
+import { HiLightBulb } from "react-icons/hi";
+
+
 
 
 const LoadingRecentsSekeleton = () => {
@@ -165,27 +168,31 @@ const Page = () => {
 
 
 
-              <div className="sm:w-[40%] w-ful min-h-[250px] sm:h-[250px] h-[200px] p-5 rounded-lg bg-senary/10 border border-[#2F2F2F] flex flex-col justify-between cursor-pointer">
+              <div className="sm:w-[40%] w-full min-h-[250px] sm:h-[250px] h-[200px] rounded-lg bg-senary/10 border border-[#2F2F2F] flex flex-col  cursor-pointer relative overflow-hidden">
                 {/* <p className="text-sm">Idea for you</p> */}
 
-                <div className="bg-[#3C3C40]/50 w-max text-xs px-4 py-1 rounded-full text-center border border-white/10 flex flex-row items-center gap-1">
-                  <p>Video idea for you</p>
-                </div>
+
+                <Image src="https://clippink-bkt.s3.amazonaws.com/images/landing-page-images/b1215c73-f9c8-4db2-a9e1-8c36d6c1034a.jpeg" alt="Idea for you" width={300} height={300} className="w-full h-full shrink-0 rounded-md  object-cover object-center" />
 
 
-                <div className="w-full flex flex-row items-center gap-4">
-                  <Image src="https://clippink-bkt.s3.amazonaws.com/images/landing-page-images/bb8d0f2b-0d13-41e9-ae86-f37b467ed82b.jpeg" alt="Idea for you" width={300} height={300} className="w-[100px] shrink-0 rounded-md h-[100px] object-cover object-center" />
 
-                  <p className="text-greys2 text-sm italic line-clamp-5">
+                <div className="w-full flex flex-col justify-center  gap-4 absolute inset-0 p-5 bg-black/60">
+
+                  <div className="bg-denary w-max text-xs px-4 py-2 rounded-md text-center border border-white/10 flex flex-row items-center gap-1">
+                    <HiLightBulb className="text-lg text-yellow-300" />
+                    <p>Video idea for you</p>
+                  </div>
+
+                  <p className="text-white text-sm  line-clamp-5 italic tracking-wide leading-[1.7]">
                     &quot;As the early morning light filters through the window, the world awakens to quiet possibility. A new idea takes shape, unfolding gently in your mind, ready to transform the ordinary into something extraordinary. Guided by curiosity and a spark of inspiration, you embark on a journey where each moment holds the potential to create, discover, and imagine without limits.&quot;
                   </p>
+
                 </div>
 
 
 
 
 
-                <div></div>
 
               </div>
 

@@ -12,7 +12,7 @@ import { HiOutlineMusicNote } from "react-icons/hi";
 import { IoSettingsOutline } from "react-icons/io5";
 import useFetchRequest from "@/hooks/useFetch";
 import { makeMsUrl } from "@/constants";
-import { SceneAudioGeneratedPayload, SceneGeneratedPayload, SceneImageGeneratedPayload, VideoResponse, VideoWsProgressMessageBody } from "@/lib/types/video";
+import { SceneAudioGeneratedPayload, SceneGeneratedPayload, SceneImageGeneratedPayload, SceneImageGenerationFailedPayload, VideoResponse, VideoUpdateMessageBody } from "@/lib/types/video";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import VideoPlayer from "@/components/video/VideoPlayer";
 import ReconnectingWebSocket from 'reconnecting-websocket';
@@ -29,6 +29,8 @@ import SceneList from "@/components/video/SceneList";
 import { RxCaretLeft } from "react-icons/rx";
 import ExportVideoButton from "@/components/video/ExportVideoButton";
 import UserInfoPopover from "@/components/UserInfoPopover";
+import useStyledToast from "@/hooks/useStyledToast";
+import useVideoUpdateWs from "@/hooks/useVideoUpdateWs";
 
 
 const sideNavItems = [
@@ -76,6 +78,7 @@ const MobileBottomNavItem = ({ label, Icon, onClick = () => { }, active = false 
 
 const Page = () => {
   const { video_id } = useParams();
+  const toast = useStyledToast()
 
   const { video: videoData, loading: isFetchingVideo, fetchVideo, replaceScenes, replaceScene } = useVideoStore();
   // const [videoData, setVideoData] = useState<VideoResponse | null>(null);
@@ -112,75 +115,45 @@ const Page = () => {
   const isVideoProcessing = !videoData || videoData?.status === 'processing' || videoData?.status === 'pending';
 
 
-  const dummyRenderId = "gt7oi9luer"
-  const dummyBucketName = "remotionlambda-useast1-h2ias1sgku"
+  const handleVideoUpdate = (data: VideoUpdateMessageBody) => {
+    if (data.type === 'scenes_generated') {
+      setProgress(data.progress ?? 0)
+      replaceScenes((data.payload as SceneGeneratedPayload).scenes)
+    }
 
-  const checkProgress = async (renderId: string, bucketName: string) => {
-    const response = await axios.post(`/api/lambda/progress/${renderId}`, {
-      bucketName: bucketName
-    })
-    console.log("Response from lambda progress", response.data)
+    if (data.type === 'scene_audio_generated') {
+      setProgress(data.progress ?? 0)
+      const payload = data.payload as SceneAudioGeneratedPayload
+      replaceScene(payload.scene)
+    }
+
+    if (data.type === 'scene_image_generated') {
+      setProgress(data.progress ?? 0)
+      const payload = data.payload as SceneImageGeneratedPayload
+      replaceScene(payload.scene)
+    }
+
+    if (data.type === 'completed') {
+      fetchVideo(video_id as string)
+    }
+
+    if (data.type === 'scene_image_generation_failed') {
+      const payload = data.payload as SceneImageGenerationFailedPayload
+      const scene = videoData?.scenes.find(scene => scene.id === payload.scene_id)
+      toast.error(`Image generation failed for scene ${scene?.order_number}: ${payload.error}`)
+    }
   }
 
-  const exportVideo = async () => {
-
-    checkProgress(dummyRenderId, dummyBucketName)
-
-
-    // const response = await axios.post("/api/lambda/render", {
-    //   video: videoData,
-    //   width: 1080,
-    //   height: 1920,
-    // })
-
-    // console.log("Response from lambda render", response.data)
-  }
-
-
-
-
-
+  useVideoUpdateWs({
+    onMessage: handleVideoUpdate
+  })
 
   useEffect(() => {
     fetchVideo(video_id as string);
   }, []);
 
 
-  useEffect(() => {
 
-    const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/video/task/${video_id}`, "ws")}`);
-
-    rws.onmessage = (event) => {
-      const data = JSON.parse(event.data) as VideoWsProgressMessageBody
-      if (data.type === 'scenes_generated') {
-        setProgress(data.progress ?? 0)
-        replaceScenes((data.payload as SceneGeneratedPayload).scenes)
-      }
-
-      if (data.type === 'scene_audio_generated') {
-        setProgress(data.progress ?? 0)
-        const payload = data.payload as SceneAudioGeneratedPayload
-        replaceScene(payload.scene)
-      }
-
-      if (data.type === 'scene_image_generated') {
-        setProgress(data.progress ?? 0)
-        const payload = data.payload as SceneImageGeneratedPayload
-        replaceScene(payload.scene)
-      }
-
-      if (data.type === 'completed') {
-        fetchVideo(video_id as string)
-      }
-    }
-
-    return () => {
-      if (rws) {
-        rws.close();
-      }
-    }
-
-  }, [video_id])
 
   return (
     <div className="flex flex-col min-h-screen  bg-denary w-full relative">

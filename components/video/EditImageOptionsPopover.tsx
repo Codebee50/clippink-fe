@@ -16,6 +16,7 @@ import { FaMagic } from "react-icons/fa";
 import { FiTrash2 } from 'react-icons/fi';
 import Image from 'next/image';
 import EditMotionEffectModal from './EditMotionEffect';
+import AnimateImageModal from './AnimateImageModal';
 
 
 const EditImageOptionsPopover = ({ scene }: { scene: Scene }) => {
@@ -23,7 +24,7 @@ const EditImageOptionsPopover = ({ scene }: { scene: Scene }) => {
 
     const [open, setOpen] = useState(false)
     const [editMotionEffectOpen, setEditMotionEffectOpen] = useState(false)
-
+    const [animateImageOpen, setAnimateImageOpen] = useState(false)
     const options = [
         {
             label: 'Motion Effect',
@@ -34,7 +35,8 @@ const EditImageOptionsPopover = ({ scene }: { scene: Scene }) => {
         {
             label: "Animate Image",
             Icon: FaMagic,
-            value: "animateImage"
+            value: "animateImage",
+            onClick: () => setAnimateImageOpen(true)
         },
         {
             label: "Delete Image",
@@ -83,6 +85,7 @@ const EditImageOptionsPopover = ({ scene }: { scene: Scene }) => {
             </Popover>
 
             <EditMotionEffectModal scene={scene} open={editMotionEffectOpen} onOpenChange={setEditMotionEffectOpen} />
+            <AnimateImageModal scene={scene} open={animateImageOpen} onOpenChange={setAnimateImageOpen} />
         </>
     )
 }

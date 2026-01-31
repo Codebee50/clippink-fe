@@ -141,10 +141,23 @@ export type SceneImageGeneratedPayload = {
   scene: Scene
 }
 
-export type VideoWsProgressMessageBody = {
-  type: "scene_audio_generated" | "scene_image_generated" | "scenes_generated" | "completed" | "failed" ;
+export type SceneImageGenerationFailedPayload = {
+  scene_id: string,
+  error: string
+}
+
+export type SceneAnimationSuccessfulPayload = {
+  scene: Scene,
+  video: {
+    video_file_key: string,
+    video_url: string
+  }
+}
+
+export type VideoUpdateMessageBody = {
+  type: "scene_audio_generated" | "scene_image_generated" | "scenes_generated" | "completed" | "failed" | "scene_image_generation_failed" | "scene_animation_successful";
   progress?:number,
-  payload: SceneGeneratedPayload | SceneAudioGeneratedPayload | SceneImageGeneratedPayload
+  payload: SceneGeneratedPayload | SceneAudioGeneratedPayload | SceneImageGeneratedPayload | SceneImageGenerationFailedPayload | SceneAnimationSuccessfulPayload
 }
 
 export type ExportedVideo = {

@@ -1,6 +1,6 @@
 import { appConfig } from "../../constants";
 import { Scene, VideoResponse } from "../../lib/types/video";
-import { AbsoluteFill, Audio, Img, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, Img, Sequence, useCurrentFrame, useVideoConfig, Video } from "remotion";
 import { getAnimationStyle } from "../../lib/utils";
 import { useMemo} from "react";
 
@@ -91,7 +91,13 @@ const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: Vide
           <Sequence key={scene.id} from={startTime} durationInFrames={duration}>
             <AbsoluteFill style={{ justifyContent: 'center', alignItems: 'center', width: "100%", height: "100%" }}>
 
-              <Img src={scene.image_url || appConfig.PLACEHOLDER_IMAGE_URL} alt="scene image" width={width} height={height} className="w-full h-full object-cover object-center" style={animationData.style} />
+              {scene.media_type === 'image' && (
+                <Img src={scene.image_url || appConfig.PLACEHOLDER_IMAGE_URL} alt="scene image" width={width} height={height} className="w-full h-full object-cover object-center" style={animationData.style} />
+              )}
+
+              {scene.media_type === 'video' && scene.video_url && (
+                <Video src={scene.video_url}  width={width} height={height} className="w-full h-full object-cover object-center" style={animationData.style} />
+              )}
 
               <AbsoluteFill style={{
                 justifyContent: 'flex-end',

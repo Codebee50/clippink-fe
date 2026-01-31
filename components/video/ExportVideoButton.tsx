@@ -168,8 +168,10 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
 
 
     useEffect(() => {
-        if (exportInProgress) {
+        if (exportInProgress && video?.id) {
             const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/video/render/${video?.id}`, "ws")}`);
+
+            
 
             rws.onmessage = (event) => {
                 const data = JSON.parse(event.data) as VideoWsExportProgressMessageBody
@@ -192,11 +194,9 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
                     toast.error("video rendering failed")
                 }
             }
-
-
         }
 
-    }, [exportInProgress])
+    }, [exportInProgress, video?.id])
 
     return (
 
