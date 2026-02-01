@@ -6,7 +6,13 @@ export default function Home() {
   return (
     <div >
       <Hero />
+
+      <div className="pt-[250px] bg-denary">
+
+      </div>
       <ShowcaseSection />
+
+
 
 
       <Footer />

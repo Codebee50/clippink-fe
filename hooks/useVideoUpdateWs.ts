@@ -1,7 +1,7 @@
 
 import { useVideoStore } from "@/lib/store/video";
 import { VideoUpdateMessageBody } from "@/lib/types/video";
-import { videoUpdateManager } from "@/lib/utils";
+import { videoUpdateManager } from "@/lib/utils/videoUpdateManager";
 import { useEffect } from "react"
 
 const useVideoUpdateWs = ({onMessage}: {onMessage: (data: VideoUpdateMessageBody) => void}) => {

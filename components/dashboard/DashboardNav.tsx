@@ -146,7 +146,11 @@ const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobil
 
         </div>
 
-        <UserInfoPopover state={layoutState} />
+        <div className="max-md:px-3 max-md:py-5 py-2">
+          <UserInfoPopover state={layoutState} />
+
+        </div>
+
 
       </div>
     </div>

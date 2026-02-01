@@ -110,7 +110,7 @@ const Hero = () => {
   const [images, setImages] = useState<string[]>(shuffleArray(imageUrls as string[]));
   const router = useRouter();
   return (
-    <div className="flex flex-col min-h-dvh  bg-denary w-full relative">
+    <div className="flex flex-col  bg-denary w-full relative">
       <div className="relative">
         <div className="flex flex-col pt-[20px]">
           <Marquee imageList={images.slice(0, 30)} direction="left" />

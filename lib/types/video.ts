@@ -1,3 +1,5 @@
+import { CaptionStyleConfig } from "./captions";
+
 export interface Word {
   end: number;
   text: string;
@@ -67,6 +69,7 @@ export interface VideoResponse {
   title: string | null;
   scenes: Scene[];
   last_changed_at?: string | null;
+  caption_settings: CaptionStyleConfig | null
 }
 
 export type VideoStyleResponse = {

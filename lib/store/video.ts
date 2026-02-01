@@ -2,6 +2,7 @@ import {create} from "zustand"
 import { Scene, VideoResponse } from "../types/video";
 import { makeMsUrl } from "@/constants";
 import axios from "axios";
+import { getDefaultCaptionSettings } from "../utils/caption";
 type VideoStore = {
     video: VideoResponse | null;
     loading: boolean;
@@ -21,8 +22,12 @@ export const useVideoStore = create<VideoStore>((set)=>({
         const response = await axios.get(`${makeMsUrl(`/video/${videoId}/`)}`)
 
         if(response.status === 200){
-            set({video: response.data as VideoResponse, loading: false})
-            return response.data as VideoResponse
+            const video = response.data as VideoResponse
+            if (!video.caption_settings){
+                video.caption_settings = getDefaultCaptionSettings()
+            }
+            set({video: video, loading: false})
+            return video
         }
 
         set({loading: false})

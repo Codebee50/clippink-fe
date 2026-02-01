@@ -52,7 +52,7 @@ const UserInfoPopover = ({ state = "expanded", avatarSize = 40 }: { state?: "red
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <div className={`flex flex-row cursor-pointer items-center w-full px-3 py-3 ${state == "reduced" ? "justify-center" : "justify-between"}`}>
+                <div className={`flex flex-row cursor-pointer items-center w-full ${state == "reduced" ? "justify-center" : "justify-between"} ${state == "expanded" ? "px-2 py-1" : ""}`}>
                     <div className="flex flex-row items-center gap-2">
                         <RoundedUserAvatar width={avatarSize} height={avatarSize} />
 
@@ -71,7 +71,7 @@ const UserInfoPopover = ({ state = "expanded", avatarSize = 40 }: { state?: "red
                     }
                 </div>
             </PopoverTrigger>
-            <PopoverContent className='bg-denary max-md:bg-greys3 border-greys1/30 overflow-hidden max-w-[200px] px-0 pt-0'>
+            <PopoverContent align="end" className='bg-denary max-md:bg-greys3 border-greys1/30 overflow-hidden max-w-[200px] px-0 pt-0'>
                 <PopoverHeader>
                     <div className='flex flex-row items-center gap-4 px-4 py-3 border-b border-b-greys1/30'>
                         <RoundedUserAvatar />

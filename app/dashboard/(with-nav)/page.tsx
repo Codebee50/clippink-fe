@@ -106,7 +106,7 @@ const Page = () => {
           <input type="text" placeholder="Search Videos, Categories or Trends" className="bg-transparent outline-none flex-1 text-sm text-white placeholder:text-greys4" />
         </div>
 
-        <div className="flex flex-row items-center gap-1">
+        <div className="flex flex-row items-center gap-3">
           {/* notifications */}
           <div className="cursor-pointer text-greys2/50 hover:text-white transition-all duration-300  rounded-md hover:bg-greys1/10 relative">
             <MdNotificationsNone className="text-xl" />

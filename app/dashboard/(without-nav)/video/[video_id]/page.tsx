@@ -31,6 +31,7 @@ import ExportVideoButton from "@/components/video/ExportVideoButton";
 import UserInfoPopover from "@/components/UserInfoPopover";
 import useStyledToast from "@/hooks/useStyledToast";
 import useVideoUpdateWs from "@/hooks/useVideoUpdateWs";
+import CaptionModifications from "@/components/video/CaptionModifications";
 
 
 const sideNavItems = [
@@ -173,10 +174,14 @@ const Page = () => {
 
         <BreadCrumbs breadCrumbs={breadCrumbs} className="hidden md:flex" />
 
-        <div className="flex flex-row items-center ">
+        <div className="flex flex-row items-center gap-2">
           <ExportVideoButton video={videoData ?? null} />
 
-          <UserInfoPopover state="reduced" />
+          <div className="max-sm:hidden">
+            <UserInfoPopover state="reduced" />
+
+          </div>
+
         </div>
       </div>
 
@@ -200,6 +205,10 @@ const Page = () => {
 
               {
                 activeTab === 'frames' && <SceneList />
+              }
+
+              {
+                activeTab === 'captions' && <CaptionModifications />
               }
 
               {/* video and loading animation tab for mobile view only */}

@@ -1,8 +1,9 @@
 import { appConfig } from "../../constants";
 import { Scene, VideoResponse } from "../../lib/types/video";
 import { AbsoluteFill, Audio, Img, Sequence, useCurrentFrame, useVideoConfig, Video } from "remotion";
-import { getAnimationStyle } from "../../lib/utils";
-import { useMemo} from "react";
+import { getAnimationStyle } from "../../lib/utils/animationStyle";
+import { useMemo } from "react";
+import { CAPTION_FONTS, CAPTION_STYLES } from "../../lib/utils/caption";
 
 
 
@@ -96,7 +97,7 @@ const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: Vide
               )}
 
               {scene.media_type === 'video' && scene.video_url && (
-                <Video src={scene.video_url}  width={width} height={height} className="w-full h-full object-cover object-center" style={animationData.style} />
+                <Video src={scene.video_url} width={width} height={height} className="w-full h-full object-cover object-center" style={animationData.style} />
               )}
 
               <AbsoluteFill style={{
@@ -107,25 +108,20 @@ const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: Vide
                 width: "100%",
                 height: "100%",
                 padding: `${height * 0.05}px`
+                // padding: `${height * 0.05}px`
               }}>
                 <div style={{
-                  fontSize: Math.max(height * 0.03, 24), // Scale with video height, minimum 24px
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  whiteSpace: 'pre-wrap',
-                  color: "white",
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.8)', // Add shadow for better readability
-                  maxWidth: '90%',
-                  lineHeight: 1.4,
-                  paddingBottom: `${height * 0.08}px`
+                  ...video.caption_settings,
+                  marginBottom: `${height * 0.08}px`,
+                  fontSize: Math.max(height * 0.03, 20)
                 }}>
                   {captionData?.caption.words?.map((word, idx) => (
                     <span
                       key={idx}
                       style={{
                         color: word.text === captionData.currentWord?.text
-                          ? "yellow"
-                          : "white"
+                          ? video.caption_settings?.highlightWordColor || '#FDE047'
+                          : video.caption_settings?.dormantTextColor || '#0C0C10'
                       }}
                     >
                       {word.text}{" "}

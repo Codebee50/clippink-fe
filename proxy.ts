@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import { appConfig, routeMap } from './constants'
 
 
-export function middleware(request: NextRequest){
+export function proxy(request: NextRequest){
     const token = request.cookies.get('access_token')?.value
 
     if(!token) {
