@@ -3,7 +3,6 @@ import { Scene, VideoResponse } from "../../lib/types/video";
 import { AbsoluteFill, Audio, Img, Sequence, useCurrentFrame, useVideoConfig, Video } from "remotion";
 import { getAnimationStyle } from "../../lib/utils/animationStyle";
 import { useMemo } from "react";
-import { CAPTION_FONTS, CAPTION_STYLES } from "../../lib/utils/caption";
 
 
 
@@ -87,6 +86,7 @@ const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: Vide
         );
 
         const captionData = getCurrentCaption(scene, startTime);
+        const marginBottomPercentage = video?.caption_settings?.marginBottomPercentage || 15;
 
         return (
           <Sequence key={scene.id} from={startTime} durationInFrames={duration}>
@@ -107,12 +107,13 @@ const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: Vide
                 textAlign: "center",
                 width: "100%",
                 height: "100%",
-                padding: `${height * 0.05}px`
+                paddingLeft: `${height * 0.05}px`,
+                paddingRight: `${height * 0.05}px`,
                 // padding: `${height * 0.05}px`
               }}>
                 <div style={{
                   ...video.caption_settings,
-                  marginBottom: `${height * 0.08}px`,
+                  marginBottom: `${(marginBottomPercentage/100) * height}px`,
                   fontSize: Math.max(height * 0.05, video.caption_settings?.fontSize ?? 24)
                 }}>
                   {captionData?.caption.words?.map((word, idx) => (

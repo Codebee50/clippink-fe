@@ -13,6 +13,7 @@ import {
 import { IoColorFillOutline } from "react-icons/io5";
 import { useVideoStore } from '@/lib/store/video';
 import { CaptionStyle, CaptionStyleConfig } from '@/lib/types/captions';
+import { Slider } from "@/components/ui/slider"
 
 
 
@@ -26,6 +27,7 @@ const CaptionModifications = () => {
 
     const activeColorDebounceTimer = useRef<NodeJS.Timeout | null>(null)
     const dormantColorDebounceTimer = useRef<NodeJS.Timeout | null>(null)
+    const marginBottomPercentageDebounceTimer = useRef<NodeJS.Timeout | null>(null)
 
     const [selectedCaptionStyle, setSelectedCaptionStyle] = useState<string | null>(null)
 
@@ -58,10 +60,24 @@ const CaptionModifications = () => {
         }, 1000)
     }
 
+    const handleMarginBottomPercentageChange = (value: number[]) => {
+        const marginBottomPercentage = value[0]
+
+        updateCaptionSettingsByKey("marginBottomPercentage", marginBottomPercentage)
+
+        if(marginBottomPercentageDebounceTimer.current){
+            clearTimeout(marginBottomPercentageDebounceTimer.current)
+        }
+
+        marginBottomPercentageDebounceTimer.current = setTimeout(() => {
+            updateCaptionSettingsByKey("marginBottomPercentage", marginBottomPercentage, true)
+        }, 1000)
+    }
+
 
     const handleCaptionStyleClicked = (style: CaptionStyleConfig, key: string) => {
 
-        const { fontSize , fontWeight, color, ...rest } = style
+        const { fontSize, fontWeight, color, ...rest } = style
 
         const oldCaptionSettings = video?.caption_settings || getDefaultCaptionSettings()
 
@@ -74,7 +90,7 @@ const CaptionModifications = () => {
             ...rest
         }
 
-    
+
         setSelectedCaptionStyle(key)
         bulkUpdateCaptionSettings(newCaptionSettings)
     }
@@ -163,6 +179,21 @@ const CaptionModifications = () => {
                     </div>
                 </div>
 
+            </div>
+
+            <div className='w-full bg-denary border border-greys1/10 rounded-md px-4 py-3 pb-5 flex flex-col gap-2'>
+                <p className='text-greys1 text-sm'>Position</p>
+
+
+                <div className='w-full flex flex-col gap-2 items-start'>
+                    <Slider
+                        defaultValue={[video?.caption_settings?.marginBottomPercentage || 15]}
+                        max={100}
+                        step={1}
+                        className="w-full max-w-xs"
+                        onValueChange={handleMarginBottomPercentageChange}
+                    />
+                </div>
             </div>
 
             <div className='w-full bg-denary border border-greys1/10 rounded-md px-4 py-3 flex flex-col gap-2'>

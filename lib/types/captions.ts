@@ -29,6 +29,7 @@ export interface CaptionStyleConfig {
   filter?: string;
   highlightWordColor?: string;
   dormantTextColor?: string;
+  marginBottomPercentage?: number;
 }
 
 export interface FontConfig {
