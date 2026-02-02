@@ -7,15 +7,22 @@ import {
     SelectGroup,
     SelectValue,
 } from "@/components/ui/select"
-import { CAPTION_FONTS } from '@/lib/utils/caption'
+import { CAPTION_FONTS, getFontKeyFromFontFamily } from '@/lib/utils/caption'
 import { FontConfig } from '@/lib/types/captions'
+import { VideoResponse } from '@/lib/types/video'
 import { loadGoogleFont } from '@/lib/utils/fontLoader'
 import { useEffect } from 'react'
+import { useVideoStore } from '@/lib/store/video'
 
 
 const FontItem = ({ font }: { font: FontConfig }) => {
     useEffect(() => {
-        loadGoogleFont(font.googleFontName, font.weights);
+        try{
+            loadGoogleFont(font.googleFontName, font.weights);
+        }
+        catch(error){
+            console.error('error loading font', error)
+        }
     }, [font.googleFontName]);
     return (
         <div className='' style={{ fontFamily: font.fontFamily }}>
@@ -24,9 +31,15 @@ const FontItem = ({ font }: { font: FontConfig }) => {
     )
 }
 
-const SelectFont = () => {
-    const [selectedFont, setSelectedFont] = useState("inter");
-    const [selectedWeight, setSelectedWeight] = useState(CAPTION_FONTS[selectedFont].weights[0].toString());
+const SelectFont = ({ video }: { video: VideoResponse | null }) => {
+
+
+    const [selectedFont, setSelectedFont] = useState(getFontKeyFromFontFamily(video?.caption_settings?.fontFamily || CAPTION_FONTS.inter.fontFamily));
+    const [selectedWeight, setSelectedWeight] = useState((video?.caption_settings?.fontWeight || 400).toString());
+
+    const updateCaptionSettingsByKey = useVideoStore((state) => state.updateCaptionSettingsByKey)
+
+
     const [fontSize, setFontSize] = useState(16);
     const getWeightName = (weight: number) => {
         switch (weight) {
@@ -52,15 +65,33 @@ const SelectFont = () => {
 
         const fontConfig = CAPTION_FONTS[font]
         if (fontConfig) {
-            const existingWeight = fontConfig.weights.find((weight) => weight.toString() === selectedWeight)
+            updateCaptionSettingsByKey("fontFamily", fontConfig.fontFamily, true)
+            const existingWeight = fontConfig.weights.find((weight) => weight.toString() === selectedWeight.toString())
             if (existingWeight) {
+                //this means the previously selected font already has a weight that is available in the new font
                 setSelectedWeight(existingWeight.toString())
             }
             else {
                 setSelectedWeight(fontConfig.weights[0].toString())
+                updateCaptionSettingsByKey("fontWeight", fontConfig.weights[0], true)
             }
+
+
+
         }
     }
+
+    const handleFontWeightChange = (weight: string) => {
+        setSelectedWeight(weight)
+        updateCaptionSettingsByKey("fontWeight", weight, true)
+    }
+
+    const handleFontSizeChange = (size: number) => {
+        console.log('the size changed', size)
+        setFontSize(size)
+        updateCaptionSettingsByKey("fontSize", size, true)
+    }
+
     return (
         <div className='w-full flex flex-col gap-2'>
             <Select defaultValue={selectedFont} onValueChange={handleFontChange}>
@@ -80,7 +111,7 @@ const SelectFont = () => {
 
 
             <div className='w-full grid grid-cols-2 gap-2'>
-                <Select defaultValue={selectedWeight} onValueChange={setSelectedWeight}>
+                <Select defaultValue={selectedWeight} onValueChange={handleFontWeightChange} value={selectedWeight}>
                     <SelectTrigger className="w-full border-greys1/30 bg-denary rounded-md">
                         <SelectValue placeholder="Select a font" />
                     </SelectTrigger>
@@ -101,9 +132,14 @@ const SelectFont = () => {
                 <input
                     type="number"
                     className='w-full bg-greys1/25 text-sm outline-none rounded-md px-3 py-2 [-webkit-appearance:none]'
-                    defaultValue={16}
+                    defaultValue={video?.caption_settings?.fontSize || 16}
                     placeholder='Enter font size'
-                    onChange={(e) => setFontSize(Number(e.target.value))}
+                    onBlur={(e) => handleFontSizeChange(Number(e.target.value))}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleFontSizeChange(Number(e.currentTarget.value));
+                        }
+                    }}
                 />
             </div>
         </div>

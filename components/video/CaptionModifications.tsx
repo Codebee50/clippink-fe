@@ -1,33 +1,83 @@
-import { CAPTION_FONTS, CAPTION_STYLES } from '@/lib/utils/caption'
+import { CAPTION_STYLES, getDefaultCaptionSettings } from '@/lib/utils/caption'
 import Image from 'next/image'
-import React, { useState } from 'react'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import React, { useEffect, useRef, useState } from 'react'
 import SelectFont from '../SelectFont'
-import { HexColorPicker, RgbaColorPicker } from 'react-colorful';
+import { HexColorPicker } from 'react-colorful';
 import {
     Popover,
     PopoverContent,
-    PopoverDescription,
     PopoverHeader,
     PopoverTitle,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { MdFormatColorFill } from "react-icons/md";
-
-import { IoIosColorPalette } from "react-icons/io";
 import { IoColorFillOutline } from "react-icons/io5";
+import { useVideoStore } from '@/lib/store/video';
+import { CaptionStyle, CaptionStyleConfig } from '@/lib/types/captions';
 
 
 
 const CaptionModifications = () => {
-    const [activeWordColor, setActiveWordColor] = useState('#FFFFFF');
-    const [dormantTextColor, setDormantTextColor] = useState('#0C0C1');
+    const video = useVideoStore((state) => state.video)
+    const updateCaptionSettingsByKey = useVideoStore((state) => state.updateCaptionSettingsByKey)
+    const bulkUpdateCaptionSettings = useVideoStore((state) => state.bulkUpdateCaptionSettings)
+
+    const [activeWordColor, setActiveWordColor] = useState(video?.caption_settings?.highlightWordColor || '#FFFFFF');
+    const [dormantTextColor, setDormantTextColor] = useState(video?.caption_settings?.dormantTextColor || '#0C0C10');
+
+    const activeColorDebounceTimer = useRef<NodeJS.Timeout | null>(null)
+    const dormantColorDebounceTimer = useRef<NodeJS.Timeout | null>(null)
+
+    const [selectedCaptionStyle, setSelectedCaptionStyle] = useState<string | null>(null)
+
+
+    const handleActiveWordColorChange = (color: string) => {
+        setActiveWordColor(color)
+
+        updateCaptionSettingsByKey("highlightWordColor", color)
+
+        if (activeColorDebounceTimer.current) {
+            clearTimeout(activeColorDebounceTimer.current)
+        }
+
+        activeColorDebounceTimer.current = setTimeout(() => {
+            updateCaptionSettingsByKey("highlightWordColor", color, true)
+        }, 1000)
+    }
+
+    const handleDormantTextColorChange = (color: string) => {
+        setDormantTextColor(color)
+
+        updateCaptionSettingsByKey("dormantTextColor", color)
+
+        if (dormantColorDebounceTimer.current) {
+            clearTimeout(dormantColorDebounceTimer.current)
+        }
+
+        dormantColorDebounceTimer.current = setTimeout(() => {
+            updateCaptionSettingsByKey("dormantTextColor", color, true)
+        }, 1000)
+    }
+
+
+    const handleCaptionStyleClicked = (style: CaptionStyleConfig, key: string) => {
+
+        const { fontSize , fontWeight, color, ...rest } = style
+
+        const oldCaptionSettings = video?.caption_settings || getDefaultCaptionSettings()
+
+        const newCaptionSettings = {
+            fontSize: oldCaptionSettings.fontSize,
+            fontWeight: oldCaptionSettings.fontWeight,
+            color: oldCaptionSettings.color,
+            highlightWordColor: oldCaptionSettings.highlightWordColor,
+            dormantTextColor: oldCaptionSettings.dormantTextColor,
+            ...rest
+        }
+
+    
+        setSelectedCaptionStyle(key)
+        bulkUpdateCaptionSettings(newCaptionSettings)
+    }
 
     return (
         <div className='w-full h-full border-r border-r-greys1/20 bg-[#0C0C10] overflow-y-scroll px-1  pb-10 flex flex-col gap-1 cus-scrollbar shrink-0 '>
@@ -36,7 +86,7 @@ const CaptionModifications = () => {
             <div className='w-full  bg-denary border border-greys1/10 rounded-md px-4 py-3 flex flex-col gap-2 mt-3'>
                 <p className='text-greys1 text-sm'>Typography</p>
 
-                <SelectFont />
+                <SelectFont video={video} />
 
             </div>
 
@@ -66,7 +116,7 @@ const CaptionModifications = () => {
                             <PopoverContent className='w-max bg-denary border-none'>
                                 <PopoverHeader>
                                     <PopoverTitle className='hidden'>Word Highlight Color</PopoverTitle>
-                                    <HexColorPicker onChange={setActiveWordColor} />
+                                    <HexColorPicker onChange={handleActiveWordColorChange} />
                                 </PopoverHeader>
                             </PopoverContent>
                         </Popover>
@@ -103,7 +153,7 @@ const CaptionModifications = () => {
                             <PopoverContent className='w-max bg-denary border-none'>
                                 <PopoverHeader>
                                     <PopoverTitle className='hidden'>Word Highlight Color</PopoverTitle>
-                                    <HexColorPicker onChange={setDormantTextColor} />
+                                    <HexColorPicker onChange={handleDormantTextColorChange} />
                                 </PopoverHeader>
                             </PopoverContent>
                         </Popover>
@@ -120,7 +170,7 @@ const CaptionModifications = () => {
                 <div className='grid sm:grid-cols-3 grid-cols-2 gap-2 '>
                     {
                         Object.entries(CAPTION_STYLES).map(([key, value]) => (
-                            <div key={key} className='w-full h-[150px] rounded-md overflow-hidden border border-greys1/20 relative cursor-pointer'>
+                            <div key={key} className='w-full h-[150px] rounded-md overflow-hidden border border-greys1/20 relative cursor-pointer' onClick={() => handleCaptionStyleClicked(value, key)}>
 
                                 <Image src={`https://clippink-bkt.s3.amazonaws.com/images/landing-page-images/f1e59269-be29-4e2c-80a4-19dd548d82ef.jpeg`} className='w-full h-full object-cover object-center' alt={key} width={100} height={100} />
 

@@ -11,6 +11,7 @@ export type CaptionStyle =
 export interface CaptionStyleConfig {
   // Visual styling only - NO font family here
   fontSize: number;
+  fontFamily?: string;
   fontWeight: string | number;
   color: string;
   backgroundColor?: string;

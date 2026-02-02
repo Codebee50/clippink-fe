@@ -1,8 +1,9 @@
-import {create} from "zustand"
+import { create } from "zustand"
 import { Scene, VideoResponse } from "../types/video";
 import { makeMsUrl } from "@/constants";
 import axios from "axios";
 import { getDefaultCaptionSettings } from "../utils/caption";
+import { CaptionStyleConfig } from "../types/captions";
 type VideoStore = {
     video: VideoResponse | null;
     loading: boolean;
@@ -10,34 +11,36 @@ type VideoStore = {
     setVideo: (video: VideoResponse) => void;
     replaceScenes: (scenes: Scene[]) => void;
     replaceScene: (scene: Scene) => void;
+    updateCaptionSettingsByKey: (key: keyof CaptionStyleConfig, value: unknown, persist?: boolean) => void;
+    bulkUpdateCaptionSettings: (captionSettings: CaptionStyleConfig) => Promise<void>;
 }
 
-export const useVideoStore = create<VideoStore>((set)=>({
+export const useVideoStore = create<VideoStore>((set) => ({
     video: null,
     loading: false,
     setVideo: (video: VideoResponse) => set({ video }),
 
-    fetchVideo: async(videoId: string) =>{
-        set({loading: true})
+    fetchVideo: async (videoId: string) => {
+        set({ loading: true })
         const response = await axios.get(`${makeMsUrl(`/video/${videoId}/`)}`)
 
-        if(response.status === 200){
+        if (response.status === 200) {
             const video = response.data as VideoResponse
-            if (!video.caption_settings){
+            if (!video.caption_settings) {
                 video.caption_settings = getDefaultCaptionSettings()
             }
-            set({video: video, loading: false})
+            set({ video: video, loading: false })
             return video
         }
 
-        set({loading: false})
+        set({ loading: false })
         return null
     },
 
     replaceScenes: (scenes: Scene[]) => {
         const timestamp = new Date().getTime();
         set((state) => {
-            if(!state.video) return state;
+            if (!state.video) return state;
 
             return {
                 video: {
@@ -49,10 +52,10 @@ export const useVideoStore = create<VideoStore>((set)=>({
         })
     },
 
-    replaceScene: (scene: Scene) =>{
+    replaceScene: (scene: Scene) => {
         const timestamp = new Date().getTime();
         set((state) => {
-            if(!state.video) return state;
+            if (!state.video) return state;
             return {
                 video: {
                     ...state.video,
@@ -61,6 +64,70 @@ export const useVideoStore = create<VideoStore>((set)=>({
                 }
             }
         })
+    },
+
+    updateCaptionSettingsByKey: async (key: keyof CaptionStyleConfig, value: unknown, persist: boolean = false) => {
+        let videoId = null;
+        let captionSettings = null
+        set((state) => {
+            if (!state.video) return state;
+            if (!state.video.caption_settings) {
+                state.video.caption_settings = getDefaultCaptionSettings()
+            }
+
+            const newCaptionSettings = { ...state.video.caption_settings, [key]: value }
+
+            videoId = state.video.id
+            captionSettings = newCaptionSettings
+
+            return {
+                video: {
+                    ...state.video,
+                    caption_settings: newCaptionSettings
+                }
+            }
+        })
+
+        if (persist && videoId && captionSettings) {
+            const requestbody = {
+                "video_id": videoId,
+                "caption_settings": captionSettings
+            }
+            const headers = {
+                "Content-Type": "application/json",
+            }
+            await axios.post(`${makeMsUrl(`/video/captions/update/`)}`, requestbody, { headers, withCredentials: true })
+
+        }
+
+    },
+
+
+    bulkUpdateCaptionSettings: async (captionSettings: CaptionStyleConfig) => {
+        let videoId = null
+        set((state) => {
+            if (!state.video) return state;
+
+            videoId = state.video.id
+
+            return {
+                video: {
+                    ...state.video,
+                    caption_settings: captionSettings
+                }
+            }
+        })
+
+        if (videoId && captionSettings) {
+            const requestbody = {
+                "video_id": videoId,
+                "caption_settings": captionSettings
+            }
+            const headers = {
+                "Content-Type": "application/json",
+            }
+            await axios.post(`${makeMsUrl(`/video/captions/update/`)}`, requestbody, { headers, withCredentials: true })
+        }
     }
 
 

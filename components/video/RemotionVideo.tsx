@@ -113,7 +113,7 @@ const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: Vide
                 <div style={{
                   ...video.caption_settings,
                   marginBottom: `${height * 0.08}px`,
-                  fontSize: Math.max(height * 0.03, 20)
+                  fontSize: Math.max(height * 0.05, video.caption_settings?.fontSize ?? 24)
                 }}>
                   {captionData?.caption.words?.map((word, idx) => (
                     <span
