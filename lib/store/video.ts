@@ -1,9 +1,10 @@
 import { create } from "zustand"
-import { Scene, VideoResponse } from "../types/video";
+import { Scene, UpdateVideoReqConfig, VideoResponse } from "../types/video";
 import { makeMsUrl } from "@/constants";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { getDefaultCaptionSettings } from "../utils/caption";
 import { CaptionStyleConfig } from "../types/captions";
+import baseApiClient from "../axios";
 type VideoStore = {
     video: VideoResponse | null;
     loading: boolean;
@@ -13,9 +14,10 @@ type VideoStore = {
     replaceScene: (scene: Scene) => void;
     updateCaptionSettingsByKey: (key: keyof CaptionStyleConfig, value: unknown, persist?: boolean) => void;
     bulkUpdateCaptionSettings: (captionSettings: CaptionStyleConfig) => Promise<void>;
+    updateVideo: (config: UpdateVideoReqConfig, persist?: boolean) => Promise<AxiosResponse | null>;
 }
 
-export const useVideoStore = create<VideoStore>((set) => ({
+export const useVideoStore = create<VideoStore>((set, get) => ({
     video: null,
     loading: false,
     setVideo: (video: VideoResponse) => set({ video }),
@@ -102,7 +104,6 @@ export const useVideoStore = create<VideoStore>((set) => ({
 
     },
 
-
     bulkUpdateCaptionSettings: async (captionSettings: CaptionStyleConfig) => {
         let videoId = null
         set((state) => {
@@ -128,8 +129,30 @@ export const useVideoStore = create<VideoStore>((set) => ({
             }
             await axios.post(`${makeMsUrl(`/video/captions/update/`)}`, requestbody, { headers, withCredentials: true })
         }
+    },
+
+    updateVideo: async (config: UpdateVideoReqConfig, persist: boolean = false): Promise<AxiosResponse | null> => {
+        const videoId = get().video?.id
+        if (!videoId) return null
+
+        if (!persist) {
+            set((state) => {
+                if (!state.video) return state
+                return {
+                    video: {
+                        ...state.video,
+                        ...config
+                    }
+                }
+            })
+            return null
+        }
+
+        const response = await baseApiClient.patch(`/video/update/${videoId}/`, config)
+        if (response.status === 200) {
+            const video = response.data as VideoResponse
+            set({ video: video })
+        }
+        return response
     }
-
-
-
 })) 

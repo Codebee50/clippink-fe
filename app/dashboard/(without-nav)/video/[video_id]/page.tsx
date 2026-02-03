@@ -32,6 +32,7 @@ import UserInfoPopover from "@/components/UserInfoPopover";
 import useStyledToast from "@/hooks/useStyledToast";
 import useVideoUpdateWs from "@/hooks/useVideoUpdateWs";
 import CaptionModifications from "@/components/video/CaptionModifications";
+import BackgroundAudioSettings from "@/components/video/BackgroundAudioSettings";
 
 
 const sideNavItems = [
@@ -40,10 +41,16 @@ const sideNavItems = [
     Icon: MdOutlineVideoCameraBack,
     id: "video",
   },
+
   {
     Label: "Frames",
     Icon: FaPhotoVideo,
     id: "frames",
+  },
+  {
+    Label: "Audio",
+    Icon: HiOutlineMusicNote,
+    id: "audio",
   },
   {
     Label: "Captions",
@@ -55,11 +62,7 @@ const sideNavItems = [
     Icon: HiOutlineMicrophone,
     id: "voiceover",
   },
-  {
-    Label: "Audio",
-    Icon: HiOutlineMusicNote,
-    id: "audio",
-  },
+
   {
     Label: "General",
     Icon: IoSettingsOutline,
@@ -209,6 +212,10 @@ const Page = () => {
 
               {
                 activeTab === 'captions' && <CaptionModifications />
+              }
+
+              {
+                activeTab === 'audio' && <BackgroundAudioSettings />
               }
 
               {/* video and loading animation tab for mobile view only */}

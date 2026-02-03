@@ -57,6 +57,15 @@ export interface Scene {
   motion_effect: AnimationType | null
 }
 
+export type BackgroundAudio ={
+  id: string;
+  name: string;
+  url: string;
+  file_name: string
+  is_public: boolean
+  
+}
+
 export interface VideoResponse {
   created_at: string;
   status: string;
@@ -70,6 +79,14 @@ export interface VideoResponse {
   scenes: Scene[];
   last_changed_at?: string | null;
   caption_settings: CaptionStyleConfig | null
+  background_audio: BackgroundAudio | null
+  background_audio_volume: number | null //value between 0 and 1
+}
+
+export type UpdateVideoReqConfig = {
+  background_audio_id?: string | null,
+  background_audio_volume?: number | null,
+  title?: string | null
 }
 
 export type VideoStyleResponse = {

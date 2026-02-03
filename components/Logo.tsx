@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 const Logo = ({
-  color = "#1DB954",
+  color = "var(--color-senary)",
   dotColor = "#fff",
   width = 142,
   height = 141,

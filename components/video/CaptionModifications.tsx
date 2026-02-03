@@ -87,6 +87,7 @@ const CaptionModifications = () => {
             color: oldCaptionSettings.color,
             highlightWordColor: oldCaptionSettings.highlightWordColor,
             dormantTextColor: oldCaptionSettings.dormantTextColor,
+            marginBottomPercentage: oldCaptionSettings.marginBottomPercentage,
             ...rest
         }
 

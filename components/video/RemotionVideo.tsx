@@ -74,6 +74,12 @@ const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: Vide
   return (
     <AbsoluteFill className="bg-greys1/10 rounded-md overflow-hidden">
 
+      {video.background_audio && (
+        // volume is a value from 0 to 1
+        <Audio src={video.background_audio.url} volume={video.background_audio_volume ?? 0.5} loop={true} />
+      )}
+
+
       {sortedScenes.map((scene, index) => {
         const startTime = getSceneStartFrame(scene, index);
         const duration = getSceneDurationInFrames(scene);
@@ -113,7 +119,7 @@ const RemotionVideo = ({ video, overrideDurationInFrames = null }: { video: Vide
               }}>
                 <div style={{
                   ...video.caption_settings,
-                  marginBottom: `${(marginBottomPercentage/100) * height}px`,
+                  marginBottom: `${(marginBottomPercentage / 100) * height}px`,
                   fontSize: Math.max(height * 0.05, video.caption_settings?.fontSize ?? 24)
                 }}>
                   {captionData?.caption.words?.map((word, idx) => (
