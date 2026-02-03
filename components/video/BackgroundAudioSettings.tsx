@@ -9,13 +9,14 @@ import useFetchRequest from "@/hooks/useFetch";
 import { AxiosResponse } from "axios";
 import { BackgroundMusicResponse } from "@/lib/types/video";
 import { IoPlayOutline } from "react-icons/io5";
-import UploadAudio from "./UploadAudio";
+import UploadAudio from "../UploadAudio";
 import Image from "next/image";
 
 import { MdVolumeUp } from "react-icons/md";
 import { useVideoStore } from "@/lib/store/video";
 import PlayPauseAudio from "./PlayPauseAudio";
 import useStyledToast from "@/hooks/useStyledToast";
+import UpdateBackgroundAudio from "./UpdateBackgroundAudio";
 
 
 const BackgroundAudioSettings = () => {
@@ -198,8 +199,7 @@ const BackgroundAudioSettings = () => {
                 {
                     audioSource === "uploaded_audio" && <div className="w-full flex flex-col gap-4 mt-3">
 
-                        <UploadAudio />
-
+                        <UpdateBackgroundAudio/>
                     </div>
                 }
 

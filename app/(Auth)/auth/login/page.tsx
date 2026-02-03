@@ -27,7 +27,7 @@ const Page = () => {
 
 
     const { mutate: login, isLoading: isLoginLoading } = usePostRequest({
-        url: makeMsUrl("/auth/login/"),
+        url: "/auth/login/",
         onSuccess: (response: AxiosResponse) => {
             const user = response.data.user as UserData
             setUser(user)

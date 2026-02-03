@@ -29,7 +29,7 @@ const Page = () => {
   const setUser = useUserStore((state) => state.setUser)
 
   const { mutate: verifyEmail, isLoading: isVerifyingEmail } = usePostRequest({
-    url: makeMsUrl("/auth/email/verify/"),
+    url: "/auth/email/verify/",
     onSuccess: (response: AxiosResponse) => {
       toast.success(`Email verified successfully, welcome to ${appConfig.APP_NAME}`)
       setUser(response.data as UserData)
@@ -41,7 +41,7 @@ const Page = () => {
   })
 
   const { mutate: resendEmail, isLoading: isResendingEmail } = usePostRequest({
-    url: makeMsUrl("/auth/email/verification/resend/"),
+    url: "/auth/email/verification/resend/",
     onSuccess: (response: AxiosResponse) => {
       toast.success("Email resent successfully")
     },

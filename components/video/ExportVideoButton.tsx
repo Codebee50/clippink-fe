@@ -60,7 +60,7 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
     })
 
     const { mutate: initiateExport, isLoading: isInitiatingExport } = usePostRequest({
-        url: makeMsUrl(`/video/export/`),
+        url: "/video/export/",
         onSuccess: (response: AxiosResponse) => {
             setExportInProgress(true)
         },

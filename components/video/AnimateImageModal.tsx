@@ -30,7 +30,7 @@ const AnimateImageModal = ({ scene, open = false, onOpenChange = () => { } }: { 
 
 
     const { mutate: initiateAnimation, isLoading: isInitiatingAnimation } = usePostRequest({
-        url: makeMsUrl(`/video/scene/image/animate/`),
+        url: "/video/scene/image/animate/",
         onSuccess: () => {
             setGeneratingAnimation(true)
         },

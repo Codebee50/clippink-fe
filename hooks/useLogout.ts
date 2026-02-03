@@ -9,7 +9,7 @@ const useLogout = () =>{
     const router = useRouter()
     const toast = useStyledToast()
     const {mutate: logoutUser, isLoading: isLogoutLoading} = usePostRequest({
-        url: makeMsUrl("/auth/logout/"),
+        url: "/auth/logout/",
         onSuccess: () => {
             toast.success("Logout successful")
             router.push(routeMap.LOGIN)

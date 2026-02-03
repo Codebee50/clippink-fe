@@ -13,7 +13,6 @@ import SelectVideoStyle from "../SelectVideoStyle";
 import SelectNarratorsVoice from "../SelectNarratorsVoice";
 import LoadingButton from "../buttons/LoadingButton";
 import usePostRequest from "@/hooks/usePost";
-import { makeMsUrl } from "@/constants";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -46,7 +45,7 @@ const ScriptToVideoForm = () => {
   }
 
   const { mutate: generateVideo, isLoading: isGeneratingVideo } = usePostRequest({
-    url: makeMsUrl("/video/script-to-video/"),
+    url: "/video/script-to-video/",
     onSuccess: (response: AxiosResponse) => {
       const data = response.data as GenerateVideoResponse;
 

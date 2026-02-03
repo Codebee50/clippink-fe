@@ -7,7 +7,7 @@ import LoadingButton from '@/components/buttons/LoadingButton'
 import { useFormik } from 'formik'
 import TextInput from '@/components/inputs/TextInput'
 import Link from 'next/link'
-import { makeMsUrl, routeMap } from '@/constants'
+import { routeMap } from '@/constants'
 import { registrationSchema } from '@/lib/validationSchemas'
 import usePostRequest from '@/hooks/usePost'
 import { AxiosError, AxiosResponse } from 'axios'
@@ -21,7 +21,7 @@ const Page = () => {
     const router = useRouter()
 
     const { mutate: register, isLoading: isRegisterLoading } = usePostRequest({
-        url: makeMsUrl("/auth/register/"),
+        url: "/auth/register/",
         onSuccess: (response: AxiosResponse) => {
 
             toast.success("Account created successfully")

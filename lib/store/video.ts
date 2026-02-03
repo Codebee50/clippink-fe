@@ -4,7 +4,9 @@ import { makeMsUrl } from "@/constants";
 import axios, { AxiosResponse } from "axios";
 import { getDefaultCaptionSettings } from "../utils/caption";
 import { CaptionStyleConfig } from "../types/captions";
-import baseApiClient from "../axios";
+import baseApiClient from "@/lib/axios/api";
+
+
 type VideoStore = {
     video: VideoResponse | null;
     loading: boolean;
@@ -24,7 +26,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
 
     fetchVideo: async (videoId: string) => {
         set({ loading: true })
-        const response = await axios.get(`${makeMsUrl(`/video/${videoId}/`)}`)
+        const response = await baseApiClient.get(`/video/${videoId}/`)
 
         if (response.status === 200) {
             const video = response.data as VideoResponse
@@ -95,10 +97,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
                 "video_id": videoId,
                 "caption_settings": captionSettings
             }
-            const headers = {
-                "Content-Type": "application/json",
-            }
-            await axios.post(`${makeMsUrl(`/video/captions/update/`)}`, requestbody, { headers, withCredentials: true })
+            await baseApiClient.post(`/video/captions/update/`, requestbody)
 
         }
 
@@ -124,10 +123,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
                 "video_id": videoId,
                 "caption_settings": captionSettings
             }
-            const headers = {
-                "Content-Type": "application/json",
-            }
-            await axios.post(`${makeMsUrl(`/video/captions/update/`)}`, requestbody, { headers, withCredentials: true })
+            await baseApiClient.post(`/video/captions/update/`, requestbody)
         }
     },
 

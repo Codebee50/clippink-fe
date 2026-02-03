@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import baseApiClient from "@/lib/axios/api";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
@@ -13,24 +14,16 @@ type PostRequestProps = {
 
 const usePostRequest = ({
   url,
-  onSuccess = () => {},
-  onError = () => {},
-  authorize = true,
+  onSuccess = () => { },
+  onError = () => { },
   contentType = "application/json",
 }: PostRequestProps) => {
   const mutation = useMutation({
     mutationFn: async (data: unknown) => {
-      const accessToken = Cookies.get("userToken");
-
       const headers: Record<string, string> = {
         "Content-Type": contentType,
       };
-
-      if (accessToken && authorize) {
-        headers["Authorization"] = `Bearer ${accessToken}`;
-      }
-
-      return await axios.post(url, data, { headers, withCredentials:true } );
+      return await baseApiClient.post(url, data, { headers });
     },
     onSuccess,
     onError,
