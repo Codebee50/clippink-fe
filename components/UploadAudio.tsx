@@ -5,16 +5,22 @@ import { FaRegFileAudio } from "react-icons/fa";
 
 const SUPPORTED_FORMATS = ['.mp3', '.wav', '.ogg'];
 
-const UploadAudio = ({ onFileChange }: { onFileChange: (file: File | null) => void }) => {
+const UploadAudio = ({ onFileChange, enabled=true }: { onFileChange: (file: File | null) => void, enabled?: boolean }) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [isDragActive, setIsDragActive] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleClick = () => {
+        if(!enabled){
+            return
+        }
         fileInputRef.current?.click();
     };
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        if(!enabled){
+            return
+        }
         e.preventDefault();
         setIsDragActive(false);
 
@@ -26,6 +32,9 @@ const UploadAudio = ({ onFileChange }: { onFileChange: (file: File | null) => vo
     };
 
     const handleFile = (file: File | null) => {
+        if(!enabled){
+            return
+        }
         // You can update state or call an onChange prop here
         // e.g., setUploadedFile(file);
         // For now, just log
@@ -35,6 +44,9 @@ const UploadAudio = ({ onFileChange }: { onFileChange: (file: File | null) => vo
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if(!enabled){
+            return
+        }
         if (e.target.files && e.target.files.length === 1) {
             handleFile(e.target.files[0]);
         }
@@ -59,6 +71,7 @@ const UploadAudio = ({ onFileChange }: { onFileChange: (file: File | null) => vo
         cursor-pointer
         transition-colors
         select-none
+        ${!enabled ? 'cursor-not-allowed opacity-50' : ''}
       `
 
                 }
@@ -94,7 +107,7 @@ const UploadAudio = ({ onFileChange }: { onFileChange: (file: File | null) => vo
                     <IoCloudUploadOutline size={36} className="text-greys1/80" />
                 </span>
                 <p className="text-white font-semibold mt-1 mb-1 text-center">Upload your audio</p>
-                <p className="text-greys2 text-sm text-center">MP3, WAV, OGG supported</p>
+                <p className="text-greys2 text-sm text-center">MP3, WAV, OGG supported, 50MB Max</p>
             </div>
 
 

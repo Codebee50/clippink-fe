@@ -106,7 +106,7 @@ const BackgroundAudioSettings = () => {
                             <Image src="/music-player.png" alt="background audio" width={40} height={40} className="object-cover object-center" />
 
                             <div className="flex flex-col ">
-                                <p>{video?.background_audio.name}</p>
+                                <p className="max-sm:text-sm line-clamp-2 ">{video?.background_audio.name}</p>
                                 <div className="flex flex-row items-center gap-1 text-greys1">
 
                                     <MdVolumeUp size={16} />
@@ -183,7 +183,7 @@ const BackgroundAudioSettings = () => {
                                         <PlayPauseAudio audio_url={music.url} id={music.id} onPlay={handlePlay} playingAudioId={playingAudioId} />
 
                                         <div className="flex flex-col gap-1">
-                                            <p className="text-sm text-white">{music.name}</p>
+                                            <p className="text-sm text-white line-clamp-1 truncate max-w-[200px]">{music.name}</p>
                                             <p className="text-xs text-greys4">{music.description}</p>
                                         </div>
 

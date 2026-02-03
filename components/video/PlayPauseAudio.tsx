@@ -59,7 +59,7 @@ const PlayPauseAudio = ({ audio_url, id, sizePx = 40, playingAudioId = null, onP
                 <audio ref={audioref} loop={true} />
             }
 
-            <button onClick={pauseOrPlayAudio} className="rounded-full cursor-pointer bg-greys1/10 border border-greys1/20 flex items-center justify-center" style={{
+            <button onClick={pauseOrPlayAudio} className="rounded-full cursor-pointer bg-greys1/10 border border-greys1/20 flex items-center justify-center shrink-0" style={{
                 width: sizePx,
                 height: sizePx,
             }}>

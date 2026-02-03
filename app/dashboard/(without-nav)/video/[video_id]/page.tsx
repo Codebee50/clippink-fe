@@ -204,7 +204,7 @@ const Page = () => {
             </div>
 
 
-            <div className="w-[50%] max-vidMobile:w-full vidMobile:max-w-[500px] ">
+            <div className="w-[50%] max-vidMobile:w-full vidMobile:max-w-[500px] max-vidMobile:mb-[50px]">
 
               {
                 activeTab === 'frames' && <SceneList />
