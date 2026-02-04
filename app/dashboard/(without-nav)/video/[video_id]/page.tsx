@@ -149,7 +149,8 @@ const Page = () => {
   }
 
   useVideoUpdateWs({
-    onMessage: handleVideoUpdate
+    onMessage: handleVideoUpdate,
+    listenerId: "video-progress-update-ws"
   })
 
   useEffect(() => {

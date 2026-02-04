@@ -57,7 +57,7 @@ const SelectNarratorsVoice = ({ onSelect }: { onSelect: (voice: NarratorsVoiceRe
         return gradientAvatar(name)
     }
     const { mutate: getNarratorsVoice, isLoading: isGettingNarratorsVoice } = useFetchRequest({
-        url: makeMsUrl(`/assets/voices/list/`),
+        url: `/assets/voices/list`,
         onSuccess: (response: AxiosResponse) => {
             const data = response.data.voices as NarratorsVoiceResponse[];
             const dataWithAvatars = data.map(voice => {

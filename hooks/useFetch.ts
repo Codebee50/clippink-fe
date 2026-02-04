@@ -1,6 +1,6 @@
+import baseApiClient from "@/lib/axios/api";
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import Cookies from "js-cookie";
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 type FetchRequestProps = {
   url: string;
@@ -21,7 +21,7 @@ const useFetchRequest = ({
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
-      return await axios.get(url, { headers, responseType, withCredentials:true });
+      return await baseApiClient.get(url, { headers, responseType });
     },
     onSuccess,
     onError,

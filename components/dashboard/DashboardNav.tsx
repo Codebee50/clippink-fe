@@ -24,42 +24,42 @@ import { MdOutlineClose } from "react-icons/md";
 import { useUserStore } from "@/hooks/useUser";
 import UserInfoPopover from "../UserInfoPopover";
 import { BiSolidVideos } from "react-icons/bi";
+import { useQueryParams } from "@/hooks/useQueryParams";
 
 
 const navSections = [
   {
     title: "DASHBOARD",
     items: [
-      { label: "Home", Icon: MdHome },
-      { label: "My Videos", Icon: BiSolidVideos },
-      { label: "Marketplace", Icon: LuShoppingBag },
+      { label: "Home", Icon: MdHome, id: "home", href: null },
+      { label: "My Videos", Icon: BiSolidVideos, id: "my-videos", href: null },
+      { label: "Marketplace", Icon: LuShoppingBag, id: "marketplace", href: null },
     ],
   },
   {
     title: "CREATION",
     items: [
-      { label: "Script to video", Icon: TbScriptPlus },
-      { label: "Prompt to video", Icon: BsAlphabet },
-      { label: "POV Videos", Icon: IoMdEye },
-      { label: "Italian Bainrot", Icon: LuPizza },
-      { label: "User Generated Content", Icon: MdFace2 },
-      { label: "AI ASMR", Icon: GiFruitBowl },
+      { label: "Script to video", Icon: TbScriptPlus, id: "script-to-video", href: null },
+      { label: "Prompt to video", Icon: BsAlphabet, id: "prompt-to-video", href: null },
+      { label: "POV Videos", Icon: IoMdEye, id: "pov-videos", href: null },
+      { label: "Italian Bainrot", Icon: LuPizza, id: "italian-bainrot", href: null },
+      { label: "User Generated Content", Icon: MdFace2, id: "user-generated-content", href: null },
+      { label: "AI ASMR", Icon: GiFruitBowl, id: "ai-asmr", href: null },
     ],
   },
-  // {
-  //   title: "TRENDS",
-  //   items: [
-  //     { label: "POV Videos", Icon: IoMdEye },
-  //     { label: "Italian Bainrot", Icon: LuPizza },
-  //     { label: "User Generated Content", Icon: MdFace2 },
-  //     { label: "AI ASMR", Icon: GiFruitBowl },
-  //   ],
-  // },
 ];
 
+
 const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobile?: boolean, onMobileClose?: () => void }) => {
-  const [selectedItem, setSelectedItem] = useState<string | null>(navSections[0].items[0].label);
+  // const [selectedItem, setSelectedItem] = useState<string | null>(navSections[0].items[0].label);
   const [layoutState, setLayoutState] = useState<"reduced" | "expanded">("expanded");
+
+
+  const { setParam, getParam} = useQueryParams()
+
+  const selectedSection = getParam("section") || "home"
+
+
   const { user } = useUserStore()
   return (
     <div className={`md:w-[40%] md:max-w-[250px] md:h-full max-md:h-screen  flex flex-col items-center  border-r border-r-greys1/20 shrink-0 bg-greys3/70 transition-all duration-300  ${isMobile ? "" : "max-md:hidden"} ${layoutState == "reduced" ? "w-max" : ""}`}>
@@ -91,13 +91,17 @@ const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobil
               }
               <div className={`flex flex-col gap-1 ${layoutState == "reduced" ? "gap-2" : ""}`}>
                 {section.items.map(item => {
-                  const isSelected = selectedItem === item.label;
+                  const isSelected = selectedSection === item.id;
                   return (
                     <div
                       key={item.label}
                       className={`flex flex-row items-center gap-2  ${isSelected ? "text-senary bg-senary/5" : "text-white"
                         } hover:bg-greys1/10 rounded-md py-2 px-3 cursor-pointer transition-all duration-300`}
-                      onClick={() => setSelectedItem(item.label)}
+                      onClick={() => {
+                        // setSelectedItem(item.label)
+                        setParam("section", item.id)
+                        onMobileClose?.()
+                      }}
                     >
                       <item.Icon />
 

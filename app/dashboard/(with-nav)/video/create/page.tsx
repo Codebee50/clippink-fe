@@ -44,7 +44,7 @@ const Page = () => {
   const [sampleVideo, setSampleVideo] = useState<VideoResponse | null>(null)
 
   const { mutate: getSampleVideo, isLoading: isGettingSampleVideo } = useFetchRequest({
-    url: makeMsUrl(`/video/sample/`),
+    url: `/video/sample`,
     onSuccess: (response: AxiosResponse) => {
       const data = response.data as VideoResponse;
       setSampleVideo(data);

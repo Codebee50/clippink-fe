@@ -7,7 +7,7 @@ export default function Home() {
     <div >
       <Hero />
 
-      <div className="pt-[250px] bg-denary">
+      <div className="pt-[40vh] bg-denary">
 
       </div>
       <ShowcaseSection />

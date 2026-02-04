@@ -17,6 +17,8 @@ import { useVideoStore } from "@/lib/store/video";
 import PlayPauseAudio from "./PlayPauseAudio";
 import useStyledToast from "@/hooks/useStyledToast";
 import UpdateBackgroundAudio from "./UpdateBackgroundAudio";
+import { IoWarningOutline } from "react-icons/io5";
+
 
 
 const BackgroundAudioSettings = () => {
@@ -57,6 +59,13 @@ const BackgroundAudioSettings = () => {
     }
 
 
+    const isIOS = () => {
+        if (typeof window === 'undefined') return false;
+        
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      };
+
+
     const handleVolumeChange = (value: number[]) => {
         const volume = value[0] / 100
 
@@ -81,7 +90,7 @@ const BackgroundAudioSettings = () => {
     }
 
     const { mutate: getBackgroundMusicList, isLoading: isGettingBackgroundMusicList } = useFetchRequest({
-        url: makeMsUrl(`/assets/background-audio/list/`),
+        url: `/assets/background-audio/list`,
         onSuccess: (response: AxiosResponse) => {
             const data = response.data as BackgroundMusicResponse[];
             setBackgroundMusicList(data);
@@ -110,7 +119,7 @@ const BackgroundAudioSettings = () => {
                                 <div className="flex flex-row items-center gap-1 text-greys1">
 
                                     <MdVolumeUp size={16} />
-                                    <p className="text-sm">{(video?.background_audio_volume || 0.5) * 100}%</p>
+                                    <p className="text-sm">{parseInt((video?.background_audio_volume || 0.5) * 100)}%</p>
 
                                 </div>
 
@@ -144,11 +153,23 @@ const BackgroundAudioSettings = () => {
                     />
 
                     <p className='text-white text-sm'>
-                        {(video?.background_audio_volume ?? 0.5) * 100}%
+                        {parseInt((video?.background_audio_volume ?? 0.5) * 100)}%
                     </p>
 
 
                 </div>
+
+                {
+                    isIOS() && <div className="w-full flex flex-row items-center justify-center gap-2">
+                        <p className="text-xs text-yellow-500 flex flex-row items-center gap-2">                        
+                            <IoWarningOutline size={16} className="text-yellow-500 shrink-0" />
+                            KNOWN ISSUE: iOS Safari and some mobile browsers handle audio playback differently during in-browser preview, which can cause volume inconsistencies. We promise your rendered file will have accurate audio mixing.
+                        </p>
+                        {/* <p className="text-xs text-yellow-500">**Known Issue: Safari on iOS and certain other mobile browsers may display elevated background music volume during preview. Exported videos are unaffected and will retain proper audio levels.</p> */}
+                    </div>
+                }
+
+                
 
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Scene, SceneAnimationSuccessfulPayload, VideoUpdateMessageBody } from '@/lib/types/video'
 import {
     Dialog,
@@ -50,17 +50,19 @@ const AnimateImageModal = ({ scene, open = false, onOpenChange = () => { } }: { 
         onOpenChange(false)
     }
 
-    const handleVideoUpdate = (data: VideoUpdateMessageBody) => {
+    const handleVideoUpdate = useCallback((data: VideoUpdateMessageBody) => {
         if (data.type === "scene_animation_successful") {
+            console.log("scene animation successful from animate image modal", data)
             const payload = data.payload as SceneAnimationSuccessfulPayload
             replaceScene(payload.scene)
             toast.success("Animation generated successfully")
             closeModal()
         }
-    }
+    }, [])
 
     useVideoUpdateWs({
-        onMessage: handleVideoUpdate
+        onMessage: handleVideoUpdate,
+        listenerId: "animate-image-modal"
     })
 
     const handleInitiateAnimation = () => {
@@ -128,7 +130,7 @@ const AnimateImageModal = ({ scene, open = false, onOpenChange = () => { } }: { 
                             onChange={(e) => setAnimationPrompt(e.target.value)}
                         />
 
-                        <LoadingButton text="Animate Image" onClick={handleInitiateAnimation} isLoading={isInitiatingAnimation || generatingAnimation} className='mt-5' />
+                        <LoadingButton text="Animate Image" loadingText="Animating Image..." onClick={handleInitiateAnimation} isLoading={isInitiatingAnimation || generatingAnimation} className='mt-5' />
 
                     </div>
 

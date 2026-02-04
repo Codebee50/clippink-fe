@@ -10,7 +10,7 @@ const VideoListCard = ({ video }: { video: VideoResponse }) => {
   const router = useRouter();
 
   return (
-    <div className="w-[150px] sm:w-[200px] h-[200px] sm:h-[250px] bg-greys3 rounded-md border border-greys1/30 shrink-0 cursor-pointer overflow-hidden relative" onClick={() => router.push(`/dashboard/video/${video.id}`)}>
+    <div className="w-[150px] sm:w-[250px] h-[200px] sm:h-[300px] bg-greys3 rounded-md border border-greys1/30 shrink-0 cursor-pointer overflow-hidden relative" onClick={() => router.push(`/dashboard/video/${video.id}`)}>
       {video.thumbnail_url ? (
         <Image src={video.thumbnail_url || appConfig.PLACEHOLDER_IMAGE_URL} alt={video.title || "Untitled"} width={200} height={200} className="w-full h-full object-cover object-center" />
       ) : (

@@ -64,7 +64,7 @@ const Page = () => {
                 </div>
 
 
-                <div className='w-full  mt-[5px] flex flex-col gap-2'>
+                <form onSubmit={formik.handleSubmit} className='w-full  mt-[5px] flex flex-col gap-2'>
 
 
                     <TextInput formik={formik} name='name' label='Username' placeholder='Choose your username' type='text' />
@@ -72,7 +72,7 @@ const Page = () => {
                     <TextInput formik={formik} name='password' label='Password' placeholder='Enter your password' type='password' />
 
                     <div className='w-full mt-5 flex flex-col gap-2'>
-                        <LoadingButton text='Create account' onClick={formik.handleSubmit} isLoading={isRegisterLoading} loadingText='Creating your account...' />
+                        <LoadingButton text='Create account' type='submit' isLoading={isRegisterLoading} loadingText='Creating your account...' />
 
                         <p className='text-center text-greys2 font-inter f text-sm'>
                             <span>Already have an account?</span>
@@ -81,7 +81,7 @@ const Page = () => {
                         </p>
                     </div>
 
-                </div>
+                </form>
             </div>
         </AuthLayout>
     )

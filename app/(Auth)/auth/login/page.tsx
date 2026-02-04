@@ -70,7 +70,7 @@ const Page = () => {
 
                 </div>
 
-                <div className='w-full  mt-[5px] flex flex-col gap-2'>
+                <form onSubmit={formik.handleSubmit} className='w-full  mt-[5px] flex flex-col gap-2'>
 
 
                     <TextInput formik={formik} name='email' label='Email' placeholder='Enter your email' type='email' />
@@ -84,7 +84,7 @@ const Page = () => {
                     } />
 
                     <div className='w-full mt-5 flex flex-col gap-2'>
-                        <LoadingButton text='Login' onClick={formik.handleSubmit} isLoading={isLoginLoading} loadingText='Logging in...' />
+                        <LoadingButton text='Login' type='submit' isLoading={isLoginLoading} loadingText='Logging in...' />
 
                         <p className='text-center text-greys2 font-inter f text-sm'>
                             <span>Don&apos;t have an account?</span>
@@ -94,7 +94,7 @@ const Page = () => {
 
                     </div>
 
-                </div>
+                </form>
 
             </div>
         </AuthLayout>
