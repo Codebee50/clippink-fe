@@ -21,6 +21,7 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import useLogout from '@/hooks/useLogout'
 import GooeyBalls from './loaders/GooeyBalls'
 import { FaSlideshare } from "react-icons/fa";
+import Link from 'next/link'
 
 
 const userInfoPopoverItems = [
@@ -37,7 +38,7 @@ const userInfoPopoverItems = [
     {
         label: "My Videos",
         icon: <BiSolidVideos size={18} />,
-        href: "/videos",
+        href: "/dashboard?section=my-videos",
     },
     {
         label: "Social accounts",
@@ -85,10 +86,10 @@ const UserInfoPopover = ({ state = "expanded", avatarSize = 40 }: { state?: "red
                 <div className='flex flex-col gap-2 my-3 px-3'>
                     {
                         userInfoPopoverItems.map((item) => (
-                            <div key={item.label} className='flex flex-row items-center gap-2 text-white hover:bg-greys1/10 rounded-md py-2 px-3 cursor-pointer transition-all duration-300'>
+                            <Link href={item.href} key={item.label} className='flex flex-row items-center gap-2 text-white hover:bg-greys1/10 rounded-md py-2 px-3 cursor-pointer transition-all duration-300'>
                                 {item.icon}
                                 <p className="text-white text-sm">{item.label}</p>
-                            </div>
+                            </Link>
                         ))
                     }
 

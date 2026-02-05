@@ -33,6 +33,14 @@ import useStyledToast from "@/hooks/useStyledToast";
 import useVideoUpdateWs from "@/hooks/useVideoUpdateWs";
 import CaptionModifications from "@/components/video/CaptionModifications";
 import BackgroundAudioSettings from "@/components/video/BackgroundAudioSettings";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 
 const sideNavItems = [
@@ -48,15 +56,16 @@ const sideNavItems = [
     id: "frames",
   },
   {
-    Label: "Audio",
-    Icon: HiOutlineMusicNote,
-    id: "audio",
-  },
-  {
     Label: "Captions",
     Icon: FaRegClosedCaptioning,
     id: "captions",
   },
+  {
+    Label: "Audio",
+    Icon: HiOutlineMusicNote,
+    id: "audio",
+  },
+
   {
     Label: "Voiceover",
     Icon: HiOutlineMicrophone,
@@ -70,12 +79,12 @@ const sideNavItems = [
   },
 ];
 
-const MobileBottomNavItem = ({ label, Icon, onClick = () => { }, active = false }: { label: string, Icon: React.ElementType, onClick?: () => void, active?: boolean }) => {
+const MobileBottomNavItem = ({ label, Icon, onClick = () => { }, active = false, variant = "vertical" }: { label: string, Icon: React.ElementType, onClick?: () => void, active?: boolean, variant?: "horizontal" | "vertical" }) => {
   return (
-    <div onClick={onClick} className={`flex flex-col items-center justify-center gap-1 hover:bg-greys1/10 rounded-md p-2 cursor-pointer transition-all duration-300 w-[90%] ${active ? "bg-greys1/10 text-white" : "text-greys2"}`}>
+    <button onClick={onClick} className={`flex z-10 w-full  gap-1 hover:bg-greys1/10  p-2 cursor-pointer transition-all duration-300 rounded-md flex-1  ${active ? "bg-greys1/10 text-white" : "text-greys2"} ${variant === "horizontal" ? "flex-row items-center gap-3" : "flex-col items-center justify-center"}`}>
       <Icon className="text-xl" />
       <span className="text-xs">{label}</span>
-    </div>
+    </button>
   )
 }
 
@@ -197,7 +206,7 @@ const Page = () => {
             {/* Side Nav */}
             <div className="w-[10%] max-w-[90px] h-full pt-5 flex max-vidMobile:hidden flex-col items-center gap-5 border-r border-r-greys1/20 shrink-0">
               {sideNavItems.slice(1, sideNavItems.length).map(item => (
-                <div key={item.Label} className={`flex flex-col items-center justify-center gap-2 text-greys2 hover:bg-greys1/10 rounded-md p-2 cursor-pointer transition-all duration-300 w-[90%] ${activeTab === item.id ? "bg-greys1/10 text-white" : ""}`} onClick={() => setActiveTab(item.id)}>
+                <div key={item.Label} className={`flex flex-col items-center justify-center gap-2 text-greys2 hover:bg-greys1/10 rounded-md p-2 cursor-pointer transition-all duration-300 w-[90%] ${activeTab === item.id ? "bg-greys1/20 text-white" : ""}`} onClick={() => setActiveTab(item.id)}>
                   <item.Icon className="text-xl" />
                   <span className="text-sm">{item.Label}</span>
                 </div>
@@ -281,7 +290,19 @@ const Page = () => {
                 ))
               }
 
-              <MobileBottomNavItem label="More" Icon={RiAppsFill} />
+              <Popover modal={false}>
+                <PopoverTrigger className="flex-1 flex flex-col items-center justify-center" >
+                  <MobileBottomNavItem label="More" Icon={RiAppsFill} active={sideNavItems.slice(3, sideNavItems.length).some(item => item.id === activeTab)} />
+                </PopoverTrigger>
+                <PopoverContent className='bg-greys3 border border-greys1 overflow-hidden w-max flex flex-col-reverse  min-w-[150px] outline-none border-none gap-4 mb-1 mr-2'>
+                  {
+                    sideNavItems.slice(3, sideNavItems.length).map(item => (
+                      <MobileBottomNavItem variant="horizontal" key={item.Label} label={item.Label} Icon={item.Icon} onClick={() => setActiveTab(item.id)} active={activeTab === item.id} />
+                    ))
+                  }
+                </PopoverContent>
+              </Popover>
+
             </div>
 
 

@@ -17,6 +17,7 @@ type VideoStore = {
     updateCaptionSettingsByKey: (key: keyof CaptionStyleConfig, value: unknown, persist?: boolean) => void;
     bulkUpdateCaptionSettings: (captionSettings: CaptionStyleConfig) => Promise<void>;
     updateVideo: (config: UpdateVideoReqConfig, persist?: boolean) => Promise<AxiosResponse | null>;
+    prepareVideoForState: (video: VideoResponse) => VideoResponse;
 }
 
 export const useVideoStore = create<VideoStore>((set, get) => ({
@@ -24,17 +25,25 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
     loading: false,
     setVideo: (video: VideoResponse) => set({ video }),
 
+    // call this function anytime you fetch the complete video from the backend and want to override the entire video state 
+    //i am doing this so that defaults or other video preparations can be done as this stage
+    // it does not modify the state, it only prepares the video with any defaults and returns it
+    prepareVideoForState: (video: VideoResponse) => {
+        if(!video.caption_settings){
+            video.caption_settings = getDefaultCaptionSettings()
+        }
+        return video
+    },
+
     fetchVideo: async (videoId: string) => {
         set({ loading: true })
         const response = await baseApiClient.get(`/video/${videoId}/`)
 
         if (response.status === 200) {
             const video = response.data as VideoResponse
-            if (!video.caption_settings) {
-                video.caption_settings = getDefaultCaptionSettings()
-            }
-            set({ video: video, loading: false })
-            return video
+            const updatedVideo = get().prepareVideoForState(video)
+            set({ video: updatedVideo, loading: false })
+            return updatedVideo
         }
 
         set({ loading: false })
@@ -147,7 +156,8 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
         const response = await baseApiClient.patch(`/video/update/${videoId}/`, config)
         if (response.status === 200) {
             const video = response.data as VideoResponse
-            set({ video: video })
+            const updatedVideo = get().prepareVideoForState(video)
+            set({ video: updatedVideo })
         }
         return response
     }

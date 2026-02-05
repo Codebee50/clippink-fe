@@ -147,47 +147,49 @@ const SelectBackgroundMusicModal = ({ onSelect }: { onSelect: (audio: Background
         <DialogContent className='bg-denary border-greys1/10'>
           <DialogHeader>
             <DialogTitle className='font-normal text-lg'>Choose Background Music</DialogTitle>
-            <DialogDescription>
-              <div className="w-full flex flex-col gap-2 ">
+            <DialogDescription className='hidden'>
+              Select a background music to use in your video
+            </DialogDescription>
 
-                <input type="text" placeholder='Search for a background music' className='w-full outline-none text-sm  px-5 py-2 border border-greys1/30 rounded-sm resize-none bg-greys5 cus-scrollbar placeholder:text-sm placeholder:leading-7 placeholder:text-greys4/80' />
+            <div className="w-full flex flex-col gap-2 ">
 
-                <div className="w-full flex flex-col gap-7 mt-2 h-[330px] overflow-y-scroll cus-scrollbar">
-                  {backgroundMusic.map(music => (
-                    <div key={music.id} className="w-full flex flex-row items-center gap-2 justify-between ">
-                      <div className="flex flex-row items-center gap-2">
+              <input type="text" placeholder='Search for a background music' className='w-full outline-none text-sm  px-5 py-2 border border-greys1/30 rounded-sm resize-none bg-greys5 cus-scrollbar placeholder:text-sm placeholder:leading-7 placeholder:text-greys4/80' />
 
-                        <div className="flex flex-col gap-1 text-start">
-                          <p className="text-sm text-white">{music.name}</p>
-                          <p className="text-xs text-greys4">{music.description}</p>
-                        </div>
+              <div className="w-full flex flex-col gap-7 mt-2 h-[330px] overflow-y-scroll cus-scrollbar">
+                {backgroundMusic.map(music => (
+                  <div key={music.id} className="w-full flex flex-row items-center gap-2 justify-between ">
+                    <div className="flex flex-row items-center gap-2">
+
+                      <div className="flex flex-col gap-1 text-start">
+                        <p className="text-sm text-white">{music.name}</p>
+                        <p className="text-xs text-greys4">{music.description}</p>
                       </div>
-                      <div className="flex flex-row gap-2 items-center">
+                    </div>
+                    <div className="flex flex-row gap-2 items-center">
+                      {
+                        isPlayingAudio(music) && (
+                          <SoundLottie />
+                        )
+                      }
+                      <button onClick={() => playOrPauseAudio(music)} className="flex flex-row gap-2 w-[35px] h-[35px] rounded-md bg-greys1/10 border border-greys1/20 items-center justify-center cursor-pointer hover:bg-greys1/20 transition-all duration-300">
                         {
-                          isPlayingAudio(music) && (
-                            <SoundLottie />
+                          isPlayingAudio(music) ? (
+                            <IoPauseOutline size={16} className="text-white" />
+                          ) : (
+                            <IoPlayOutline size={16} className="text-white" />
                           )
                         }
-                        <button onClick={() => playOrPauseAudio(music)} className="flex flex-row gap-2 w-[35px] h-[35px] rounded-md bg-greys1/10 border border-greys1/20 items-center justify-center cursor-pointer hover:bg-greys1/20 transition-all duration-300">
-                          {
-                            isPlayingAudio(music) ? (
-                              <IoPauseOutline size={16} className="text-white" />
-                            ) : (
-                              <IoPlayOutline size={16} className="text-white" />
-                            )
-                          }
-                        </button>
-                        <button className='text-xs text-white bg-senary border rounded-md border-greys1/60 px-6 py-2 cursor-pointer' onClick={() => {
-                          selectBackgroundMusic(music);
-                        }}>Select</button>
-
-                      </div>
+                      </button>
+                      <button className='text-xs text-white bg-senary border rounded-md border-greys1/60 px-6 py-2 cursor-pointer' onClick={() => {
+                        selectBackgroundMusic(music);
+                      }}>Select</button>
 
                     </div>
-                  ))}
-                </div>
+
+                  </div>
+                ))}
               </div>
-            </DialogDescription>
+            </div>
           </DialogHeader>
         </DialogContent>
       </Dialog>

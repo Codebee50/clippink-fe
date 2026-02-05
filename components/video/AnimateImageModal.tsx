@@ -52,13 +52,13 @@ const AnimateImageModal = ({ scene, open = false, onOpenChange = () => { } }: { 
 
     const handleVideoUpdate = useCallback((data: VideoUpdateMessageBody) => {
         if (data.type === "scene_animation_successful") {
-            console.log("scene animation successful from animate image modal", data)
             const payload = data.payload as SceneAnimationSuccessfulPayload
             replaceScene(payload.scene)
+            setGeneratingAnimation(false)
             toast.success("Animation generated successfully")
             closeModal()
         }
-    }, [])
+    }, [replaceScene, closeModal])
 
     useVideoUpdateWs({
         onMessage: handleVideoUpdate,
@@ -130,7 +130,7 @@ const AnimateImageModal = ({ scene, open = false, onOpenChange = () => { } }: { 
                             onChange={(e) => setAnimationPrompt(e.target.value)}
                         />
 
-                        <LoadingButton text="Animate Image" loadingText="Animating Image..." onClick={handleInitiateAnimation} isLoading={isInitiatingAnimation || generatingAnimation} className='mt-5' />
+                        <LoadingButton text="Animate Image" loadingText="Animating..." onClick={handleInitiateAnimation} isLoading={isInitiatingAnimation || generatingAnimation} className='mt-5' />
 
                     </div>
 

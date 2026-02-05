@@ -16,6 +16,7 @@ import usePostRequest from "@/hooks/usePost";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import AiScriptWriterModal from "../video/AiScriptWriterModal";
 
 
 
@@ -39,7 +40,7 @@ const ScriptToVideoForm = () => {
 
   }
 
-  type GenerateVideoResponse = {  
+  type GenerateVideoResponse = {
     message: string;
     video: Video
   }
@@ -98,10 +99,9 @@ const ScriptToVideoForm = () => {
             <p className="text-sm text-greys4">Our AI analyzes your script and generates visuals that match it.</p>
           </div>
 
-          <button className="flex flex-row text-white bg-senary sm:px-6 px-4 py-2 rounded-sm text-sm text-nowrap gap-2 items-center cursor-pointer">
-            <PiMagicWand size={16} />
-            Write using AI
-          </button>
+          <AiScriptWriterModal />
+
+
         </div>
 
         <div className="w-full pb-4 border-b border-b-greys1/30">
@@ -125,10 +125,7 @@ Example: On Christmas Eve 1945, the Sodder family went to bed in their home in F
         {/* Narrators Voice */}
         <SelectNarratorsVoice onSelect={handleSelectNarratorsVoice} />
 
-
-
         <LoadingButton text="Generate Video" loadingText="Generating Video.." isLoading={isGeneratingVideo} Icon={<GiMagicLamp size={20} />} onClick={handleGenerateVideo} />
-
 
       </div>
     </div>
