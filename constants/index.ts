@@ -37,9 +37,6 @@ export const makeMsUrl = (path: string, protocol: string | null = null) => {
     url = `${BASE_MS_PROTOCOL}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
   }
 
-  if(!url.endsWith("/")){
-    url += "/"
-  }
   return url
 }
 

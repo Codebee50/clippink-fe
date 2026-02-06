@@ -91,7 +91,7 @@ const BackgroundAudioSettings = () => {
     }
 
     const { mutate: getBackgroundMusicList, isLoading: isGettingBackgroundMusicList } = useFetchRequest({
-        url: `/assets/background-audio/list`,
+        url: `/assets/background-audio/list/`,
         onSuccess: (response: AxiosResponse) => {
             const data = response.data as BackgroundMusicResponse[];
             setBackgroundMusicList(data);

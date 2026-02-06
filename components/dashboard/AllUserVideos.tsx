@@ -40,7 +40,7 @@ const AllUserVideos = () => {
     const page = Number(getParam("page")) || 1
 
     const { mutate: fetchVideos, isLoading: isFetchingVideos } = useFetchRequest({
-        url: `/video/user-videos?page_size=12&page=${page}`,
+        url: `/video/user-videos/?page_size=12&page=${page}`,
         onSuccess: (response: AxiosResponse) => {
             const data = response.data.videos as VideoResponse[];
             const paginationInfo = response.data.page_info as PaginationInfo

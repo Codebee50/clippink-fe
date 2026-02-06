@@ -36,7 +36,7 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
     const toast = useStyledToast()
 
     const { mutate: getExportedVideo, isLoading: isGettingExportedVideo } = useFetchRequest({
-        url: `/video/exported-video/${video?.id}`,
+        url: `/video/exported-video/${video?.id}/`,
         onSuccess: (response: AxiosResponse) => {
             const data = response.data
 

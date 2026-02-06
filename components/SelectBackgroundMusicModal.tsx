@@ -27,7 +27,7 @@ const SelectBackgroundMusicModal = ({ onSelect }: { onSelect: (audio: Background
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate: getBackgroundMusic, isLoading: isGettingBackgroundMusic } = useFetchRequest({
-    url: `/assets/background-audio/list`,
+    url: `/assets/background-audio/list/`,
     onSuccess: (response: AxiosResponse) => {
       const data = response.data as BackgroundMusicResponse[];
       setBackgroundMusic(data);
