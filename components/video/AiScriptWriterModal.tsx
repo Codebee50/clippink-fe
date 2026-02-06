@@ -19,7 +19,7 @@ import usePostRequest from '@/hooks/usePost';
 import { AxiosError, AxiosResponse } from 'axios'
 import useStyledToast from '@/hooks/useStyledToast'
 import { genericErrorHandler } from '@/lib/errorHandler'
-import { makeMsUrl } from '@/constants'
+import { makeMsUrl, WS_PROTOCOL } from '@/constants'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 
@@ -82,7 +82,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
     useEffect(() => {
         if (taskId) {
             console.log("connecting to task update ws")
-            const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/task/update/${taskId}`, "ws")}`);
+            const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/task/update/${taskId}`, WS_PROTOCOL)}`);
             rws.onmessage = (event) => {
                 const data = JSON.parse(event.data) as TaskUpdateMessageBody
                 console.log("data", data)

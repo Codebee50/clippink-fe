@@ -21,18 +21,28 @@ export const BASE_MS_URL = process.env.NEXT_PUBLIC_BASE_MS_URL || "http://192.16
 export const BASE_MS_HOST = process.env.NEXT_PUBLIC_BASE_MS_HOST || "192.168.1.164"
 export const BASE_MS_PORT = process.env.NEXT_PUBLIC_BASE_MS_PORT || "9000"
 export const BASE_MS_PROTOCOL = process.env.NEXT_PUBLIC_BASE_MS_PROTOCOL || "http"
+export const WS_PROTOCOL = process.env.NEXT_PUBLIC_WS_PROTOCOL || "ws"
 
 
-export const makeMsUrl = (path: string, protocol: string | null=null) =>{
-  if(protocol){
-    return `${protocol}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
+export const makeMsUrl = (path: string, protocol: string | null = null) => {
+  let url = ""
+  if (protocol) {
+    url = `${protocol}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
   }
 
-  if(BASE_MS_PROTOCOL === "https"){
-    return `https://${BASE_MS_HOST}${path}`
+  if (BASE_MS_PROTOCOL === "https") {
+    url = `https://${BASE_MS_HOST}${path}`
   }
-    return `${BASE_MS_PROTOCOL}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
+  else {
+    url = `${BASE_MS_PROTOCOL}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
+  }
+
+  if(!url.endsWith("/")){
+    url += "/"
+  }
+  return url
 }
+
 
 
 export const motionEffects: MotionEffect[] = [
@@ -40,7 +50,7 @@ export const motionEffects: MotionEffect[] = [
     displayName: "None",
     value: "none"
   },
-  
+
   {
     displayName: "Scroll Up",
     value: "scrollUp"
@@ -68,7 +78,7 @@ export const motionEffects: MotionEffect[] = [
   {
     displayName: "Diagonal Up Left",
     value: "diagonalUpLeft"
-    },
+  },
   {
     displayName: "Diagonal Up Right",
     value: "diagonalUpRight"

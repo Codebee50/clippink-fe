@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/popover"
 import { BiCopyAlt, BiExport, BiRefresh } from 'react-icons/bi'
 import useFetchRequest from '@/hooks/useFetch'
-import { makeMsUrl } from '@/constants'
+import { makeMsUrl, WS_PROTOCOL } from '@/constants'
 import { ExportedVideo, VideoResponse, VideoWsExportCompletedPayload, VideoWsExportProgressMessageBody } from '@/lib/types/video'
 import { AxiosError, AxiosResponse } from 'axios'
 import GooeyBalls from '../loaders/GooeyBalls'
@@ -169,7 +169,7 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
 
     useEffect(() => {
         if (exportInProgress && video?.id) {
-            const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/video/render/${video?.id}`, "ws")}`);
+            const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/video/render/${video?.id}`, WS_PROTOCOL)}`);
 
             
 

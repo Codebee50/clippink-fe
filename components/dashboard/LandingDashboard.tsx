@@ -66,7 +66,7 @@ const LandingDashboard = () => {
 
 
     const { mutate: fetchVideos, isLoading: isFetchingVideos } = useFetchRequest({
-        url: `/video/user-videos`,
+        url: `/video/user-videos/`,
         onSuccess: (response: AxiosResponse) => {
             const data = response.data.videos as VideoResponse[];
             setUserVideos(data);

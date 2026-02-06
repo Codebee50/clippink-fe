@@ -19,7 +19,7 @@ const SelectVideoStyle = ({ onSelect }: { onSelect: (style: VideoStyleResponse) 
 
 
     const { mutate: getVideoStyles, isLoading: isGettingVideoStyles } = useFetchRequest({
-        url: `/video/image-style-presets`,
+        url: `/video/image-style-presets/`,
         onSuccess: (response: AxiosResponse) => {
             const data = response.data as VideoStyleResponse[];
             setVideoStyles(data);

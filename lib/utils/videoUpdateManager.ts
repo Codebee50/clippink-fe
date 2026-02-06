@@ -2,7 +2,7 @@
 import { VideoUpdateMessageBody } from "../types/video";
 
 import ReconnectingWebSocket from 'reconnecting-websocket'
-import { makeMsUrl } from "@/constants"
+import { makeMsUrl, WS_PROTOCOL } from "@/constants"
 
 
 type Listener = (data: VideoUpdateMessageBody) => void
@@ -20,7 +20,7 @@ class VideoUpdateManager {
     this.disconnect()
     this.currentVideoId = videoId
 
-    this.ws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/video/task/${videoId}`, "ws")}`)
+    this.ws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/video/task/${videoId}`, WS_PROTOCOL)}`)
 
     this.ws.onmessage = (event) => {
       console.log("video update message received", event.data)
