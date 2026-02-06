@@ -89,6 +89,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
                 console.log("data", data)
                 if (data.type === "failed") {
                     toast.error(data.message)
+                    setIsGeneratingScript(false)
                 }
 
                 if (data.type === 'completed') {
@@ -96,6 +97,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
                     onScriptGenerated(data?.script ?? "")
                     setMessages(prev => [...prev, "Script generated successfully"])
                     setOpen(false)
+                    setIsGeneratingScript(false)
                 }
 
                 if (data.type === "message") {
