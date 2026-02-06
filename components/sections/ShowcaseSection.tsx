@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react'
 import Image from "next/image";
 import { GoRocket } from "react-icons/go";
@@ -5,8 +7,15 @@ import { FaSlideshare } from "react-icons/fa6";
 import { MdMotionPhotosOn } from "react-icons/md";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { appConfig } from '@/constants';
+import { useRouter } from 'next/navigation';
+import { TbScript } from "react-icons/tb";
+import { RiVideoAiLine } from "react-icons/ri";
+import { BiSolidCustomize } from "react-icons/bi";
+
+
 
 const ShowcaseSection = () => {
+    const router = useRouter();
     return (
         <div
             className="w-full  pt-[10px] padding-x relative bg-denary pb-[80px]"
@@ -32,30 +41,28 @@ const ShowcaseSection = () => {
                 <div className="flex flex-col md:flex-row items-center max-w-[1000px] mx-auto gap-10">
                     {/* left stack */}
                     <div className="flex flex-col gap-3">
-                        {/* start a habit */}
+                        {/* get a script */}
                         <div className="flex flex-col items-center gap-2 bg-greys3 rounded-xl px-5 py-7 w-full sm:max-w-[270px] border border-greys1/20">
-                            <GoRocket className="text-white text-2xl" />
+                            <TbScript className="text-white text-2xl" />
 
-                            <h3 className="font-medium">Start A Habit</h3>
+                            <h3 className="font-medium">Get a script</h3>
                             <p className="text-sm text-gray-500 text-center">
-                                From Fitness to Making your bed, we have a variety of habits to
-                                choose from
+                                Bring your custom script or generate one with our advanced AI script writer.
                             </p>
 
-                            <button className="bg-senary text-white px-4 py-2 rounded-md w-max text-sm font-medium cursor-pointer mt-5">
-                                Start A Habit
+                            <button className="bg-senary text-white px-4 py-2 rounded-md w-max text-sm font-medium cursor-pointer mt-5" onClick={() => router.push("/dashboard/video/create")}>
+                                Create a video
                             </button>
                         </div>
 
-                        {/* share your goals */}
+                        {/* generate a video */}
                         <div className="flex flex-row items-center gap-4 bg-greys3 rounded-xl px-5 py-7 w-full sm:max-w-[270px] border border-greys1/20">
-                            <FaSlideshare className="text-white text-2xl shrink-0" />
+                            <RiVideoAiLine className="text-white text-2xl shrink-0" />
 
                             <div className="flex flex-col text-start">
-                                <h3 className="font-medium">Share your goals</h3>
+                                <h3 className="font-medium">Generate a video</h3>
                                 <p className="text-sm text-gray-500">
-                                    Tell us what you want to achieve and why you want to achieve
-                                    it.
+                                    Based on your script and video style configurations, our AI will generate a high quality video for you.
                                 </p>
                             </div>
                         </div>
@@ -65,7 +72,7 @@ const ShowcaseSection = () => {
                             width={70}
                             src={"/rightcurlyarrow.svg"}
                             className="self-end max-md:hidden"
-                            alt="Share your goals"
+                            alt="Generate a video"
                         />
                     </div>
 
@@ -101,22 +108,21 @@ const ShowcaseSection = () => {
 
                         {/* solid proof */}
                         <div className="flex flex-col items-center gap-2 bg-greys3 rounded-xl px-5 py-10 w-full sm:max-w-[300px] border border-greys1/20">
-                            <MdMotionPhotosOn className="text-white text-2xl" />
+                            <GoRocket className="text-white text-2xl" />
 
-                            <h3 className="font-medium">Solid proof</h3>
+                            <h3 className="font-medium">Export your video</h3>
                             <p className="text-sm text-gray-500 text-center">
-                                You consistently upload a picture of yourself performing your
-                                habit for regular verification.
+                                Export your video as a high quality mp4 file, ready to upload to your favorite social media platform.
                             </p>
                         </div>
 
-                        {/* receive constant reminders */}
+                        {/* preview or edit the video */}
                         <div className="flex flex-col items-center gap-2 bg-greys3 rounded-xl px-5 py-10 w-full sm:max-w-[300px] border border-greys1/20">
-                            <MdOutlineNotificationsActive className="text-white text-2xl" />
+                            <BiSolidCustomize className="text-white text-2xl" />
 
-                            <h3 className="font-medium">Receive reminders</h3>
+                            <h3 className="font-medium">Preview or edit the video</h3>
                             <p className="text-sm text-gray-500 text-center">
-                                Stay motivated with regular phone calls, emails, and reminders tailored to your habit.
+                                Preview the video and edit it to your liking, change background music, narrators voice, and more.
                             </p>
                         </div>
                     </div>
