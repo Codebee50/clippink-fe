@@ -73,6 +73,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
             console.log(data.task_id)
             setTaskId(data.task_id)
             setMessages(prev => [...prev, "Script generation queued..."])
+            setIsGeneratingScript(true)
 
         },
         onError: (error: AxiosError) => {
@@ -81,6 +82,8 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
     })
 
     useEffect(() => {
+        if(!taskId) return
+        
         if (taskId) {
             console.log("connecting to task update ws")
             const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/task/update/${taskId}`, WS_PROTOCOL)}`);
@@ -106,7 +109,6 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
 
 
             }
-            setIsGeneratingScript(true)
         }
 
     }, [taskId])
