@@ -27,6 +27,10 @@ export const makeMsUrl = (path: string, protocol: string | null=null) =>{
   if(protocol){
     return `${protocol}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
   }
+
+  if(BASE_MS_PROTOCOL === "https"){
+    return `https://${BASE_MS_HOST}${path}`
+  }
     return `${BASE_MS_PROTOCOL}://${BASE_MS_HOST}:${BASE_MS_PORT}${path}`
 }
 
