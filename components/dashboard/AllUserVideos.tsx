@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import CustomPagination from '../CustomPagination';
 import { DEFAULT_PAGINATION_INFO, PaginationInfo } from '@/lib/types/global';
 import { useQueryParams } from '@/hooks/useQueryParams';
+import Footer from '../Footer';
 
 
 const LoadingVideosSkeleton = () => {
@@ -72,6 +73,10 @@ const AllUserVideos = () => {
                 <CustomPagination paginationInfo={paginationInfo} />
 
             </div>
+            <div className='mt-[50px]'>
+
+            </div>
+            <Footer />
         </div>
     )
 }

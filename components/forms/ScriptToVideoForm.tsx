@@ -15,14 +15,15 @@ import LoadingButton from "../buttons/LoadingButton";
 import usePostRequest from "@/hooks/usePost";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import AiScriptWriterModal from "../video/AiScriptWriterModal";
+import useStyledToast from "@/hooks/useStyledToast";
 
 
 
 const ScriptToVideoForm = () => {
   const router = useRouter();
 
+  const toast = useStyledToast()
 
   const [videoConfig, setVideoConfig] = useState<ScriptToVideoReqConfig>({
     script: null,
@@ -99,7 +100,7 @@ const ScriptToVideoForm = () => {
             <p className="text-sm text-greys4">Our AI analyzes your script and generates visuals that match it.</p>
           </div>
 
-          <AiScriptWriterModal />
+          <AiScriptWriterModal onScriptGenerated={(script) => updateConfig("script", script)} />
 
 
         </div>
@@ -112,6 +113,7 @@ const ScriptToVideoForm = () => {
                 
 Example: On Christmas Eve 1945, the Sodder family went to bed in their home in Fayetteville, West Virginia. By morning, five of their children would be gone forever. George and Jennie Sodder had ten children. That night, nine of them were home sleeping peacefully. At 1 AM, Jennie woke to find their house engulfed in flames. George tried desperately to reach the children's bedrooms upstairs, but the fire was too intense. The family escaped outside, but five children—Maurice, Mart....`}
             onChange={(e) => updateConfig("script", e.target.value)}
+            value={videoConfig.script ?? ""}
           ></textarea>
         </div>
 

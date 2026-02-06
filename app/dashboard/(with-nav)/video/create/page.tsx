@@ -13,6 +13,7 @@ import useFetchRequest from "@/hooks/useFetch";
 import { makeMsUrl } from "@/constants";
 import { AxiosResponse } from "axios";
 import VideoPlayer from "@/components/video/VideoPlayer";
+import { getDefaultCaptionSettings } from "@/lib/utils/caption";
 
 const breadCrumbs: BreadCrumbItem[] = [
   {
@@ -47,6 +48,9 @@ const Page = () => {
     url: `/video/sample`,
     onSuccess: (response: AxiosResponse) => {
       const data = response.data as VideoResponse;
+      if (!data.caption_settings) {
+        data.caption_settings = getDefaultCaptionSettings()
+      }
       setSampleVideo(data);
     },
   });
@@ -87,10 +91,17 @@ const Page = () => {
           </div>
 
           <ScriptToVideoForm />
+
+          <div className="h-[100px]">
+
+          </div>
         </div>
 
-        <div className="flex  justify-center flex-1 max-lg:hidden">
-          <VideoPlayer video={sampleVideo ?? null} />
+        <div className="flex h-full justify-center pt-[100px]  flex-1 max-lg:hidden">
+          <div className="w-full max-h-[500px] max-w-[350px]">
+            <VideoPlayer video={sampleVideo ?? null} />
+
+          </div>
         </div>
 
       </div>

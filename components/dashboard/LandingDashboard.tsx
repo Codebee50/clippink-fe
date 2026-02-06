@@ -240,7 +240,7 @@ const LandingDashboard = () => {
             </div>
 
 
-            <div className="flex flex-col gap-4 text-lg w-full mt-5">
+            <div className="flex flex-col gap-4 w-full mt-5">
                 <div className="w-full flex flex-row items-center justify-between">
                     <div className="flex flex-row items-center gap-2">
                         <p>Recently Created</p>
@@ -276,6 +276,8 @@ const LandingDashboard = () => {
             </div>
 
             <Footer />
+
+
         </div>
     )
 }

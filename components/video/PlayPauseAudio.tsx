@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { IoPauseOutline, IoPlayOutline } from 'react-icons/io5'
 
-const PlayPauseAudio = ({ audio_url, id, sizePx = 40, playingAudioId = null, onPlay = (id: string) => { }, onPause = (id: string) => { } }: { audio_url: string, id: string, sizePx?: number, playingAudioId?: string | null, onPlay?: (id: string) => void, onPause?: (id: string) => void }) => {
+const PlayPauseAudio = ({ audio_url, id, sizePx = 40, playingAudioId = null, onPlay = (id: string) => { }, onPause = (id: string) => { }, volume = 0.5 }: { audio_url: string, id: string, sizePx?: number, playingAudioId?: string | null, onPlay?: (id: string) => void, onPause?: (id: string) => void, volume?: number }) => {
     const audioref = useRef<HTMLAudioElement>(null)
     const [isPlaying, setIsPlaying] = useState(false)
 
@@ -21,6 +21,12 @@ const PlayPauseAudio = ({ audio_url, id, sizePx = 40, playingAudioId = null, onP
             audioref.current.src = audio_url
         }
     }, [audio_url])
+
+    useEffect(() => {
+        if (audioref.current) {
+            audioref.current.volume = volume ?? 0.5
+        }
+    }, [volume])
 
 
     useEffect(() => {

@@ -61,9 +61,9 @@ const BackgroundAudioSettings = () => {
 
     const isIOS = () => {
         if (typeof window === 'undefined') return false;
-        
+
         return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      };
+    };
 
 
     const handleVolumeChange = (value: number[]) => {
@@ -128,7 +128,7 @@ const BackgroundAudioSettings = () => {
                         </div>
 
 
-                        <PlayPauseAudio audio_url={video?.background_audio.url} id={'currently_using'} onPlay={handlePlay} playingAudioId={playingAudioId} />
+                        <PlayPauseAudio audio_url={video?.background_audio.url} id={'currently_using'} onPlay={handlePlay} playingAudioId={playingAudioId} volume={video?.background_audio_volume ?? 0.5} />
 
                     </div>
 
@@ -153,7 +153,7 @@ const BackgroundAudioSettings = () => {
                     />
 
                     <p className='text-white text-sm'>
-                        {parseInt((video?.background_audio_volume ?? 0.5) * 100)}%
+                        {Math.round((video?.background_audio_volume ?? 0.5) * 100)}%
                     </p>
 
 
@@ -161,7 +161,7 @@ const BackgroundAudioSettings = () => {
 
                 {
                     isIOS() && <div className="w-full flex flex-row items-center justify-center gap-2">
-                        <p className="text-xs text-yellow-500 flex flex-row items-center gap-2">                        
+                        <p className="text-xs text-yellow-500 flex flex-row items-center gap-2">
                             <IoWarningOutline size={16} className="text-yellow-500 shrink-0" />
                             KNOWN ISSUE: iOS Safari and some mobile browsers handle audio playback differently during in-browser preview, which can cause volume inconsistencies. We promise your rendered file will have accurate audio mixing.
                         </p>
@@ -169,7 +169,7 @@ const BackgroundAudioSettings = () => {
                     </div>
                 }
 
-                
+
 
 
 
@@ -220,7 +220,7 @@ const BackgroundAudioSettings = () => {
                 {
                     audioSource === "uploaded_audio" && <div className="w-full flex flex-col gap-4 mt-3">
 
-                        <UpdateBackgroundAudio/>
+                        <UpdateBackgroundAudio />
                     </div>
                 }
 
