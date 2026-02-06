@@ -60,10 +60,11 @@ const BackgroundAudioSettings = () => {
 
 
     const isIOS = () => {
-        if (typeof window === 'undefined') return false;
+        if (typeof window === "undefined") return false
 
-        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    };
+        return /iPad|iPhone|iPod/.test(navigator.userAgent)
+    }
+
 
 
     const handleVolumeChange = (value: number[]) => {
@@ -119,7 +120,7 @@ const BackgroundAudioSettings = () => {
                                 <div className="flex flex-row items-center gap-1 text-greys1">
 
                                     <MdVolumeUp size={16} />
-                                    <p className="text-sm">{parseInt((video?.background_audio_volume || 0.5) * 100)}%</p>
+                                    <p className="text-sm">{Math.round((video?.background_audio_volume || 0.5) * 100)}%</p>
 
                                 </div>
 

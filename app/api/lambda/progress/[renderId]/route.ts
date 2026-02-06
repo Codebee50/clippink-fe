@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import {getRenderProgress, getFunctions} from '@remotion/lambda/client';
 
 
-export async function POST(req: NextRequest, { params }: { params: { renderId: string } }){
+export async function POST(req: NextRequest, { params }: { params: Promise<{ renderId: string }> }){
     const {renderId} = await params
     const {bucketName} = await req.json()
 

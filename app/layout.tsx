@@ -4,6 +4,7 @@ import { appConfig } from "@/constants";
 import { ReactQueryProvider } from "./ReactQueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import UserHeader from "@/components/UserHeader";
+import { Suspense } from "react";
 
 
 export const metadata: Metadata = {
@@ -27,7 +28,9 @@ export default function RootLayout({
         <ReactQueryProvider>
           <Toaster position="top-right" />
           <UserHeader />
-          {children}
+          <Suspense fallback={<div className="w-dvw h-dvh flex items-center justify-center bg-denary text-greys1 text-2xl font-medium">Loading...</div>}>
+            {children}
+          </Suspense>
         </ReactQueryProvider>
       </body>
     </html>

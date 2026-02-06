@@ -6,6 +6,7 @@ import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import IconTextInputLabel from "./IconTextInputLabel";
 import { FormikProps } from "formik";
+import { IconType } from "react-icons";
 
 
 
@@ -20,7 +21,7 @@ type TextInputProps<T> = {
   required?: boolean;
   labelSider?: React.ReactNode;
   formik?: FormikProps<T>;
-  icon?: React.ReactNode;
+  icon?: IconType;
   rightHint?: React.ReactNode;
   underHint?: React.ReactNode;
 };
@@ -37,7 +38,7 @@ const TextInput = <T,>({
   required = false,
   labelSider = null,
   formik = undefined,
-  icon = null,
+  icon = undefined,
   rightHint = null,
   underHint = null,
 }: TextInputProps<T>) => {
