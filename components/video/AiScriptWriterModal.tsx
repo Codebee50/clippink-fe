@@ -64,6 +64,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
     const [messages, setMessages] = useState<string[]>([]);
     const [taskId, setTaskId] = useState<string | null>(null);
     const [open, setOpen] = useState(false)
+    const [isGeneratingScript, setIsGeneratingScript] = useState<boolean>(false);
 
     const { mutate: initiateScriptGeneration, isLoading: isInitiatingScriptGeneration } = usePostRequest({
         url: "/video/script/ai-generate/",
@@ -103,6 +104,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
 
 
             }
+            setIsGeneratingScript(true)
         }
 
     }, [taskId])
@@ -196,7 +198,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
 
                             </div>
 
-                            <LoadingButton text='Generate Script' type='submit' isLoading={isInitiatingScriptGeneration} loadingText={"Processing..."} />
+                            <LoadingButton text='Generate Script' type='submit' isLoading={isInitiatingScriptGeneration || isGeneratingScript} loadingText={"Processing..."} />
                         </form>
 
                         <div className='w-full flex flex-col gap-2 mt-5 max-h-[100px] overflow-y-scroll cus-scrollbar'>
