@@ -25,6 +25,13 @@ import { RiVideoAiLine } from "react-icons/ri";
 import { TbVideoPlus } from "react-icons/tb";
 
 
+type UserDashboard = {
+    total_videos: number;
+    pending_videos: number;
+    completed_videos: number;
+    failed_videos: number;
+}
+
 
 const LoadingRecentsSekeleton = () => {
 
@@ -44,6 +51,13 @@ const LandingDashboard = () => {
     const userVideosScrollRef = useRef<HTMLDivElement>(null);
     const [userVideos, setUserVideos] = useState<VideoResponse[]>([]);
     const user = useUserStore((state) => state.user)
+
+    const [userDashboardData, setUserDashboardData] = useState<UserDashboard>({
+        total_videos: 0,
+        pending_videos: 0,
+        completed_videos: 0,
+        failed_videos: 0,
+    });
 
 
     const scrollUserVideos = (direction: "left" | "right") => {
@@ -73,8 +87,17 @@ const LandingDashboard = () => {
         },
     });
 
+    const { mutate: fetchUserDashboard, isLoading: isFetchingUserDashboard } = useFetchRequest({
+        url: "/video/user/dashboard/",
+        onSuccess: (response: AxiosResponse) => {
+            const data = response.data as UserDashboard;
+            setUserDashboardData(data);
+        },
+    });
+
     useEffect(() => {
         fetchVideos();
+        fetchUserDashboard();
     }, []);
 
     return (
@@ -122,7 +145,7 @@ const LandingDashboard = () => {
                             </div>
 
                             <div>
-                                <p className='text-4xl  text-white'>10</p>
+                                <p className='text-4xl  text-white'>{userDashboardData.total_videos}</p>
                             </div>
 
                             <div className='w-full flex flex-row items-center gap-2'>
@@ -130,20 +153,14 @@ const LandingDashboard = () => {
                                 <p className='text-greys2 text-xs'>Total videos created</p>
                             </div>
 
-                            {/* <div className="w-full flex flex-row items-center gap-4">
-                                <button
-                                    onClick={() => router.push("/dashboard/video/create")}
-                                    className="bg-denary  z-10 text-white font-medium px-4 py-2 rounded-md flex flex-row items-center gap-2 cursor-pointer w-max max-sm:mt-10"
-                                >
-                                    <IoMdAdd className="text-lg" />
-                                    <p className="text-sm capitalize">Create new video</p>
-                                </button>
-                            </div> */}
-
+                        
 
                             <Image src="/images/stars.svg" alt="Idea for you" width={300} height={300} className="w-full h-full shrink-0  object-cover object-center absolute opacity-10" />
 
                         </div>
+
+
+
 
                         {/* Pending videos */}
                         <div className='w-full min-w-[250px] rounded-lg bg-greys3/50 p-4 h-full min-h-[180px] flex flex-col justify-between'>
@@ -160,7 +177,7 @@ const LandingDashboard = () => {
                             </div>
 
                             <div>
-                                <p className='text-white text-4xl '>0</p>
+                                <p className='text-white text-4xl '>{userDashboardData.pending_videos}</p>
                             </div>
 
 
@@ -190,7 +207,7 @@ const LandingDashboard = () => {
                             </div>
 
                             <div>
-                                <p className='text-white text-4xl'>0</p>
+                                <p className='text-white text-4xl'>{userDashboardData.completed_videos}</p>
                             </div>
 
 
@@ -217,7 +234,7 @@ const LandingDashboard = () => {
                             </div>
 
                             <div>
-                                <p className='text-white text-4xl'>0</p>
+                                <p className='text-white text-4xl'>{userDashboardData.failed_videos}</p>
                             </div>
 
 
