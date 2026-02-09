@@ -107,7 +107,7 @@ const imageUrls = [
 const imageList = [
     "https://clippink-bkt.s3.amazonaws.com/images/77df34e4-6260-4d4b-904e-d79a6a3e645e/11c44cca-4aa7-4720-bf09-d5dc0fcf9877.jpeg",
     "https://clippink-bkt.s3.amazonaws.com/images/d01da742-80f3-4858-8464-805e0d657e56/98f55c22-b597-4b1c-9aa8-24be5b8b6c75.jpeg",
-    "https://clippink-bkt.s3.amazonaws.com/images/2032ee58-7b58-47e7-87ba-c28c50056dda/27d461cb-269a-44c8-935c-cbbd9228663b.jpeg",
+    "https://clippink-bkt.s3.amazonaws.com/images/2032ee58-7b58-47e7-87ba-c28c50056dda/c7506295-0b8a-452f-b76c-d30b48a5dabc.jpeg",
     "https://clippink-bkt.s3.amazonaws.com/images/619aca91-4ce2-4200-bc36-396401e9f484/ce1a1494-36c8-4565-8860-0a837d8b30ea.jpeg",
     "https://clippink-bkt.s3.amazonaws.com/images/dc717093-b252-44f2-92e1-48bff8fa86f6/66973684-3adb-4c85-b1db-635915b6058a.jpeg"
 
