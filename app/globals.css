@@ -31,6 +31,10 @@
   --color-greys4: #6b6b6b;
   --color-greys5: #0c0c10;
 
+  --color-cardbg: hsl(220, 12%, 7%);
+  --color-cardborder: hsl(220 10% 14%);
+  --color-card-foreground: hsl(210, 20%, 92%);
+
   --font-eb-garamond: "EB Garamond", serif;
   --font-rubik: "Rubik", sans-serif;
   --font-zalando: "Zalando Sans Expanded", sans-serif;

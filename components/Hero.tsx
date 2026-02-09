@@ -124,8 +124,8 @@ const Hero = () => {
           <div className="h-[280px]"></div>
 
           <div className="flex flex-col items-center justify-center gap-3 padding-x">
-            <h1 className="text-white text-3xl md:text-6xl font-medium capitalize font-eb-garamond text-center">
-              Create Viral Social Media <br /> Content On Auto Pilot
+            <h1 className="text-white text-3xl md:text-5xl font-medium capitalize font-eb-garamond text-center">
+              Create Viral Social Media Content<br /> Faster, Easier and Better
             </h1>
             <p className="font-intertight text-greys2 max-sm:text-sm max-sm:max-w-[270px] text-center">Post daily without burnout and grow your audience while you sleep. </p>
             <button

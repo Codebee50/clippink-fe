@@ -7,6 +7,8 @@ import UserHeader from "@/components/UserHeader";
 import { Suspense } from "react";
 
 
+
+
 export const metadata: Metadata = {
   title: `${appConfig.APP_NAME} - ${appConfig.APP_DESCRIPTION}`,
   // title: `${appConfig.APP_NAME} - AI Powered Video Creation`,

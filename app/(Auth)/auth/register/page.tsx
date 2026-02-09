@@ -14,6 +14,7 @@ import { AxiosError, AxiosResponse } from 'axios'
 import useStyledToast from '@/hooks/useStyledToast'
 import { useRouter } from 'next/navigation'
 import { genericErrorHandler } from '@/lib/errorHandler'
+import GoogleSignInButton from '@/components/GoogleSignInButton'
 
 const Page = () => {
 
@@ -48,10 +49,7 @@ const Page = () => {
         <AuthLayout title="Create an account">
             <div className='w-full flex flex-col gap-4'>
                 <div className='w-full  mt-5'>
-                    <button className='w-full flex flex-row items-center gap-5 justify-center bg-greys3/50  text-white px-4 py-3 rounded-md border border-greys2/10 cursor-pointer '>
-                        <Image src="/images/google.png" alt="google" width={20} height={20} />
-                        <p>Continue with Google</p>
-                    </button>
+                    <GoogleSignInButton />
                 </div>
 
 
@@ -74,7 +72,7 @@ const Page = () => {
                     <div className='w-full mt-5 flex flex-col gap-2'>
                         <LoadingButton text='Create account' type='submit' isLoading={isRegisterLoading} loadingText='Creating your account...' />
 
-                        <p className='text-center text-greys2 font-inter f text-sm'>
+                        <p className='text-center text-greys2 font-inter text-sm'>
                             <span>Already have an account?</span>
                             <Link href={routeMap.LOGIN} className='text-senary font-inter  text-sm text-center underline'> Login</Link>
 

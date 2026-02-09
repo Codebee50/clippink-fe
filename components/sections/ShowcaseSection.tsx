@@ -18,7 +18,7 @@ const ShowcaseSection = () => {
     const router = useRouter();
     return (
         <div
-            className="w-full  pt-[10px] padding-x relative bg-denary pb-[80px]"
+            className="w-full  padding-x relative bg-denary"
             style={{
                 backgroundImage: `
           linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px),
@@ -29,7 +29,7 @@ const ShowcaseSection = () => {
         >
 
 
-            <div className="w-full mt-10 stack">
+            <div className="w-full stack">
                 <Image
                     height={200}
                     width={200}
@@ -42,7 +42,7 @@ const ShowcaseSection = () => {
                     {/* left stack */}
                     <div className="flex flex-col gap-3">
                         {/* get a script */}
-                        <div className="flex flex-col items-center gap-2 bg-greys3 rounded-xl px-5 py-7 w-full sm:max-w-[270px] border border-greys1/20">
+                        <div className="flex flex-col items-center gap-2 bg-cardbg rounded-xl px-5 py-7 w-full sm:max-w-[270px] border border-cardborder/60">
                             <TbScript className="text-white text-2xl" />
 
                             <h3 className="font-medium">Get a script</h3>
@@ -56,7 +56,7 @@ const ShowcaseSection = () => {
                         </div>
 
                         {/* generate a video */}
-                        <div className="flex flex-row items-center gap-4 bg-greys3 rounded-xl px-5 py-7 w-full sm:max-w-[270px] border border-greys1/20">
+                        <div className="flex flex-row items-center gap-4 bg-cardbg rounded-xl px-5 py-7 w-full sm:max-w-[270px] border border-cardborder/60">
                             <RiVideoAiLine className="text-white text-2xl shrink-0" />
 
                             <div className="flex flex-col text-start">
@@ -107,7 +107,7 @@ const ShowcaseSection = () => {
                         />
 
                         {/* solid proof */}
-                        <div className="flex flex-col items-center gap-2 bg-greys3 rounded-xl px-5 py-10 w-full sm:max-w-[300px] border border-greys1/20">
+                        <div className="flex flex-col items-center gap-2 bg-cardbg rounded-xl px-5 py-10 w-full sm:max-w-[300px] border border-cardborder/60">
                             <GoRocket className="text-white text-2xl" />
 
                             <h3 className="font-medium">Export your video</h3>
@@ -117,7 +117,7 @@ const ShowcaseSection = () => {
                         </div>
 
                         {/* preview or edit the video */}
-                        <div className="flex flex-col items-center gap-2 bg-greys3 rounded-xl px-5 py-10 w-full sm:max-w-[300px] border border-greys1/20">
+                        <div className="flex flex-col items-center gap-2 bg-cardbg rounded-xl px-5 py-10 w-full sm:max-w-[300px] border border-cardborder/60">
                             <BiSolidCustomize className="text-white text-2xl" />
 
                             <h3 className="font-medium">Preview or edit the video</h3>
