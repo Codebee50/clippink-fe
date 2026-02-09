@@ -9,7 +9,7 @@ const ScrollIntoVideoAnimation = ({ images }: { images: string[] }) => {
 
     const { scrollYProgress } = useScroll({
         target: ref,
-        offset: ["start end", "end start"] // when to start/end tracking
+        offset: ["start end", "end start"] // when to start/end tracking the scroll
     });
 
     useEffect(() => {
@@ -25,7 +25,6 @@ const ScrollIntoVideoAnimation = ({ images }: { images: string[] }) => {
 
                 {
                     images.map((image, index) => {
-
                         return <motion.div
 
                             key={index} className="flex flex-col items-center justify-center gap-2 mt-[50px] min-w-[120px] flex-1 rounded-md overflow-hidden relative">
