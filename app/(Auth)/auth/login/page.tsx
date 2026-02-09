@@ -17,6 +17,7 @@ import { UserData } from '@/lib/types/user';
 import { useUserStore } from '@/hooks/useUser';
 import Link from 'next/link';
 import AuthLayout from '@/components/AuthLayout';
+import GoogleSignInButton from '@/components/GoogleSignInButton';
 
 
 const Page = () => {
@@ -56,10 +57,7 @@ const Page = () => {
         <AuthLayout title="Log in to your account">
             <div className='w-full flex flex-col gap-4'>
                 <div className='w-full  mt-5'>
-                    <button className='w-full flex flex-row items-center gap-5 justify-center bg-greys3/50  text-white px-4 py-3 rounded-md border border-greys2/10 cursor-pointer '>
-                        <Image src="/images/google.png" alt="google" width={20} height={20} />
-                        <p>Continue with Google</p>
-                    </button>
+                    <GoogleSignInButton />
                 </div>
 
                 <div className='w-full  flex flex-row items-center justify-center gap-2'>
