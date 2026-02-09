@@ -9,7 +9,7 @@ import Footer from './Footer'
 const AuthLayout = ({ children, title = "Login", showColorFooter = true, description }: { children: React.ReactNode, title?: string, showColorFooter?: boolean, description?: string }) => {
     return (
         <div className='w-full min-h-dvh flex flex-col  bg-denary '>
-            <div className='w-full flex flex-col items-center justify-center gap-5 bg-denary  max-h-[1000px] relative '>
+            <div className='w-full flex flex-col items-center justify-center gap-5 bg-linear-to-b from-denary to-senary/20 via-denary  max-h-[1000px] relative '>
                 <Nav fixed={true} backdrop={true} logoWidth={30} logoHeight={30} className='border-b border-greys1/20' />
 
                 <div className='mt-[100px]'>
@@ -37,22 +37,15 @@ const AuthLayout = ({ children, title = "Login", showColorFooter = true, descrip
 
                     </div>
 
-
-
-
-
-
-
-
                 </div>
-
+{/* 
                 {
                     showColorFooter && <div className="w-full h-[300px] overflow-hidden absolute bottom-0 left-0 right-0 grid md:grid-cols-2">
                         <Image src="/images/abstractcolors.svg" alt="login-bg" width={1000} height={1000} className='w-full bg-repeat max-md:min-w-[600px]' />
                         <Image src="/images/abstractcolors.svg" alt="login-bg" width={1000} height={1000} className='w-full bg-repeat max-md:hidden' />
 
                     </div>
-                }
+                } */}
 
 
 
