@@ -83,6 +83,10 @@ body {
   font-family: var(--font-rubik);
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 @layer utilities {
   .padding-x {
     @apply px-6 md:px-10 lg:px-16;
@@ -156,6 +160,21 @@ body {
     /* Firefox */
     scrollbar-width: thin;
     scrollbar-color: #22242a transparent;
+  }
+
+  @keyframes slide-scroll-animation {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .slide-track {
+    display: flex;
+    animation: slide-scroll-animation 20s linear infinite;
+    width: max-content;
   }
 }
 

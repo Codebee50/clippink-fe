@@ -18,6 +18,7 @@ const ShowcaseSection = () => {
     const router = useRouter();
     return (
         <div
+            id="about"
             className="w-full  padding-x relative bg-denary"
             style={{
                 backgroundImage: `

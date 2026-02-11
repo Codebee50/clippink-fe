@@ -105,12 +105,41 @@ const imageUrls = [
 
 
 const imageList = [
-    "https://clippink-bkt.s3.amazonaws.com/images/77df34e4-6260-4d4b-904e-d79a6a3e645e/11c44cca-4aa7-4720-bf09-d5dc0fcf9877.jpeg",
-    "https://clippink-bkt.s3.amazonaws.com/images/d01da742-80f3-4858-8464-805e0d657e56/98f55c22-b597-4b1c-9aa8-24be5b8b6c75.jpeg",
-    "https://clippink-bkt.s3.amazonaws.com/images/2032ee58-7b58-47e7-87ba-c28c50056dda/c7506295-0b8a-452f-b76c-d30b48a5dabc.jpeg",
-    "https://clippink-bkt.s3.amazonaws.com/images/619aca91-4ce2-4200-bc36-396401e9f484/ce1a1494-36c8-4565-8860-0a837d8b30ea.jpeg",
-    "https://clippink-bkt.s3.amazonaws.com/images/dc717093-b252-44f2-92e1-48bff8fa86f6/66973684-3adb-4c85-b1db-635915b6058a.jpeg"
-
+    {
+        thumbnail: "https://clippink-bkt.s3.amazonaws.com/images/77df34e4-6260-4d4b-904e-d79a6a3e645e/11c44cca-4aa7-4720-bf09-d5dc0fcf9877.jpeg",
+        style: "Realistic",
+        videoUrl: ""
+    },
+    {
+        thumbnail: "https://clippink-bkt.s3.amazonaws.com/images/a51e55fc-e009-4d64-9a6d-baa799d76c65/c364eda6-e67f-4aff-b7b8-8185ef98a7c6.jpeg",
+        style: "Anime",
+        videoUrl: ""
+    },
+    {
+        thumbnail: "https://clippink-bkt.s3.amazonaws.com/images/d01da742-80f3-4858-8464-805e0d657e56/98f55c22-b597-4b1c-9aa8-24be5b8b6c75.jpeg",
+        style: "Cartoon",
+        videoUrl: ""
+    },
+    {
+        thumbnail: "https://clippink-bkt.s3.amazonaws.com/images/2032ee58-7b58-47e7-87ba-c28c50056dda/c7506295-0b8a-452f-b76c-d30b48a5dabc.jpeg",
+        style: "Realistic",
+        videoUrl: ""
+    },
+    {
+        thumbnail: "https://clippink-bkt.s3.amazonaws.com/images/619aca91-4ce2-4200-bc36-396401e9f484/ce1a1494-36c8-4565-8860-0a837d8b30ea.jpeg",
+        style: "Cartoon",
+        videoUrl: ""
+    },
+    {
+        thumbnail: "https://clippink-bkt.s3.amazonaws.com/images/dc717093-b252-44f2-92e1-48bff8fa86f6/66973684-3adb-4c85-b1db-635915b6058a.jpeg",
+        style: "Line art",
+        videoUrl: ""
+    },
+    {
+        thumbnail: "https://clippink-bkt.s3.amazonaws.com/images/a51e55fc-e009-4d64-9a6d-baa799d76c65/ff5cb6ac-d212-4793-85a4-05693f1a57f7.jpeg",
+        style: "Anime",
+        videoUrl: ""
+    }
 ]
 
 const randomAvatars = ["/avaters/bear.png", "/avaters/dog.png", "/avaters/meerkat.png", "/avaters/rabbit.png"];
@@ -188,11 +217,9 @@ const HeroSection = () => {
                     </div>
                 </div>
             </div>
-            
 
-            <ScrollIntoVideoAnimation images={
-                imageList
-            } />
+
+            <ScrollIntoVideoAnimation images={imageList} />
 
         </div>
     );
