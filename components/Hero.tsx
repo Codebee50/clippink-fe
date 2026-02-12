@@ -132,7 +132,7 @@ const Hero = () => {
               onClick={() => router.push("/dashboard")}
               className="bg-senary text-white px-6 py-2 rounded-md cursor-pointer capitalize font-medium text-center"
             >
-              Start creating videos 
+              Start creating videos
             </button>
 
             <div className="mt-2 flex flex-row items-center gap-4">
