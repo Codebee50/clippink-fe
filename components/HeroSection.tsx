@@ -184,7 +184,7 @@ const HeroSection = () => {
 
                 <div className="flex flex-col items-center justify-center gap-3 padding-x">
                     <h1 className="text-white text-2xl md:text-5xl font-medium capitalize font-eb-garamond text-center">
-                        Create Viral Social Media Content<br /> Faster, Easier and Better
+                        Create Viral faceless videos<br /> Faster, Easier and Better
                     </h1>
                     <p className="font-intertight text-greys2 max-sm:text-sm max-sm:max-w-[270px] text-center">Post daily without burnout and grow your audience while you sleep. </p>
                     <button
