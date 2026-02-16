@@ -20,13 +20,13 @@ const ScrollIntoVideoAnimation = ({ images }: { images: { thumbnail: string, sty
         return () => unsubscribe();
     }, [scrollYProgress]);
     return (
-        <div ref={ref} className='max-w-[1300px] mx-auto w-full'>
+        <div ref={ref} className='max-w-[2500px] mx-auto w-full'>
 
             <div className="slider overflow-hidden w-full flex justify-start padding-x mt-[70px]">
                 <div className="slide-track gap-5 flex flex-row items-center">
                     {[...images, ...images].map((image, index) => (
                         <div
-                            className="slide shrink-0 cursor-pointer relative rounded-md overflow-hidden md:max-w-[260px] max-w-[150px]"
+                            className="slide shrink-0 cursor-pointer relative rounded-md overflow-hidden md:max-w-[290px] max-w-[150px]"
                             key={`hero-section-${index}`}
                         >
                             <Image src={image.thumbnail} alt={`hero-section-${index}`} width={200} height={200} className="w-full h-full object-cover object-center " />

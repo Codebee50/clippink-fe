@@ -174,52 +174,58 @@ const HeroSection = () => {
 
 
     return (
-        <div className="flex flex-col  bg-denary w-full relative" ref={ref}>
+        <div className="flex flex-col  bg-denary  w-full relative" ref={ref}>
+
+            <div className="flex flex-col relative bg-linear-to-t from-denary to-senary/5 via-denary pb-15">
 
 
-            <div className=" inset-0 bg-linear-to-b from-denary/95 from-20% to-denary  via-transparent">
-                <Nav />
+                <div className=" inset-0 bg-transparent">
+                    <Nav />
 
-                <div className="h-[50px]"></div>
+                    <div className="h-[50px]"></div>
 
-                <div className="flex flex-col items-center justify-center gap-3 padding-x">
-                    <h1 className="text-white text-2xl md:text-5xl font-medium capitalize font-eb-garamond text-center">
-                        Create Viral faceless videos<br /> Faster, Easier and Better
-                    </h1>
-                    <p className="font-intertight text-greys2 max-sm:text-sm max-sm:max-w-[270px] text-center">Post daily without burnout and grow your audience while you sleep. </p>
-                    <button
-                        onClick={() => router.push("/dashboard")}
-                        className="bg-senary text-white px-6 py-2 rounded-md cursor-pointer capitalize font-medium text-center"
-                    >
-                        Start creating videos
-                    </button>
+                    <div className="flex flex-col items-center justify-center gap-3 padding-x">
+                        <h1 className="text-white text-2xl md:text-5xl font-medium capitalize font-eb-garamond text-center">
+                            Create Viral faceless videos<br /> Faster, Easier and Better
+                        </h1>
+                        <p className="font-intertight text-greys2 max-sm:text-sm max-sm:max-w-[270px] text-center">Post daily without burnout and grow your audience while you sleep. </p>
+                        <button
+                            onClick={() => router.push("/dashboard")}
+                            className="bg-senary text-white px-6 py-2 rounded-md cursor-pointer capitalize font-medium text-center"
+                        >
+                            Start creating videos
+                        </button>
 
-                    <div className="mt-2 flex flex-row items-center gap-4">
-                        <div className="flex flex-row items-center justify-center">
-                            {randomAvatars.map(avatar => (
-                                <Image src={avatar} alt="avatar" key={avatar} width={50} height={50} className="w-10 h-10 rounded-full object-cover object-center shrink-0 -m-1" />
-                            ))}
-                        </div>
-
-                        <div className="w-[0.5px] h-[40px] bg-gray-600 opacity-50 "></div>
-
-                        <div className="flex flex-col justify-start items-start">
-                            <div className="flex flex-row gap-1 items-center">
-                                {[1, 2, 3, 4, 5].map(item => (
-                                    <FaStar className="text-yellow-500" key={`${item}-starry`} />
+                        <div className="mt-2 flex flex-row items-center gap-4">
+                            <div className="flex flex-row items-center justify-center">
+                                {randomAvatars.map(avatar => (
+                                    <Image src={avatar} alt="avatar" key={avatar} width={50} height={50} className="w-10 h-10 rounded-full object-cover object-center shrink-0 -m-1" />
                                 ))}
-                                <p className="">5.0</p>
                             </div>
-                            <p className=" text-gray-200 text-sm">
-                                <span className="font-medium">{randomAvatars.length}</span> early adopter{randomAvatars.length > 1 && "s"}
-                            </p>
+
+                            <div className="w-[0.5px] h-[40px] bg-gray-600 opacity-50 "></div>
+
+                            <div className="flex flex-col justify-start items-start">
+                                <div className="flex flex-row gap-1 items-center">
+                                    {[1, 2, 3, 4, 5].map(item => (
+                                        <FaStar className="text-yellow-500" key={`${item}-starry`} />
+                                    ))}
+                                    <p className="">5.0</p>
+                                </div>
+                                <p className=" text-gray-200 text-sm">
+                                    <span className="font-medium">{randomAvatars.length}</span> early adopter{randomAvatars.length > 1 && "s"}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+                <ScrollIntoVideoAnimation images={imageList} />
+
             </div>
 
 
-            <ScrollIntoVideoAnimation images={imageList} />
 
         </div>
     );
