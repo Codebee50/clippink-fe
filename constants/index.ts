@@ -1,8 +1,8 @@
 import { MotionEffect } from "@/lib/types/video";
 
 export const appConfig = {
-  APP_NAME: "GetClip",
-  APP_SHORT_NAME: "GetClip",
+  APP_NAME: "getclip",
+  APP_SHORT_NAME: "getclip",
   APP_DESCRIPTION:
     "Create viral faceless videos with AI. Post daily without burnout and grow your audience while you sleep.",
   PLACEHOLDER_IMAGE_URL: "https://clippink-bkt.s3.us-east-1.amazonaws.com/defaultbg.png"
