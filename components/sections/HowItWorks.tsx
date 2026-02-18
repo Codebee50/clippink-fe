@@ -149,28 +149,21 @@ export default function HowItWorks() {
 
                 {/* ── Heading ── */}
                 <div
-                    className={`text-center mb-5 transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                    className={`sm:mb-5 mb-3 transition-all  duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                         }`}
                 >
-                    <h2 className="sm:text-4xl text-2xl  font-medium tracking-tight leading-[1.1]">
-                        <span className="text-white">Turn Ideas Into</span>
-                        {/* <br /> */}
-                        <span className="text-white"> Short Videos In </span>
-                        <span
-                            className="text-senary"
-
-                        >
-                            Seconds.
-                        </span>
+                    <p className="text-senary max-sm:text-sm">Designed for flexibility</p>
+                    <h2 className="sm:text-5xl text-3xl font-alegreya  mt-1 ">
+                        Make it your own
                     </h2>
                 </div>
 
                 {/* ── Subheading ── */}
                 <div
-                    className={`text-center mb-16 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                    className={`mb-16 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                         }`}
                 >
-                    <p className="text-greys2 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+                    <p className="text-greys2 text-base sm:text-lg max-w-xl  leading-relaxed max-sm:text-sm">
                         Produce endless short videos instantly. Automatically generate
                         captions, effects, backgrounds, and music.
                     </p>

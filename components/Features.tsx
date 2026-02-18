@@ -48,10 +48,10 @@ export function Features() {
                     className="text-center mb-20"
                 >
                     <span className="text-xs font-medium text-senary uppercase tracking-widest">Features</span>
-                    <h2 className="text-3xl sm:text-4xl font-medium tracking-tight mt-3">
+                    <h2 className="text-2xl sm:text-4xl font-medium tracking-tight mt-3 font-alegreya">
                         Everything you need to go viral
                     </h2>
-                    <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
+                    <p className="text-muted-foreground mt-4 max-w-lg mx-auto max-sm:text-sm">
                         Professional-quality videos without the learning curve, the editing software, or the freelancer invoices.
                     </p>
                 </motion.div>

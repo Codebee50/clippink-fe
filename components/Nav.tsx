@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -45,8 +45,18 @@ const Nav = ({ fixed = false, backdrop = false, logoWidth = 30, logoHeight = 30,
 
 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 100)
+    }
+    window.addEventListener('scroll', handleScroll)
+  }, [])
+
+
   return (
-    <div className={`flex justify-between items-center w-full  padding-x py-5 ${fixed ? "fixed top-0 left-0 right-0 z-50" : ""} ${backdrop ? "backdrop-blur-sm" : ""} ${className}`}>
+    <div className={`flex justify-between items-center w-full  padding-x py-4 ${fixed ? "fixed top-0 left-0 right-0 z-50" : ""} ${backdrop ? "backdrop-blur-sm" : ""} ${className}`}>
       {/* <Image
         src="/images/logo.svg"
         alt="logo"
@@ -64,7 +74,7 @@ const Nav = ({ fixed = false, backdrop = false, logoWidth = 30, logoHeight = 30,
         ))}
       </div>
       <div className="flex items-center gap-4 max-sm:hidden">
-        <Link href={routeMap.LOGIN} className="bg-senary text-white px-6 py-2 rounded-md">
+        <Link href={routeMap.LOGIN} className="bg-senary text-white px-5 text-sm py-2 rounded-sm">
           Login
         </Link>
       </div>

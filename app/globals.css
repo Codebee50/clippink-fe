@@ -1,12 +1,11 @@
-/* EBGaramond font */
-@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
-
 /* rubik font */
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
 
 /* zalando sans expanded font */
 /* zalando sans expanded font with multiple weights */
 @import url("https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@200;300;400;500;600;700;800;900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap");
 
 @import "tailwindcss";
 
@@ -15,6 +14,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @tailwind utilities;
+
+
 
 @theme inline {
   --color-background: var(--background);
@@ -35,9 +36,9 @@
   --color-cardborder: hsl(220 10% 14%);
   --color-card-foreground: hsl(210, 20%, 92%);
 
-  --font-eb-garamond: "EB Garamond", serif;
   --font-rubik: "Rubik", sans-serif;
   --font-zalando: "Zalando Sans Expanded", sans-serif;
+  --font-alegreya: "Alegreya", serif;
 
   --breakpoint-vidMobile: 900px;
 
