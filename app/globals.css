@@ -99,12 +99,13 @@ body {
   .stack > * {
     grid-area: 1 / 1; /* stack everything on top of each other */
   }
+
   @keyframes scroll {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(calc(-360px * 6));
+      transform: translateX(calc(-1 * (290px + 20px) * var(--num-images)));
     }
   }
 

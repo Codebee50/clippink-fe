@@ -157,27 +157,11 @@ const HeroSection = () => {
 
     const ref = useRef(null)
 
-    // const { scrollYProgress } = useScroll({
-    //     target: ref,
-    //     offset: ["start end", "end start"] // when to start/end tracking
-    // });
-
-    // useEffect(() => {
-    //     const unsubscribe = scrollYProgress.on("change", (latest) => {
-    //         console.log("scrollYProgress", latest);
-    //     });
-
-    //     return () => unsubscribe();
-    // }, [scrollYProgress]);
-
-
-
-
+    
     return (
         <div className="flex flex-col  bg-denary  w-full relative" ref={ref}>
 
-            <div className="flex flex-col relative bg-linear-to-t from-denary to-senary/5 via-denary pb-15">
-
+            <div className="flex flex-col relative bg-linear-to-t from-denary to-senary/10 via-denary pb-15">
 
                 <div className=" inset-0 bg-transparent">
                     <Nav />

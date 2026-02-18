@@ -20,10 +20,21 @@ const ScrollIntoVideoAnimation = ({ images }: { images: { thumbnail: string, sty
         return () => unsubscribe();
     }, [scrollYProgress]);
     return (
-        <div ref={ref} className='max-w-[2500px] mx-auto w-full'>
+        <div ref={ref} className='max-w-[2500px] mx-auto w-full relative'>
 
-            <div className="slider overflow-hidden w-full flex justify-start padding-x mt-[70px]">
-                <div className="slide-track gap-5 flex flex-row items-center">
+
+            <div className="slider overflow-hidden w-full flex justify-start padding-x mt-[70px] relative">
+
+
+
+                <div className='absolute inset-0 bg-linear-to-r from-denary from-5% to-95%  to-denary via-80% via-transparent z-20'>
+
+                </div>
+
+                <div className="slide-track gap-5 flex flex-row items-center"
+                    style={{
+                        "--num-images": images.length * 3
+                    } as React.CSSProperties}>
                     {[...images, ...images].map((image, index) => (
                         <div
                             className="slide shrink-0 cursor-pointer relative rounded-md overflow-hidden md:max-w-[290px] max-w-[150px]"
