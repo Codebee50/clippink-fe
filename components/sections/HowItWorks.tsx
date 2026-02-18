@@ -134,7 +134,7 @@ export default function HowItWorks() {
                 }}
             /> */}
 
-            <div className="relative z-10 max-w-6xl mx-auto">
+            <div className="relative z-10 section-con padding-x">
                 {/* ── Badge ── */}
                 {/* <div
                     className={`flex justify-center mb-8 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"

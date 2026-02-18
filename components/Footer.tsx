@@ -5,7 +5,7 @@ import { FaTwitter, FaGithub, FaLinkedin } from 'react-icons/fa'
 const Footer = () => {
     return (
         <footer className="w-full bg-denary text-white pt-[150px] pb-8 ">
-            <div className="max-w-6xl mx-auto flex flex-col gap-7 px-4">
+            <div className="section-con flex flex-col gap-7 padding-x">
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
                     {/* Brand and tagline */}
                     <div className="flex flex-col gap-3 min-w-[220px]">
