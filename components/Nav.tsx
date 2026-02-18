@@ -19,7 +19,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { PiCaretRightLight } from "react-icons/pi";
 
 
-const Nav = ({ fixed = false, backdrop = false, logoWidth = 50, logoHeight = 50, className = "" }: { fixed?: boolean, backdrop?: boolean, logoWidth?: number, logoHeight?: number, className?: string }) => {
+const Nav = ({ fixed = false, backdrop = false, logoWidth = 30, logoHeight = 30, className = "" }: { fixed?: boolean, backdrop?: boolean, logoWidth?: number, logoHeight?: number, className?: string }) => {
   const navItems = [
     {
       label: "Home",
