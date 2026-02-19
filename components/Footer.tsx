@@ -15,7 +15,7 @@ const Footer = () => {
                             <span className="text-md">Viral videos with AI.</span>
                         </div>
                         <p className="text-xs text-white/60 mt-1 max-w-md">
-                            Passionate about delivering the best digital experiences for everyone. Our platform is designed for growth, creativity, and impact.
+                            {appConfig.APP_DESCRIPTION}
                         </p>
                         <div className="flex items-center gap-4 mt-2">
                             <a href="https://twitter.com/" target="_blank" rel="noopener" className="text-white/60 hover:text-white transition">

@@ -158,9 +158,15 @@ const HeroSection = () => {
     return (
         <div className="flex flex-col  bg-denary  w-full relative" ref={ref}>
 
-            <div className="flex flex-col relative bg-linear-to-t from-denary to-senary/10 via-denary pb-15">
+            <div className="flex flex-col relative bg-linear-to-t from-denary to-denary/10 via-denary">
 
-                <div className="inset-0 bg-transparent">
+                <div className='absolute inset-0  overflow-hidden flex flex-row'>
+                    {[1, 2, 3, 4, 5,7,8,9].map((item) => (
+                        <div key={item} className='w-full h-full relative border-r-[0.05px] border-r-greys3' />
+                    ))}
+                </div>
+
+                <div className="inset-0 bg-transparent z-10">
                     <Nav fixed={true} backdrop={true} />
 
                     <div className="h-[120px]"></div>

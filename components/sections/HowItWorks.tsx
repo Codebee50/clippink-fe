@@ -111,7 +111,7 @@ export default function HowItWorks() {
     return (
         <section
             ref={sectionRef}
-            className="relative w-full overflow-hidden pb-24 px-4 sm:px-6 lg:px-8"
+            className="relative w-full overflow-hidden pb-24"
             style={{ backgroundColor: "#08090a" }}
         >
             {/* ── Decorative scattered marks ── */}
@@ -125,27 +125,9 @@ export default function HowItWorks() {
             <CrossMark style={{ bottom: "52%", left: "26%" }} />
             <CrossMark style={{ bottom: "52%", right: "11%" }} />
 
-            {/* ── Subtle radial glow behind the heading ── */}
-            {/* <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] pointer-events-none"
-                style={{
-                    background:
-                        "radial-gradient(ellipse at center, rgba(34,197,94,0.04) 0%, transparent 70%)",
-                }}
-            /> */}
 
             <div className="relative z-10 section-con padding-x">
-                {/* ── Badge ── */}
-                {/* <div
-                    className={`flex justify-center mb-8 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                        }`}
-                >
-                    <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-cardborder bg-cardbg/60 text-greys2 text-sm font-medium backdrop-blur-sm">
-                        <span className="w-4 h-px bg-senary" />
-                        How it works
-                        <span className="w-4 h-px bg-senary" />
-                    </span>
-                </div> */}
+
 
                 {/* ── Heading ── */}
                 <div
