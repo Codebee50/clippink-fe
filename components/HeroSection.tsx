@@ -8,6 +8,7 @@ import { FaStar } from "react-icons/fa";
 import Image from "next/image";
 import ScrollIntoVideoAnimation from "./ScrollIntoVideoAnimation";
 import { useScroll, useTransform, motion } from "framer-motion";
+import { appConfig } from "@/constants";
 
 
 const imageUrls = [
@@ -161,9 +162,11 @@ const HeroSection = () => {
             <div className="flex flex-col relative bg-linear-to-t from-denary to-denary/10 via-denary">
 
                 <div className='absolute inset-0  overflow-hidden flex flex-row'>
-                    {[1, 2, 3, 4, 5,7,8,9].map((item) => (
-                        <div key={item} className='w-full h-full relative border-r-[0.05px] border-r-greys3' />
+                    {imageList.map((item) => (
+                        <div key={item.thumbnail} className='w-full min-w-[100px] h-full relative border-r-[0.05px] border-r-greys1/20' />
                     ))}
+
+                    {/* <Image src="/bgclouds.svg" alt={appConfig.APP_NAME} width={1000} height={1000} className="w-full h-full object-cover object-center opacity-20"/> */}
                 </div>
 
                 <div className="inset-0 bg-transparent z-10">

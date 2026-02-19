@@ -27,7 +27,7 @@ const ScrollIntoVideoAnimation = ({ images }: { images: { thumbnail: string, sty
 
 
 
-                <div className='absolute inset-0 bg-linear-to-r from-denary from-5% to-95%  to-denary via-80% via-transparent z-20'>
+                <div className='absolute inset-0 bg-linear-to-r from-denary  to-95%  to-denary via-80% via-transparent z-20'>
 
                 </div>
 
