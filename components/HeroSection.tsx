@@ -161,15 +161,12 @@ const HeroSection = () => {
 
             <div className="flex flex-col relative bg-linear-to-t from-denary to-denary/10 via-denary">
 
-                <div className='absolute inset-0  overflow-hidden flex flex-row'>
-                    {imageList.map((item) => (
-                        <div key={item.thumbnail} className='w-full min-w-[100px] h-full relative border-r-[0.05px] border-r-greys1/20' />
-                    ))}
 
-                    {/* <Image src="/bgclouds.svg" alt={appConfig.APP_NAME} width={1000} height={1000} className="w-full h-full object-cover object-center opacity-20"/> */}
-                </div>
+                <div className="hero-grid-overlay -z-20"></div>
 
-                <div className="inset-0 bg-transparent z-10">
+
+
+                <div className="bg-transparent z-20">
                     <Nav fixed={true} backdrop={true} />
 
                     <div className="h-[120px]"></div>

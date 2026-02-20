@@ -180,6 +180,19 @@ body {
     animation: slide-scroll-animation 20s linear infinite;
     width: max-content;
   }
+
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 0.6px, transparent 0.8px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0.6px, transparent 0.8px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 1;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 55%);
+    mask-image: linear-gradient(to bottom, black 0%, transparent 55%);
+  }
 }
 
 :root {

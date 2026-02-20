@@ -57,13 +57,7 @@ const Nav = ({ fixed = false, backdrop = false, logoWidth = 30, logoHeight = 30,
 
   return (
     <div className={`flex justify-between items-center w-full  padding-x py-4 ${fixed ? "fixed top-0 left-0 right-0 z-50" : ""} ${backdrop ? "backdrop-blur-sm" : ""} ${className}`}>
-      {/* <Image
-        src="/images/logo.svg"
-        alt="logo"
-        width={100}
-        height={100}
-        className="w-[70px] h-[70px]"
-      /> */}
+     
 
       <Logo width={logoWidth} height={logoHeight} />
       <div className="flex items-center gap-7 max-sm:hidden">
