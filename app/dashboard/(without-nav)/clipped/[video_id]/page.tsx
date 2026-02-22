@@ -72,7 +72,11 @@ const Page = () => {
                 const data = JSON.parse(event.data) as VideoClippingTaskUpdateWsBody
                 if (data.type === 'progress_update' && data.progress) {
                     const payload = data.payload as ProgressUpdateWsPayload
-                    setProgress(data.progress)
+
+                    if (data.progress) {
+                        setProgress(data.progress)
+
+                    }
                     if (payload.message) {
                         setProgressMessage(payload.message)
                     }
