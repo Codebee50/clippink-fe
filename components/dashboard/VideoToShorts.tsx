@@ -253,7 +253,7 @@ const VideoToShorts = () => {
                 {
                     isfetchingUserclippedVideos ? <LoadingRecentsSekeleton /> : userClipped.length > 0 ? <div className="w-full  flex flex-row overflow-scroll no-scrollbar gap-4 scroll-smooth" ref={userVideosScrollRef}>
                         {userClipped.map(clipped => {
-                            return <div key={clipped.id} className='flex flex-col gap-1 cursor-pointer'  onClick={()=> router.push(`/dashboard/clipped/${clipped.id}`)}>
+                            return <div key={clipped.id} className='flex flex-col gap-1 cursor-pointer' onClick={() => router.push(`/dashboard/clipped/${clipped.id}`)}>
 
                                 <div className='w-[250px] sm:w-[300px] h-[200px] bg-greys3 rounded-md overflow-hidden relative'>
                                     <Image src={clipped.thumbnail_url || appConfig.PLACEHOLDER_IMAGE_URL} alt={clipped.title} width={400} height={400} className='w-full h-full object-cover object-center' />
@@ -264,7 +264,7 @@ const VideoToShorts = () => {
                                     </div>
 
                                 </div>
-                                <p className='max-w-[250px] line-clamp-3'>{clipped.title}</p>
+                                <p className='max-w-[250px] line-clamp-2'>{clipped.title}</p>
 
                                 <div className="flex flex-row items-center text-xs text-greys2/50 gap-1">
                                     <TbClockHour3 />
