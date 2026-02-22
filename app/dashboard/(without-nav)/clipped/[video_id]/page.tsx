@@ -46,7 +46,7 @@ const Page = () => {
 
 
     const { mutate: fetchUserClipped, isLoading: isFetchingUserVideos } = useFetchRequest({
-        url: `/to-shorts/${video_id}`,
+        url: `/to-shorts/${video_id}/`,
         onSuccess: (response: AxiosResponse) => {
             const shortClipList = response.data.short_clips as ShortClip[]
             setClippedVideo(response.data as ClippedVideo)
@@ -140,7 +140,7 @@ const Page = () => {
                     </div>
                 }
 
-                <div className='w-full grid grid-cols-4 gap-4'>
+                <div className='w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4'>
 
                     {
                         shortClips?.map((clip) => {

@@ -255,7 +255,7 @@ const VideoToShorts = () => {
                         {userClipped.map(clipped => {
                             return <div key={clipped.id} className='flex flex-col gap-1 cursor-pointer'  onClick={()=> router.push(`/dashboard/clipped/${clipped.id}`)}>
 
-                                <div className='w-[300px] h-[200px] bg-greys3 rounded-md overflow-hidden relative'>
+                                <div className='w-[250px] sm:w-[300px] h-[200px] bg-greys3 rounded-md overflow-hidden relative'>
                                     <Image src={clipped.thumbnail_url || appConfig.PLACEHOLDER_IMAGE_URL} alt={clipped.title} width={400} height={400} className='w-full h-full object-cover object-center' />
 
                                     <div className={`border border-greys1/30 rounded-md w-max px-2 py-1 text-xs absolute top-0 right-0 font-medium m-2 ${getClassNameForStatus(clipped.status)}`}>

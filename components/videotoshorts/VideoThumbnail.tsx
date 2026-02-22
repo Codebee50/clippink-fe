@@ -28,6 +28,7 @@ function VideoThumbnail({
     const [thumbReady, setThumbReady] = useState(false);
     const [hovered, setHovered] = useState(false);
 
+    // Generate thumbnail by seeking to the desired frame
     useEffect(() => {
         const video = videoRef.current;
         if (!video || isPlaying) return;
@@ -45,16 +46,37 @@ function VideoThumbnail({
         };
     }, [src, seekTo, isPlaying]);
 
+    // Pause when isPlaying becomes false
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
-        if (isPlaying) {
+        if (!isPlaying) {
+            video.pause();
+        }
+        // NOTE: We do NOT call video.play() here.
+        // On iOS Safari, play() must be called synchronously within a user
+        // gesture (tap/click). Calling it inside useEffect (async) breaks
+        // the gesture requirement and silently fails.
+    }, [isPlaying]);
+
+    const handleClick = () => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        // Notify parent to toggle isPlaying state
+        onClick();
+
+        // Call play() directly here, synchronously inside the click handler.
+        // This satisfies iOS Safari's "user gesture" requirement.
+        if (!isPlaying) {
             video.currentTime = 0;
-            video.play().catch(() => {/* autoplay policy blocked */ });
+            video.play().catch(() => {
+                // Autoplay policy or other error — fail silently
+            });
         } else {
             video.pause();
         }
-    }, [isPlaying]);
+    };
 
     const scoreColor =
         score >= 85 ? "text-senary border-senary/25 bg-dot-orange"
@@ -68,19 +90,22 @@ function VideoThumbnail({
 
     return (
         <div
-            onClick={onClick}
+            onClick={handleClick}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            className="relative w-full cursor-pointer overflow-hidden bg-greys3 rounded-md overflow-hidden"
+            className="relative w-full cursor-pointer overflow-hidden bg-greys3 rounded-md"
             style={{ aspectRatio: "9/16" }}
         >
-            {/* Video element */}
+            {/* Video element — always render with playsInline + webkit-playsinline for iOS */}
             <video
                 ref={videoRef}
                 src={src}
                 preload="metadata"
                 muted
                 playsInline
+                // @ts-ignore — webkit-playsinline is not in React's type defs but
+                // is required by older iOS Safari to prevent fullscreen takeover
+                webkit-playsinline="true"
                 controls={isPlaying}
                 className={[
                     "absolute inset-0 w-full h-full object-cover transition-opacity duration-300",
@@ -105,11 +130,11 @@ function VideoThumbnail({
                     <div className="absolute top-2.5 left-2.5 right-2.5 flex justify-between items-center">
                         <div className={`bg-black/70 backdrop-blur-sm border rounded-md px-2 py-0.5 flex items-center gap-1.5 ${scoreColor}`}>
                             <div className={`w-1.5 h-1.5 rounded-full ${dotColor}`} />
-                            <span className="text-[11px] font-bold  tracking-wide">
+                            <span className="text-[11px] font-bold tracking-wide">
                                 {score}
                             </span>
                         </div>
-                        <div className="bg-black/70 backdrop-blur-sm rounded-md px-2 py-0.5 text-[11px] font-semibold  text-white">
+                        <div className="bg-black/70 backdrop-blur-sm rounded-md px-2 py-0.5 text-[11px] font-semibold text-white">
                             {formatDuration(duration)}
                         </div>
                     </div>
