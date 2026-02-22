@@ -32,11 +32,11 @@ const videoTypeOptions = [
     value: "script-to-video",
     Icon: ImFileText2,
   },
-  {
-    label: "Text to video",
-    value: "text-to-video",
-    Icon: PiTextAaBold,
-  },
+  // {
+  //   label: "Text to video",
+  //   value: "text-to-video",
+  //   Icon: PiTextAaBold,
+  // },
 ];
 
 const Page = () => {

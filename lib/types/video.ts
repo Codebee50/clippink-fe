@@ -216,7 +216,7 @@ export type VideoWsExportProgressUpdatePayload = {
 
 export type VideoWsExportProgressMessageBody = {
   type: 'video_export_started' | "video_export_completed" | "video_export_failed" | "video_export_progress_update";
-  progress: number;
+  progress: number | undefined | null;
   payload: VideoWsExportStartedPayload | VideoWsExportCompletedPayload | VideoWsExportFailedPayload | VideoWsExportProgressUpdatePayload
 }
 

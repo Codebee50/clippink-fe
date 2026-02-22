@@ -9,6 +9,8 @@ import { useQueryParams } from "@/hooks/useQueryParams";
 import LandingDashboard from "@/components/dashboard/LandingDashboard";
 import AllUserVideos from "@/components/dashboard/AllUserVideos";
 import Footer from "@/components/Footer";
+import LaunchVideoToShortsDialog from "@/components/videotoshorts/LaunchVideoToShortsDialog";
+import VideoToShorts from "@/components/dashboard/VideoToShorts";
 
 
 const Page = () => {
@@ -44,7 +46,9 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="md:h-[calc(100vh-80px)] md:overflow-y-scroll no-scrollbar flex flex-col gap-5 w-full pb-[50px]">
+
+
+      <div className="md:h-[calc(100vh-80px)] md:overflow-y-scroll no-scrollbar flex flex-col gap-5 w-full pb-[50px] bg-denary">
 
         {
           (!section || section === 'home') && <LandingDashboard />
@@ -53,6 +57,11 @@ const Page = () => {
         {
           section === "my-videos" && <AllUserVideos />
         }
+
+        {
+          section === 'to-shorts' && <VideoToShorts />
+        }
+
 
 
 

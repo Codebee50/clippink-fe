@@ -25,21 +25,35 @@ import { useUserStore } from "@/hooks/useUser";
 import UserInfoPopover from "../UserInfoPopover";
 import { BiSolidVideos } from "react-icons/bi";
 import { useQueryParams } from "@/hooks/useQueryParams";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { RiScissorsCutFill } from "react-icons/ri";
+import { dialogIds, useUiStore } from "@/lib/store/uiStore";
 
 
-const navSections = [
+type NavItem = {
+  label: string;
+  Icon: React.ElementType;
+  id: string;
+  href: string | null
+}
+
+const navSections: { title: string, items: NavItem[] }[] = [
   {
     title: "DASHBOARD",
     items: [
-      { label: "Home", Icon: MdHome, id: "home", href: null },
-      { label: "My Videos", Icon: BiSolidVideos, id: "my-videos", href: null },
-      { label: "Marketplace", Icon: LuShoppingBag, id: "marketplace", href: null },
+      { label: "Home", Icon: MdHome, id: "home", href: "/dashboard" },
+      { label: "My Videos", Icon: BiSolidVideos, id: "my-videos", href: "/dashboard?section=my-videos" },
+      // { label: "Marketplace", Icon: LuShoppingBag, id: "marketplace", href: null },
     ],
   },
   {
     title: "CREATION",
     items: [
-      { label: "Script to video", Icon: TbScriptPlus, id: "script-to-video", href: null },
+      { label: "Script to video", Icon: TbScriptPlus, id: "script-to-video", href: "/dashboard/video/create" },
+      { label: "Video to shorts", Icon: RiScissorsCutFill, id: "launch-vts", href: "/dashboard?section=to-shorts" },
+
+
+
       { label: "Prompt to video", Icon: BsAlphabet, id: "prompt-to-video", href: null },
       { label: "POV Videos", Icon: IoMdEye, id: "pov-videos", href: null },
       { label: "Italian Bainrot", Icon: LuPizza, id: "italian-bainrot", href: null },
@@ -51,16 +65,33 @@ const navSections = [
 
 
 const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobile?: boolean, onMobileClose?: () => void }) => {
-  // const [selectedItem, setSelectedItem] = useState<string | null>(navSections[0].items[0].label);
   const [layoutState, setLayoutState] = useState<"reduced" | "expanded">("expanded");
 
+  const router = useRouter()
 
-  const { setParam, getParam} = useQueryParams()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
-  const selectedSection = getParam("section") || "home"
+  const openDialog = useUiStore((state) => state.openDialog)
 
 
-  const { user } = useUserStore()
+  const fullPath = searchParams.toString()
+    ? `${pathname}?${searchParams.toString()}`
+    : pathname;
+
+  const handleNavItemClicked = (item: NavItem) => {
+    if (item.href) {
+      router.push(item.href)
+    }
+
+    // if (item.id == 'launch-vts') {
+    //   openDialog(dialogIds.LAUNCH_VIDEO_TO_SHORTS)
+    //   console.log('gaga')
+    // }
+    onMobileClose?.()
+
+  }
+
   return (
     <div className={`md:w-[40%] md:max-w-[250px] md:h-full max-md:h-screen  flex flex-col items-center  border-r border-r-greys1/20 shrink-0 bg-greys3/70 transition-all duration-300  ${isMobile ? "" : "max-md:hidden"} ${layoutState == "reduced" ? "w-max" : ""}`}>
       <div className="flex flex-row items-center justify-between w-full border-b border-b-greys1/20 px-5 h-[60px]">
@@ -91,17 +122,19 @@ const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobil
               }
               <div className={`flex flex-col gap-1 ${layoutState == "reduced" ? "gap-2" : ""}`}>
                 {section.items.map(item => {
-                  const isSelected = selectedSection === item.id;
+                  const isSelected = item.href && item.href === fullPath;
                   return (
                     <div
                       key={item.label}
                       className={`flex flex-row items-center gap-2  ${isSelected ? "text-senary bg-senary/5" : "text-white"
                         } hover:bg-greys1/10 rounded-md py-2 px-3 cursor-pointer transition-all duration-300`}
-                      onClick={() => {
-                        // setSelectedItem(item.label)
-                        setParam("section", item.id)
-                        onMobileClose?.()
-                      }}
+                      // onClick={() => {
+                      //   // setSelectedItem(item.label)
+                      //   setParam("section", item.id)
+                      //   onMobileClose?.()
+                      // }}
+
+                      onClick={() => handleNavItemClicked(item)}
                     >
                       <item.Icon />
 
