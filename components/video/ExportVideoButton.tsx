@@ -171,15 +171,15 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
         if (exportInProgress && video?.id) {
             const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/video/render/${video?.id}`, WS_PROTOCOL)}`);
 
-            
+
 
             rws.onmessage = (event) => {
                 const data = JSON.parse(event.data) as VideoWsExportProgressMessageBody
 
                 console.log("data", data)
 
-                if (data.type === "video_export_progress_update") {
-
+                if (data.type === "_update" && data.progress) {
+                    
                     setProgress(data.progress)
                 }
 

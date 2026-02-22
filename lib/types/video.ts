@@ -13,7 +13,7 @@ export interface Caption {
   words: Word[];
 }
 
-export type AnimationType = 
+export type AnimationType =
   | 'none'
   | 'scrollUp'
   | 'scrollDown'
@@ -57,13 +57,13 @@ export interface Scene {
   motion_effect: AnimationType | null
 }
 
-export type BackgroundAudio ={
+export type BackgroundAudio = {
   id: string;
   name: string;
   url: string;
   file_name: string
   is_public: boolean
-  
+
 }
 
 export interface VideoResponse {
@@ -139,7 +139,7 @@ export type VideoCreateReqBody = {
 
 
 export type SceneGeneratedPayload = {
-  progress: number, 
+  progress: number,
   scenes: Scene[]
 }
 
@@ -176,7 +176,7 @@ export type SceneAnimationSuccessfulPayload = {
 
 export type VideoUpdateMessageBody = {
   type: "scene_audio_generated" | "scene_image_generated" | "scenes_generated" | "completed" | "failed" | "scene_image_generation_failed" | "scene_animation_successful";
-  progress?:number,
+  progress?: number,
   payload: SceneGeneratedPayload | SceneAudioGeneratedPayload | SceneImageGeneratedPayload | SceneImageGenerationFailedPayload | SceneAnimationSuccessfulPayload
 }
 
@@ -215,7 +215,7 @@ export type VideoWsExportProgressUpdatePayload = {
 }
 
 export type VideoWsExportProgressMessageBody = {
-  type: 'video_export_started' | "video_export_completed" | "video_export_failed" | "video_export_progress_update";
+  type: 'video_export_started' | "video_export_completed" | "video_export_failed" | "_update";
   progress: number | undefined | null;
   payload: VideoWsExportStartedPayload | VideoWsExportCompletedPayload | VideoWsExportFailedPayload | VideoWsExportProgressUpdatePayload
 }
