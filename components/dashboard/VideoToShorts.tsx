@@ -264,7 +264,7 @@ const VideoToShorts = () => {
                                     </div>
 
                                 </div>
-                                <p>{clipped.title}</p>
+                                <p className='max-w-[250px] line-clamp-3'>{clipped.title}</p>
 
                                 <div className="flex flex-row items-center text-xs text-greys2/50 gap-1">
                                     <TbClockHour3 />
