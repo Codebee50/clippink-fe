@@ -66,9 +66,12 @@ export type BackgroundAudio = {
 
 }
 
+export type VideoStatus = "pending" | 'processing' | "completed" | 'failed'
+
+
 export interface VideoResponse {
   created_at: string;
-  status: string;
+  status: VideoStatus;
   final_audio_key?: string | null;
   script: string;
   id: string;

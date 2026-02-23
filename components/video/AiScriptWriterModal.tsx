@@ -210,7 +210,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
 
                             </div>
 
-                            <LoadingButton text='Generate Script' type='submit' isLoading={isInitiatingScriptGeneration || isGeneratingScript} loadingText={"Processing..."} />
+                            <LoadingButton text='Generate Script' type='submit' isLoading={isInitiatingScriptGeneration || isGeneratingScript} loadingText={"Thinking..."} />
                         </form>
 
                         <div className='w-full flex flex-col gap-2 mt-5 max-h-[100px] overflow-y-scroll cus-scrollbar'>
@@ -218,7 +218,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
                             {
                                 messages.map((message, index) => (
                                     <div key={index} className='w-full flex flex-row items-center gap-2 text-sm text-greys2'>
-                                        <RiProgress8Line className='text-senary' />
+                                        <RiProgress8Line className='text-yellow-500' />
                                         <p>{message}</p>
                                     </div>
                                 ))
