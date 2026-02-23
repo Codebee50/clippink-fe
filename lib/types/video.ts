@@ -107,12 +107,22 @@ export type BackgroundMusicResponse = {
 };
 
 
+export type NarratorVoiceLabels = {
+  use_case: string;
+  gender: string;
+  accent: string;
+  age: string;
+  language: string;
+  descriptive: string;
+};
+
 export type NarratorsVoiceResponse = {
   voice_id: string;
   name: string
   description: string;
   preview_url: string;
   gradient_avatar: string | null | undefined
+  labels: NarratorVoiceLabels
 }
 
 

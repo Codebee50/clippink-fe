@@ -97,7 +97,7 @@ const ScriptToVideoForm = () => {
 
               <AiOutlineInfoCircle size={16} className="text-greys4 text-sm" />
             </div>
-            <p className="text-sm text-greys4">Our AI analyzes your script and generates visuals that match it.</p>
+            <p className="text-sm text-greys4">Our AI analyzes your script and generates matching visuals.</p>
           </div>
 
           <AiScriptWriterModal onScriptGenerated={(script) => updateConfig("script", script)} />

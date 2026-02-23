@@ -72,7 +72,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
             const data = response.data as InitiateScriptGenerationResponse
             console.log(data.task_id)
             setTaskId(data.task_id)
-            setMessages(prev => [...prev, "Script generation queued..."])
+            setMessages(prev => [...prev, "Initiated script generation..."])
             setIsGeneratingScript(true)
 
         },
@@ -80,38 +80,6 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
             toast.error(genericErrorHandler(error, "Failed to initiate script generation"))
         }
     })
-
-    useEffect(() => {
-        if(!taskId) return
-        
-        if (taskId) {
-            console.log("connecting to task update ws")
-            const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/task/update/${taskId}`, WS_PROTOCOL)}`);
-            rws.onmessage = (event) => {
-                const data = JSON.parse(event.data) as TaskUpdateMessageBody
-                console.log("data", data)
-                if (data.type === "failed") {
-                    toast.error(data.message)
-                    setIsGeneratingScript(false)
-                }
-
-                if (data.type === 'completed') {
-                    toast.success("Script generated successfully")
-                    onScriptGenerated(data?.script ?? "")
-                    setMessages(prev => [...prev, "Script generated successfully"])
-                    setOpen(false)
-                    setIsGeneratingScript(false)
-                }
-
-                if (data.type === "message") {
-                    setMessages(prev => [...prev, data.message])
-                }
-
-
-            }
-        }
-
-    }, [taskId])
 
 
     const formik = useFormik({
@@ -127,6 +95,42 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
         }
     })
 
+    useEffect(() => {
+        if (!taskId) return
+
+        if (taskId) {
+            console.log("connecting to task update ws")
+            const rws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/task/update/${taskId}`, WS_PROTOCOL)}`);
+            rws.onmessage = (event) => {
+                const data = JSON.parse(event.data) as TaskUpdateMessageBody
+                console.log("data", data)
+                if (data.type === "failed") {
+                    toast.error(data.message)
+                    setIsGeneratingScript(false)
+                }
+
+                if (data.type === 'completed') {
+                    toast.success("Script generated successfully")
+                    onScriptGenerated(data?.script ?? "")
+                    formik.resetForm()
+                    setMessages([])
+                    setOpen(false)
+                    setIsGeneratingScript(false)
+                }
+
+                if (data.type === "message") {
+                    setMessages(prev => [...prev, data.message])
+                }
+
+
+            }
+        }
+
+    }, [taskId])
+
+
+
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
@@ -137,7 +141,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
             </DialogTrigger>
             <DialogContent className='bg-denary border-greys1/30  overflow-hidden  max-h-[95vh]'>
                 <DialogHeader>
-                    <DialogTitle className='font-medium text-start!'>AI Script writer</DialogTitle>
+                    <DialogTitle className='font-medium text-start! text-base'>AI Script writer</DialogTitle>
                     <DialogDescription className='text-start!'>
                         Enter an idea, or let AI suggest one.
                     </DialogDescription>
