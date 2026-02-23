@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { TbClockHour3 } from "react-icons/tb";
 import Logo from "../Logo";
 import { appConfig } from "@/constants";
+import { getClassNameForStatus } from "@/lib/utils";
+import { ClippedVideoStatus } from "@/lib/types/videotoshorts";
 
 const VideoListCard = ({ video }: { video: VideoResponse }) => {
   const router = useRouter();
@@ -21,8 +23,10 @@ const VideoListCard = ({ video }: { video: VideoResponse }) => {
         </div>
       )}
       <div className="absolute inset-0 bg-linear-to-b from-transparent  to-denary  via-transparent flex flex-col justify-between p-2">
-        <div className="self-end bg-red-600 text-white text-xs font-medium px-2 py-1 rounded-md">
-          <p>New</p>
+
+
+        <div className={`self-end text-xs font-medium px-2 py-1 rounded-md ${getClassNameForStatus(video.status as ClippedVideoStatus)}`}>
+          <p>{video.status}</p>
         </div>
 
         <div className="w-full flex flex-col gap-1">

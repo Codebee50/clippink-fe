@@ -28,7 +28,7 @@ const Page = () => {
 
 
         {/* search bar */}
-        <div className="w-[50%] md:max-w-[400px] max-md:hidden  bg-greys3 rounded-md border border-greys1/20 p-3 flex flex-row items-center gap-2">
+        <div className="w-[50%] md:max-w-[400px] max-md:hidden  bg-greys3 rounded-md border border-greys1/20 px-3 py-2 flex flex-row items-center gap-2">
           <RiSearch2Line className="text-greys4" />
           <input type="text" placeholder="Search Videos, Categories or Trends" className="bg-transparent outline-none flex-1 text-sm text-white placeholder:text-greys4" />
         </div>

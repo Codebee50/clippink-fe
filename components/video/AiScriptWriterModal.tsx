@@ -42,6 +42,10 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
 
     const targetDurationOptions = [
         {
+            label: "Auto",
+            value: 0
+        },
+        {
             label: "30s",
             value: 30
         },
@@ -59,7 +63,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
         }
     ]
 
-    const [targetDuration, setTargetDuration] = useState<number>(30);
+    const [targetDuration, setTargetDuration] = useState<number>(0);
     const [isRandomIdea, setIsRandomIdea] = useState<boolean>(false);
     const [messages, setMessages] = useState<string[]>([]);
     const [taskId, setTaskId] = useState<string | null>(null);
@@ -119,7 +123,7 @@ const AiScriptWriterModal = ({ onScriptGenerated = () => { } }: { onScriptGenera
                 }
 
                 if (data.type === "message") {
-                    setMessages(prev => [...prev, data.message])
+                    setMessages([data.message])
                 }
 
 

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
     Select,
     SelectContent,
@@ -19,10 +19,10 @@ import { useVideoStore } from '@/lib/store/video'
 
 const FontItem = ({ font }: { font: FontConfig }) => {
     useEffect(() => {
-        try{
+        try {
             loadGoogleFont(font.googleFontName, font.weights);
         }
-        catch(error){
+        catch (error) {
             console.error('error loading font', error)
         }
     }, [font.googleFontName]);
@@ -41,6 +41,7 @@ const SelectFont = ({ video }: { video: VideoResponse | null }) => {
 
     const updateCaptionSettingsByKey = useVideoStore((state) => state.updateCaptionSettingsByKey)
 
+    const captionSizeChangeDebounceTimer = useRef<NodeJS.Timeout | null>(null)
 
     const [fontSize, setFontSize] = useState(16);
     const getWeightName = (weight: number) => {
@@ -89,9 +90,17 @@ const SelectFont = ({ video }: { video: VideoResponse | null }) => {
     }
 
     const handleFontSizeChange = (size: number) => {
-        console.log('the size changed', size)
         setFontSize(size)
-        updateCaptionSettingsByKey("fontSize", size, true)
+        updateCaptionSettingsByKey("fontSize", size)
+
+        if (captionSizeChangeDebounceTimer.current) {
+            clearTimeout(captionSizeChangeDebounceTimer.current)
+        }
+
+        captionSizeChangeDebounceTimer.current = setTimeout(() => {
+            updateCaptionSettingsByKey("fontSize", size, true)
+        }, (1000));
+
     }
 
     return (
@@ -136,7 +145,7 @@ const SelectFont = ({ video }: { video: VideoResponse | null }) => {
                     className='w-full bg-greys1/25 text-sm outline-none rounded-md px-3 py-2 [-webkit-appearance:none]'
                     defaultValue={video?.caption_settings?.fontSize || 16}
                     placeholder='Enter font size'
-                    onBlur={(e) => handleFontSizeChange(Number(e.target.value))}
+                    onChange={(e) => handleFontSizeChange(Number(e.target.value))}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                             handleFontSizeChange(Number(e.currentTarget.value));

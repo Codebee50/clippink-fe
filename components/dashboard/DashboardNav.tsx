@@ -93,7 +93,7 @@ const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobil
   }
 
   return (
-    <div className={`md:w-[40%] md:max-w-[250px] md:h-full max-md:h-screen  flex flex-col items-center  border-r border-r-greys1/20 shrink-0 bg-greys3/70 transition-all duration-300  ${isMobile ? "" : "max-md:hidden"} ${layoutState == "reduced" ? "w-max" : ""}`}>
+    <div className={`md:w-[40%] md:max-w-[250px] md:h-full max-md:h-screen  flex flex-col items-center  border-r border-r-greys1/20 shrink-0 bg-denary transition-all duration-300  ${isMobile ? "" : "max-md:hidden"} ${layoutState == "reduced" ? "w-max" : ""}`}>
       <div className="flex flex-row items-center justify-between w-full border-b border-b-greys1/20 px-5 h-[60px]">
 
         {
@@ -153,13 +153,13 @@ const DashboardNav = ({ isMobile = false, onMobileClose = () => { } }: { isMobil
         {/* subscription card */}
         <div className="flex flex-col px-3 items-center">
           <div className="bg-greys3 rounded-full w-[50px] h-[50px] flex items-center justify-center -mb-5 z-10">
-            <div className="w-[70%] h-[70%] bg-[#1D1D20] rounded-full flex items-center justify-center border border-greys1/20">
+            <div className="w-[70%] h-[70%] bg-greys3 rounded-full flex items-center justify-center border border-greys1/20">
               <FaCircleUser />
             </div>
           </div>
 
           {
-            layoutState == "expanded" && <div className=" bg-[#1D1D20] middle-curve-clip rounded-md border border-greys1/20 w-full flex flex-col  pt-6 px-3 pb-3">
+            layoutState == "expanded" && <div className=" bg-greys3 middle-curve-clip rounded-md border border-greys1/20 w-full flex flex-col  pt-6 px-3 pb-3">
               <p className="text-[0.6rem] uppercase text-greys4 font-semibold">CURRENT PLAN</p>
 
               <div className="flex flex-row items-center w-full justify-between pt-3 pb-2 border-b-[0.5px] border-b-greys4/50">
