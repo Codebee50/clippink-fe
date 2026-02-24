@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,8 +36,8 @@ const Nav = ({ fixed = false, backdrop = false, logoWidth = 30, logoHeight = 30,
       href: "/#features",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "Waitlist",
+      href: "/waitlist",
     },
     // {
     //   label: "Contact",

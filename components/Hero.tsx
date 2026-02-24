@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Marquee from "./Marquee";
 import Nav from "./Nav";
 import { useRouter } from "next/navigation";
 import { FaStar } from "react-icons/fa";
 import Image from "next/image";
+import { getFireStoreColumn } from "@/lib/utils/waitlist";
 
 const imageUrls = [
   "https://clippink-bkt.s3.amazonaws.com/images/landing-page-images/feaf47bb-baf6-4aef-9904-3897edf6e8a5.jpeg",
@@ -109,6 +110,22 @@ const shuffleArray = (array: string[]) => {
 const Hero = () => {
   const [images, setImages] = useState<string[]>(shuffleArray(imageUrls as string[]));
   const router = useRouter();
+
+
+  const [names, setNames] = useState<string[]>([])
+
+  const fetchWaitlistNames = async () => {
+    const names = await getFireStoreColumn('waitlist', "name")
+    setNames(names)
+  }
+
+
+  useEffect(() => {
+    (async () => {
+      await fetchWaitlistNames()
+    })()
+  }, [])
+
   return (
     <div className="flex flex-col  bg-denary w-full relative">
       <div className="relative">
@@ -137,9 +154,19 @@ const Hero = () => {
 
             <div className="mt-2 flex flex-row items-center gap-4">
               <div className="flex flex-row items-center justify-center">
-                {randomAvatars.map(avatar => (
-                  <Image src={avatar} alt="avatar" key={avatar} width={50} height={50} className="w-10 h-10 rounded-full object-cover object-center shrink-0 -m-1" />
+                {names.slice(0, 4).map((name, index) => (
+                  <Image src={randomAvatars[0]} alt="avatar" key={name} width={50} height={50} className="w-10 h-10 rounded-full object-cover object-center shrink-0 -m-1" />
                 ))}
+
+                {
+                  names.length > 3 && <div className="w-10 h-10 rounded-full object-cover object-center bg-denary border border-greys1 shrink-0 -m-1">
+                      <p>
+
+                      </p>
+                  </div>
+                }
+
+
               </div>
 
               <div className="w-[0.5px] h-[40px] bg-gray-600 opacity-50 "></div>
@@ -152,7 +179,7 @@ const Hero = () => {
                   <p className="">5.0</p>
                 </div>
                 <p className=" text-gray-200 text-sm">
-                  <span className="font-medium">{randomAvatars.length}</span> early adopter{randomAvatars.length > 1 && "s"}
+                  <span className="font-medium">{names.length}</span> early adopter{names.length > 1 && "s"}
                 </p>
               </div>
             </div>

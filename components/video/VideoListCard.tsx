@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { VideoResponse, VideoStatus } from "@/lib/types/video";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { TbClockHour3 } from "react-icons/tb";
 import Logo from "../Logo";
 import { appConfig } from "@/constants";
-import { getClassNameForStatus } from "@/lib/utils";
-import { ClippedVideoStatus } from "@/lib/types/videotoshorts";
+
 
 const VideoListCard = ({ video }: { video: VideoResponse }) => {
   const router = useRouter();
@@ -29,6 +28,9 @@ const VideoListCard = ({ video }: { video: VideoResponse }) => {
       cls2: "bg-red-600"
     },
   }
+
+
+
 
   return (
     <div className="w-[150px] sm:w-[200px] h-[200px] sm:h-[290px] bg-greys3 rounded-md border border-greys1/30 shrink-0 cursor-pointer overflow-hidden relative" onClick={() => router.push(`/dashboard/video/${video.id}`)}>

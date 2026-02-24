@@ -24,7 +24,7 @@ export default function Home() {
 
 
 
-      <Footer />
+      <Footer pad={true} />
     </div>
   );
 }

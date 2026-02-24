@@ -2,10 +2,10 @@ import { appConfig } from '@/constants'
 import React from 'react'
 import { FaTwitter, FaGithub, FaLinkedin } from 'react-icons/fa'
 
-const Footer = () => {
+const Footer = ({ pad }: { pad?: boolean }) => {
     return (
-        <footer className="w-full bg-denary text-white pt-[150px] pb-8">
-            <div className="section-con flex flex-col gap-7">
+        <footer className="w-full bg-denary text-white pt-[70px] pb-8">
+            <div className={`section-con flex flex-col gap-7 ${pad && "padding-x"}`}>
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
                     {/* Brand and tagline */}
                     <div className="flex flex-col gap-3 min-w-[220px]">
