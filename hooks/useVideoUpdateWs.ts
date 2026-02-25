@@ -3,7 +3,7 @@ import { VideoUpdateMessageBody } from "@/lib/types/video";
 import { videoUpdateManager } from "@/lib/utils/videoUpdateManager";
 import { useEffect, useRef } from "react"
 
-const useVideoUpdateWs = ({onMessage, listenerId}: {onMessage: (data: VideoUpdateMessageBody) => void, listenerId: string}) => {
+const useVideoUpdateWs = ({ onMessage, listenerId }: { onMessage: (data: VideoUpdateMessageBody) => void, listenerId: string }) => {
 
     const { video: videoData } = useVideoStore();
     const onMessageRef = useRef(onMessage);
@@ -13,7 +13,7 @@ const useVideoUpdateWs = ({onMessage, listenerId}: {onMessage: (data: VideoUpdat
     }, [onMessage]);
 
     useEffect(() => {
-        if(!videoData?.id) return 
+        if (!videoData?.id) return
 
         videoUpdateManager.connect(videoData.id)
 
@@ -23,13 +23,13 @@ const useVideoUpdateWs = ({onMessage, listenerId}: {onMessage: (data: VideoUpdat
 
         return () => {
             unsubscribe()
-            if(videoUpdateManager.getListenerCount() === 0) {
+            if (videoUpdateManager.getListenerCount() === 0) {
                 videoUpdateManager.disconnect()
             }
         }
 
-    }, [videoData?.id]) 
-    
+    }, [videoData?.id])
+
 }
 
 export default useVideoUpdateWs

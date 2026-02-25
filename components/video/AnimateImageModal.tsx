@@ -21,7 +21,7 @@ import { genericErrorHandler } from '@/lib/errorHandler';
 
 
 const AnimateImageModal = ({ scene, open = false, onOpenChange = () => { } }: { scene: Scene, open?: boolean, onOpenChange?: (open: boolean) => void }) => {
-    const [isOpen, setIsOpen] = useState(open)
+    // const [isOpen, setIsOpen] = useState(open)
     const [generatingAnimation, setGeneratingAnimation] = useState(false)
     const [animationPrompt, setAnimationPrompt] = useState<string | null>(null)
 
@@ -40,29 +40,24 @@ const AnimateImageModal = ({ scene, open = false, onOpenChange = () => { } }: { 
         }
     })
 
-    useEffect(() => {
-        setIsOpen(open)
-    }, [open])
+    const handleAnimateVideoWsUpdate = (data: VideoUpdateMessageBody) => {
+        if (data.type === "scene_animation_successful") {
+            console.log('scene animation generated successfully')
+            const payload = data.payload as SceneAnimationSuccessfulPayload
+            if (payload.scene.id === scene.id) {
+                replaceScene(payload.scene)
+                setGeneratingAnimation(false)
+                toast.success("Animation generated successfully")
+                onOpenChange(false)
 
+            }
 
-    const closeModal = () => {
-        setIsOpen(false)
-        onOpenChange(false)
+        }
     }
 
-    const handleVideoUpdate = useCallback((data: VideoUpdateMessageBody) => {
-        if (data.type === "scene_animation_successful") {
-            const payload = data.payload as SceneAnimationSuccessfulPayload
-            replaceScene(payload.scene)
-            setGeneratingAnimation(false)
-            toast.success("Animation generated successfully")
-            closeModal()
-        }
-    }, [replaceScene, closeModal])
-
     useVideoUpdateWs({
-        onMessage: handleVideoUpdate,
-        listenerId: "animate-image-modal"
+        onMessage: handleAnimateVideoWsUpdate,
+        listenerId: `animate-image-modal-${scene.id}`
     })
 
     const handleInitiateAnimation = () => {
@@ -80,8 +75,7 @@ const AnimateImageModal = ({ scene, open = false, onOpenChange = () => { } }: { 
     }
 
     return (
-        <Dialog open={isOpen} onOpenChange={(open) => {
-            setIsOpen(open)
+        <Dialog open={open} onOpenChange={(open) => {
             onOpenChange(open)
         }}>
             <DialogTrigger>
@@ -102,7 +96,7 @@ const AnimateImageModal = ({ scene, open = false, onOpenChange = () => { } }: { 
                         </div>
 
                         <button onClick={() => {
-                            closeModal()
+                            onOpenChange(false)
                         }} className='flex flex-row items-center gap-2 w-[30px] h-[30px] border border-greys1/20 rounded-md justify-center cursor-pointer  transition-all duration-300'>
                             <MdOutlineClose size={16} className='text-white text-lg cursor-pointer hover:text-red-500 transition-all duration-300' />
                         </button>

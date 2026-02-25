@@ -70,9 +70,12 @@ const Nav = ({ fixed = false, backdrop = false, logoWidth = 30, logoHeight = 30,
         ))}
       </div>
       <div className="flex items-center gap-4 max-sm:hidden">
-        <Link href={routeMap.LOGIN} className="bg-senary text-white px-5 text-sm py-2 rounded-sm">
+        <Link href={"/waitlist"} className="bg-senary text-white px-5 text-sm py-2 rounded-sm">
           Login
         </Link>
+        {/* <Link href={routeMap.LOGIN} className="bg-senary text-white px-5 text-sm py-2 rounded-sm">
+          Login
+        </Link> */}
       </div>
 
       <div className="sm:hidden">

@@ -43,7 +43,7 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
             src={scene.image_url || "/images/defaultbg.png"}
             alt="scene image"
             width={100}
-            height={100}
+            height={110}
             className="w-[100px] h-[110px] object-cover object-center shrink-0 rounded-md"
           />
 

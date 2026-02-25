@@ -23,7 +23,7 @@ import { useVideoStore } from '@/lib/store/video'
 
 
 const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }: { scene: Scene, open?: boolean, onOpenChange?: (open: boolean) => void }) => {
-  const [isOpen, setIsOpen] = useState(open)
+  // const [isOpen, setIsOpen] = useState(open)
   const [motionEffect, setMotionEffect] = useState<AnimationType | null>(scene.motion_effect || null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -93,7 +93,7 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
       } as Scene
 
       replaceScene(updatedScene)
-      setIsOpen(false)
+      onOpenChange(false)
 
     },
     onError: (error) => {
@@ -111,18 +111,13 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
     })
   }
 
-  useEffect(() => {
-    setIsOpen(open)
 
-  }, [open])
 
 
 
   return (
 
-    <Dialog open={isOpen} onOpenChange={(open) => {
-      console.log('on open change', open)
-      setIsOpen(open)
+    <Dialog open={open} onOpenChange={(open) => {
       onOpenChange(open)
     }}>
       <DialogTrigger>
@@ -145,7 +140,6 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
             </div>
 
             <button onClick={() => {
-              setIsOpen(false)
               onOpenChange(false)
             }} className='flex flex-row items-center gap-2 w-[30px] h-[30px] border border-greys1/20 rounded-md justify-center cursor-pointer  transition-all duration-300'>
               <MdOutlineClose size={16} className='text-white text-lg cursor-pointer hover:text-red-500 transition-all duration-300' />

@@ -17,25 +17,22 @@ class VideoUpdateManager {
       return
     }
 
+    this.listeners.clear()
     this.disconnect()
     this.currentVideoId = videoId
 
     this.ws = new ReconnectingWebSocket(`${makeMsUrl(`/ws/video/task/${videoId}`, WS_PROTOCOL)}`)
 
     this.ws.onmessage = (event) => {
-      console.log("video update message received", event.data)
       const data = JSON.parse(event.data) as VideoUpdateMessageBody
       this.listeners.forEach((listener, key) => {
         listener(data)
-
       })
     }
 
   }
 
   subscribe(listener: Listener, listenerId: string) {
-
-    console.log("subscribing to video update manager", listener)
     this.listeners.set(listenerId, listener)
     return () => this.listeners.delete(listenerId) // return a clean up function to unsubscribe
   }
