@@ -28,7 +28,7 @@ export default function RootLayout({
         className={`antialiased`}
       >
         <ReactQueryProvider>
-          <Toaster position="top-right" />
+          <Toaster position="top-center" />
           <UserHeader />
           <Suspense fallback={<div className="w-dvw h-dvh flex items-center justify-center bg-denary text-greys1 text-2xl font-medium">Loading...</div>}>
             {children}

@@ -6,10 +6,84 @@ import { RiSpeakAiLine } from "react-icons/ri";
 import { TbClockHour9 } from "react-icons/tb";
 import EditImageModal from "./EditMotionEffect";
 import EditImageOptionsPopover from "./EditImageOptionsPopover";
+import { useEffect, useRef, useState } from "react";
+import { FiRefreshCcw } from "react-icons/fi";
+
+import { IoClose } from "react-icons/io5";
+import TextareaAutosize from 'react-textarea-autosize';
+import useStyledToast from "@/hooks/useStyledToast";
+import usePostRequest from "@/hooks/usePost";
+import { AxiosError, AxiosResponse } from "axios";
+import { genericErrorHandler } from "@/lib/errorHandler";
 
 
 
 const SceneCard = ({ scene }: { scene: Scene }) => {
+  const [narrationChanged, setNarrationChanged] = useState(false)
+  const narrationInputRef = useRef<HTMLTextAreaElement | null>(null)
+  const toast = useStyledToast()
+
+  const [newNarration, setNewNarration] = useState<string | null>(null)
+
+  const [isRegeneratingAudio, setIsRegeneratingAudio] = useState(false)
+
+  const { mutate: initiateRegenerateAudio, isLoading: isInitiatingRegenerateAudio } = usePostRequest(
+    {
+      url: "/video/scene/audio/regenerate/",
+      onSuccess: (response: AxiosResponse) => {
+        setIsRegeneratingAudio(true)
+      },
+      onError: (error: AxiosError) => {
+        toast.error(genericErrorHandler(error, "Could not regenerate audio"))
+      }
+    }
+  )
+
+
+  const handleNarrationChanged = (newNarration: string) => {
+    if (!narrationChanged) {
+      setNarrationChanged(true)
+    }
+
+    setNewNarration(newNarration)
+  }
+
+  const handleCancelNarrationEdit = () => {
+    if (narrationInputRef.current) {
+      narrationInputRef.current.value = scene.narration
+    }
+    setNarrationChanged(false)
+  }
+
+  const handleRegenerateAudio = () => {
+
+    if (newNarration === scene.narration || newNarration == null) {
+      toast.error("You have not made any changes to the narration")
+    }
+
+
+
+    initiateRegenerateAudio({
+      scene_id: scene.id,
+      new_narration: newNarration
+    })
+  }
+
+  useEffect(() => {
+    const indicateSceneNarrationChanged = () => {
+      setIsRegeneratingAudio(false)
+      setNarrationChanged(false)
+    }
+
+
+    if(newNarration == scene.narration){
+      toast.success("Scene audio successfully regenerated")
+    }
+    indicateSceneNarrationChanged()
+  }, [scene.narration])
+
+
+
   return (
     <div key={scene.id} className="w-full  bg-greys3 rounded-md p-4 flex flex-col gap-4 border border-greys1/20">
       <div className="w-full flex flex-row items-center justify-between">
@@ -28,13 +102,35 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
       </div>
 
       <div className="w-full flex flex-row items-end justify-between gap-4">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 flex-1">
+          {
+            narrationChanged && <div className="w-full flex flex-row items-center justify-end gap-2">
+
+              <button onClick={handleCancelNarrationEdit} className="text-xs bg-red-600/20 p-1 text-red-600 rounded-md border border-red-600/40 flex flex-row gap-1 cursor-pointer hover:bg-red-600/30 transition-all ease-in-out duration-300 items-center">
+                <IoClose />
+
+                Cancel</button>
+              <button onClick={handleRegenerateAudio} disabled={isRegeneratingAudio || isInitiatingRegenerateAudio} className="text-xs bg-senary/20 p-1 text-senary rounded-md border border-senary/40 disabled:opacity-50 flex flex-row gap-1 cursor-pointer hover:bg-senary/30 transition-all ease-in-out duration-300 items-center">
+              <FiRefreshCcw className={(isRegeneratingAudio || isInitiatingRegenerateAudio) ? "animate-spin" : ""} />
+
+                Regenerate audio</button>
+
+            </div>
+          }
           <div className="w-full p-4 bg-[#1B1B25] rounded-md relative">
             <div className="flex flex-row items-center bg-senary/10 rounded-br-md px-2 py-1 text-sm gap-1 w-max absolute top-0 left-0">
               <RiSpeakAiLine className="text-senary" />
               <p className="text-sm text-senary font-medium">Narration</p>
             </div>
-            <p className="mt-5 text-sm"> {scene.narration}</p>
+            <TextareaAutosize
+              onChange={(e) => handleNarrationChanged(e.target.value)}
+              defaultValue={scene.narration}
+              className="text-sm resize-none w-full mt-5 outline-none border-none"
+              ref={narrationInputRef}
+            />
+
+            {/* <textarea onChange={(e) => handleNarrationChanged(e.target.value)} defaultValue={scene.narration} className="text-sm max-h-[400px] resize-none w-full mt-5 outline-none border-none" /> */}
+            {/* <p className="mt-5 text-sm"> {scene.narration}</p> */}
           </div>
         </div>
 
