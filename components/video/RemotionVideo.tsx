@@ -25,7 +25,7 @@ const RemotionVideo = ({
   const AUDIO_BUFFER_SECONDS = 0.1;
 
   const sortedScenes = useMemo(
-    () => video?.scenes.sort((a, b) => a.order_number - b.order_number) || [],
+    () => video?.scenes.sort((a, b) => a.order_number - b.order_number).filter((scene)=> scene.audio_url !== null) || [],
     [video]
   );
 

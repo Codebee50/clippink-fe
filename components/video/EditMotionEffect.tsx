@@ -127,11 +127,11 @@ const EditMotionEffectModal = ({ scene, open = false, onOpenChange = () => { } }
       </DialogTrigger>
       <DialogContent showCloseButton={false} className='bg-denary border-greys1/10 pt-0 overflow-hidden p-0 max-h-[95vh]'>
         <DialogHeader>
-          <div className='w-full flex flex-row items-center justify-between  border-b border-greys1/20 py-2 px-4'>
+          <div className='w-full flex flex-row items-center justify-between  border-b border-greys1/20 py-2 px-3'>
 
             <div className='flex flex-row items-center gap-4'>
-              <div className='flex flex-row items-center border border-senary/20 bg-senary/10 rounded-md py-2 px-4 h-[40px] w-[40px] justify-center'>
-                <p className='text-sm text-senary '>#{scene.order_number}</p>
+              <div className='flex flex-row items-center border border-senary/20 bg-senary/10 rounded-md py-2 px-4 h-[40px] justify-center'>
+                <p className='text-sm text-senary '>#{Math.round(scene.order_number)}</p>
               </div>
 
               <DialogTitle className='text-white font-medium text-[1rem]'>Change motion effect </DialogTitle>

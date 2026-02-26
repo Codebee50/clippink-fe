@@ -15,10 +15,11 @@ import useStyledToast from "@/hooks/useStyledToast";
 import usePostRequest from "@/hooks/usePost";
 import { AxiosError, AxiosResponse } from "axios";
 import { genericErrorHandler } from "@/lib/errorHandler";
+import CircleSpinner from "../loaders/CircleSpinner";
 
 
 
-const SceneCard = ({ scene }: { scene: Scene }) => {
+const SceneCard = ({ scene, scene_index }: { scene: Scene, scene_index: number }) => {
   const [narrationChanged, setNarrationChanged] = useState(false)
   const narrationInputRef = useRef<HTMLTextAreaElement | null>(null)
   const toast = useStyledToast()
@@ -59,6 +60,7 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
 
     if (newNarration === scene.narration || newNarration == null) {
       toast.error("You have not made any changes to the narration")
+      return
     }
 
 
@@ -76,7 +78,7 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
     }
 
 
-    if(newNarration == scene.narration){
+    if (newNarration == scene.narration) {
       toast.success("Scene audio successfully regenerated")
     }
     indicateSceneNarrationChanged()
@@ -88,7 +90,7 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
     <div key={scene.id} className="w-full  bg-greys3 rounded-md p-4 flex flex-col gap-4 border border-greys1/20">
       <div className="w-full flex flex-row items-center justify-between">
         <div className="flex flex-row items-center gap-2 border border-greys1/20 rounded-md px-2 py-1">
-          <p className="font-bold">#{scene.order_number}</p>
+          <p className="font-bold">#{scene_index}</p>
         </div>
 
         <div className="flex flex-row items-center gap-4">
@@ -111,8 +113,10 @@ const SceneCard = ({ scene }: { scene: Scene }) => {
 
                 Cancel</button>
               <button onClick={handleRegenerateAudio} disabled={isRegeneratingAudio || isInitiatingRegenerateAudio} className="text-xs bg-senary/20 p-1 text-senary rounded-md border border-senary/40 disabled:opacity-50 flex flex-row gap-1 cursor-pointer hover:bg-senary/30 transition-all ease-in-out duration-300 items-center">
-              <FiRefreshCcw className={(isRegeneratingAudio || isInitiatingRegenerateAudio) ? "animate-spin" : ""} />
 
+                {
+                  isRegeneratingAudio || isInitiatingRegenerateAudio ? <CircleSpinner size={13} color="var(--color-senary)" /> : <FiRefreshCcw className={(isRegeneratingAudio || isInitiatingRegenerateAudio) ? "animate-spin" : ""} />
+                }
                 Regenerate audio</button>
 
             </div>

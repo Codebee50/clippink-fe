@@ -174,8 +174,6 @@ const ExportVideoButton = ({ video = null }: { video: VideoResponse | null }) =>
             rws.onmessage = (event) => {
                 const data = JSON.parse(event.data) as VideoWsExportProgressMessageBody
 
-                console.log("data", data)
-
                 if (data.type === "video_export_progress_update" && data.progress) {
                     
                     setProgress(data.progress)

@@ -14,6 +14,7 @@ type VideoStore = {
     setVideo: (video: VideoResponse) => void;
     replaceScenes: (scenes: Scene[]) => void;
     replaceScene: (scene: Scene) => void;
+    addScene: (scene: Scene) => void;
     updateCaptionSettingsByKey: (key: keyof CaptionStyleConfig, value: unknown, persist?: boolean) => void;
     bulkUpdateCaptionSettings: (captionSettings: CaptionStyleConfig) => Promise<void>;
     updateVideo: (config: UpdateVideoReqConfig, persist?: boolean) => Promise<AxiosResponse | null>;
@@ -29,7 +30,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
     //i am doing this so that defaults or other video preparations can be done as this stage
     // it does not modify the state, it only prepares the video with any defaults and returns it
     prepareVideoForState: (video: VideoResponse) => {
-        if(!video.caption_settings){
+        if (!video.caption_settings) {
             video.caption_settings = getDefaultCaptionSettings()
         }
         return video
@@ -64,6 +65,23 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
             }
         })
     },
+
+    addScene: (scene: Scene) => {
+        const timestamp = new Date().getTime()
+        set((state) => {
+            if (!state.video) return state;
+
+            return {
+                video: {
+                    ...state.video,
+                    scenes: [...state.video.scenes, scene],
+                    last_changed_at: timestamp.toString()
+                }
+            }
+        })
+    },
+
+
 
     replaceScene: (scene: Scene) => {
         const timestamp = new Date().getTime();
