@@ -15,6 +15,7 @@ type VideoStore = {
     replaceScenes: (scenes: Scene[]) => void;
     replaceScene: (scene: Scene) => void;
     addScene: (scene: Scene) => void;
+    deleteScene: (scene_id: string) => void;
     updateCaptionSettingsByKey: (key: keyof CaptionStyleConfig, value: unknown, persist?: boolean) => void;
     bulkUpdateCaptionSettings: (captionSettings: CaptionStyleConfig) => Promise<void>;
     updateVideo: (config: UpdateVideoReqConfig, persist?: boolean) => Promise<AxiosResponse | null>;
@@ -75,6 +76,22 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
                 video: {
                     ...state.video,
                     scenes: [...state.video.scenes, scene],
+                    last_changed_at: timestamp.toString()
+                }
+            }
+        })
+    },
+
+    deleteScene: (scene_id: string) => {
+        const timestamp = new Date().getTime()
+
+        set((state) => {
+            if (!state.video) return state;
+
+            return {
+                video: {
+                    ...state.video,
+                    scenes: state.video.scenes.filter((scene) => scene.id !== scene_id),
                     last_changed_at: timestamp.toString()
                 }
             }

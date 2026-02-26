@@ -16,6 +16,8 @@ import usePostRequest from "@/hooks/usePost";
 import { AxiosError, AxiosResponse } from "axios";
 import { genericErrorHandler } from "@/lib/errorHandler";
 import CircleSpinner from "../loaders/CircleSpinner";
+import useDeleteRequest from "@/hooks/useDelete";
+import { useVideoStore } from "@/lib/store/video";
 
 
 
@@ -24,9 +26,22 @@ const SceneCard = ({ scene, scene_index }: { scene: Scene, scene_index: number }
   const narrationInputRef = useRef<HTMLTextAreaElement | null>(null)
   const toast = useStyledToast()
 
+  const deleteScene = useVideoStore((state) => state.deleteScene)
+
   const [newNarration, setNewNarration] = useState<string | null>(null)
 
   const [isRegeneratingAudio, setIsRegeneratingAudio] = useState(false)
+
+  const { mutate: makeDeleteSceneRequest, isLoading: isDeletingScene } = useDeleteRequest({
+    url: `/video/scene/${scene.id}/delete/`,
+    onSuccess: (reponse: AxiosResponse) => {
+      deleteScene(scene.id)
+      toast.success("Scene deleted successfully")
+    },
+    onError: (error: AxiosError) => {
+      toast.error(genericErrorHandler(error, "Scene deletion failed"))
+    }
+  })
 
   const { mutate: initiateRegenerateAudio, isLoading: isInitiatingRegenerateAudio } = usePostRequest(
     {
@@ -97,9 +112,9 @@ const SceneCard = ({ scene, scene_index }: { scene: Scene, scene_index: number }
           <div className="cursor-pointer hover:text-senary transition-all duration-300">
             <TbAdjustmentsStar />
           </div>
-          <div className="cursor-pointer hover:text-red-500 transition-all duration-300">
+          <button onClick={() => makeDeleteSceneRequest()} className="cursor-pointer hover:text-red-500 transition-all duration-300">
             <FiTrash2 />
-          </div>
+          </button>
         </div>
       </div>
 
